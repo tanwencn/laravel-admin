@@ -71,6 +71,6 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin($app['config'], $app['auth'], $app['router']);
         });
 
-        $this->app['router']->middlewareGroup('admin', config('admin.middleware'));
+        $this->app['router']->middlewareGroup('admin', config('admin.middleware', []));
     }
 }
