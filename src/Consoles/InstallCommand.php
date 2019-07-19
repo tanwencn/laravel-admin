@@ -45,7 +45,9 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->call('key:generate');
+        if(!config('app.key'))
+            $this->call('key:generate');
+
         if (!file_exists(public_path('storage'))) {
             $this->call('storage:link');
         }
