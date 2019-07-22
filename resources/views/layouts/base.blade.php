@@ -203,7 +203,7 @@
     function showImageSelector(url) {
         elfinder_container = $.dialog({
             title: "{{ trans('admin.select_image') }}",
-            content:"URL:/admin/elfinder/popup/" + url,
+            content:"URL:{{ url('admin/elfinder/popup') }}/" + url,
             animation: 'scale',
             closeAnimation: 'scale',
             backgroundDismiss: true,
