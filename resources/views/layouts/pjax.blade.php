@@ -33,7 +33,7 @@
 
         <script>
             $(function () {
-                Blog.init();
+                Admin.init();
                 currentMenu('{{ url()->current() }}');
 
                 toastr.clear();
