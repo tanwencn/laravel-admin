@@ -10,7 +10,6 @@
 namespace Tanwencn\Admin\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
@@ -34,9 +33,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if (!$this->auth->guard($this->guard)->check()) {
-            throw new AuthenticationException(
-                'Unauthenticated.', [$this->guard], $this->redirectTo($request)
-            );
+            return redirect()->guest($this->redirectTo($request));
         }
 
         $this->auth->shouldUse($this->guard);
