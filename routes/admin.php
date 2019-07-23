@@ -28,8 +28,5 @@ Admin::router()->group(function ($router) {
 
     });
 
-
-    if (file_exists(base_path('routes/admin.php'))) {
-        $router->group(base_path('routes/admin.php'));
-    }
+    $router->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
 });

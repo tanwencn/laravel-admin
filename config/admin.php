@@ -6,7 +6,9 @@ return [
      * Route configuration.
      */
     'route' => [
-        'prefix' => 'admin'
+        'prefix' => 'admin',
+        'namespaces' => 'App\\Admin\\Controllers',
+        'routes' => app_path('routes/admin.php')
     ],
 
     'pjax' => true,

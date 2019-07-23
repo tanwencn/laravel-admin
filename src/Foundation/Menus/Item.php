@@ -31,6 +31,7 @@ class Item
     public function sort($sort)
     {
         $this->sort = $sort;
+        return $this;
     }
 
     public function route($name, $parameters = [], $absolute = true)

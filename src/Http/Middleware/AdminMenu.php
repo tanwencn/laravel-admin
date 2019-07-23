@@ -33,7 +33,7 @@ class AdminMenu
 
         Admin::menu()->new('<i class="fa fa-cog"></i> <span>'.trans_choice('admin.setting', 0).'</span>')->uri('options/general')->auth('general_settings');
 
-        Admin::menu()->new('<i class="fa fa-outdent"></i> <span>'.trans_choice('admin.operationlog', 0).'</span>')->route('admin.operationlog')->auth('operationlog');
+        Admin::menu()->new('<i class="fa fa-outdent"></i> <span>'.trans_choice('admin.operationlog', 0).'</span>')->sort(99)->route('admin.operationlog')->auth('operationlog');
 
         return $next($request);
     }
