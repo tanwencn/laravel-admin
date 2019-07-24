@@ -18,10 +18,4 @@ class DashboardController extends Controller
         return Admin::view('dashboard.index');
     }
 
-    protected function abilitiesMap()
-    {
-        return [];
-    }
-
-
 }

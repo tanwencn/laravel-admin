@@ -43,7 +43,7 @@
                                 @endif
                                 <select multiple="multiple" size="20" name="permissions[]" class="form-control">
                                     @foreach($permissions as $permission)
-                                        <option {{ in_array($permission->id, $current_permissions)?'selected':'' }} value="{{ $permission->id }}">{{ trans("{$permission->guard_name}.{$permission->name}") }}</option>
+                                        <option {{ in_array($permission->id, $current_permissions)?'selected':'' }} value="{{ $permission->id }}">{{ str_after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</option>
                                     @endforeach
                                 </select>
                             </div>

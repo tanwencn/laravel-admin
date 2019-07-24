@@ -24,10 +24,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $model = User::with('roles')/*->whereHas('metas', function ($query) {
-            $query->where('meta_key', 'is_administrator');
-        })*/
-        ;
+        $model = User::with('roles');
 
         $search = $request->query('search');
         if (!empty($search)) {
@@ -145,10 +142,12 @@ class UserController extends Controller
 
     protected function abilitiesMap()
     {
-        return array_merge(parent::abilitiesMap(), [
-            'edit' => null,
-            'update' => null,
-        ]);
+        return [
+            'index' => 'view_user',
+            'create' => 'add_user',
+            'store' => 'add_user',
+            'destroy' => 'delete_user'
+        ];
     }
 
 

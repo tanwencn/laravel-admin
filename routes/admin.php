@@ -28,5 +28,6 @@ Admin::router()->group(function ($router) {
 
     });
 
-    $router->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
+    if(file_exists(config('admin.route.routes')))
+        $router->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
 });

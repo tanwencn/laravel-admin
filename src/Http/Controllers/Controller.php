@@ -9,16 +9,35 @@
 
 namespace Tanwencn\Admin\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Tanwencn\Admin\Facades\Admin;
-use Tanwencn\Admin\Http\Requests\Authorizes;
-use Illuminate\Contracts\Auth\Access\Gate;
 
 class Controller extends \Illuminate\Routing\Controller
 {
-    use Authorizes;
+    use AuthorizesRequests;
 
     protected function view($view, $data = [], $mergData = [])
     {
-        return Admin::view(str_plural(str_before(snake_case(class_basename(static::class)),'_controller')) . '.' . $view, $data, $mergData);
+        return Admin::view(str_plural(str_before(snake_case(class_basename(static::class)), '_controller')) . '.' . $view, $data, $mergData);
+    }
+
+    public function callAction($method, $parameters)
+    {
+        $abilitys = $this->abilitiesMap();
+        $ability = is_array($abilitys) ? array_get($abilitys, $method) : $abilitys;
+
+        if ($ability) {
+            $this->authorize($ability);
+        }
+
+        return parent::callAction($method, $parameters);
+    }
+
+    /**
+     * @return array
+     */
+    protected function abilitiesMap()
+    {
+        return [];
     }
 }

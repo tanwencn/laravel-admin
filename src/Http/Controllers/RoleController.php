@@ -101,4 +101,18 @@ class RoleController extends Controller
             'message' => trans('admin.delete_succeeded'),
         ]);
     }
+
+    protected function abilitiesMap()
+    {
+        return [
+            'index' => 'view_role',
+            'edit' => 'edit_role',
+            'update' => 'edit_role',
+            'create' => 'add_role',
+            'store' => 'add_role',
+            'destroy' => 'delete_role'
+        ];
+    }
+
+
 }

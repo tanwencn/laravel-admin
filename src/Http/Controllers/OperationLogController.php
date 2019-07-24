@@ -24,10 +24,5 @@ class OperationLogController extends Controller
         return $this->view('index', compact('results'));
     }
 
-    protected function abilitiesMap()
-    {
-        return [];
-    }
-
 
 }
