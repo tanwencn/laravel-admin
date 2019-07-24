@@ -58,19 +58,15 @@ var Admin = function () {
                 }
             });
             $('.grid-batch-delete,.grid-row-delete').on('click', function () {
-                if ($(this).hasClass('grid-row-delete')) {
-                    var id = $(this).data('id');
-                    if (!id)
-                        return false;
-                } else {
-                    var selected = listSelectedRows();
+                var selected = [];
+                if ($(this).hasClass('grid-batch-delete')) {
+                    selected = listSelectedRows();
                     if (!selected) {
                         return false;
                     }
-                    var id = selected.join();
                 }
 
-                ajaxDelete($(this).data('url'), id, $(this).data('type'));
+                ajaxDelete($(this).data('url'), selected, $(this).data('type'));
             });
             /** list **/
         }

@@ -17,6 +17,11 @@ $(function () {
         toastr.warning(timeout_load);
         NProgress.done();
     });
+    $(document).on('pjax:error', function (event, textStatus) {
+        event.preventDefault();
+        toastr.error(error_msg);
+        NProgress.done();
+    });
 
     $(document).on('submit', 'form', function (event) {
         $.pjax.submit(event, '#pjax-container');

@@ -198,6 +198,7 @@
 
 <script>
     var timeout_load = '{{ trans('admin.timeout_load') }}';
+    var error_msg = '{{ trans('admin.failed') }}';
     var imageJconfirm;
     var elfinder_container;
     function showImageSelector(url) {
@@ -240,7 +241,7 @@
         return selected;
     };
 
-    function ajaxDelete(url, id, type){
+    function ajaxDelete(url, ids, type){
 
         if(type == 'trash'){
             var message = "{{ trans('admin.trash_message') }}"
@@ -258,10 +259,11 @@
                     action: function () {
                         $.ajax({
                             method: 'post',
-                            url: url+'/' + id,
+                            url: url,
                             data: {
                                 _method: 'DELETE',
-                                _token: "{{ csrf_token() }}"
+                                _token: "{{ csrf_token() }}",
+                                ids:ids,
                             },
                             success: function (data) {
                                 $.pjax.reload('#pjax-container');

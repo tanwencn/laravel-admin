@@ -18,7 +18,7 @@
                         <ul class="dropdown-menu">
                             @can('delete_user')
                             <li>
-                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ request()->getPathInfo() }}">{{ trans('admin.delete') }}</a>
+                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ route('admin.users.destroy', 0) }}">{{ trans('admin.delete') }}</a>
                             </li>
                             @endcan
                         </ul>
@@ -83,8 +83,8 @@
                                 @endcan
                                 @can('delete_user')
                                 @if($user->id > 1 && Auth::user()->can('delete_user'))
-                                    <a href="javascript:void(0);" data-id="{{ $user->id }}"
-                                       data-url="{{ request()->getPathInfo() }}"
+                                    <a href="javascript:void(0);"
+                                       data-url="{{ route('admin.users.destroy', $user->id) }}"
                                        class="grid-row-delete">{{ trans('admin.delete') }}</a>
                                 @endif
                                 @endcan

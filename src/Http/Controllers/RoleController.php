@@ -87,9 +87,9 @@ class RoleController extends Controller
         return redirect(\Admin::action('index'))->with('toastr_success', trans('admin.save_succeeded'));
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $ids = explode(',', $id);
+        $ids = $id?[$id]:$request->input('ids');
         foreach ($ids as $id) {
             $model = Role::findOrFail($id);
             if ($model->name == 'superadmin') continue;

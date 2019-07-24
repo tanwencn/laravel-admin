@@ -125,9 +125,10 @@ class UserController extends Controller
         return redirect($url)->with('toastr_success', trans('admin.save_succeeded'));
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $ids = explode(',', $id);
+        $ids = $id?[$id]:$request->input('ids');
+
         foreach ($ids as $id) {
             if ($id == 1) continue;
             $model = User::findOrFail($id);

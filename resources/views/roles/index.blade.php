@@ -18,7 +18,7 @@
                         <ul class="dropdown-menu">
                             @can('delete_role')
                             <li>
-                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ request()->getPathInfo() }}">{{ trans('admin.delete') }}</a>
+                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
                             </li>
                             @endcan
                         </ul>
@@ -75,8 +75,8 @@
                                     @endcan
                                     @can('delete_role')
                                     @if($role->name !='superadmin')
-                                        <a href="javascript:void(0);" data-id="{{ $role->id }}"
-                                           data-url="{{ request()->getPathInfo() }}"
+                                        <a href="javascript:void(0);"
+                                           data-url="{{ route('admin.roles.destroy', $role->id) }}"
                                            class="grid-row-delete">{{ trans('admin.delete') }}</a>
                                     @endif
                                     @endcan
