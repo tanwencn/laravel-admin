@@ -192,101 +192,36 @@
 
 {{--<script src="{{ asset('vendor/laravel-admin/transliteration-1.6.2/lib/browser/transliteration.min.js') }}"></script>--}}
 
-<script src="{{ asset('/vendor/laravel-admin/admin/app.min.js') }}"></script>
+<script src="{{ asset('/vendor/laravel-admin/admin/app.js') }}"></script>
 
 {!! Admin::asset()->js() !!}
 
 <script>
-    var timeout_load = '{{ trans('admin.timeout_load') }}';
-    var error_msg = '{{ trans('admin.failed') }}';
-    var imageJconfirm;
-    var elfinder_container;
-    function showImageSelector(url) {
-        elfinder_container = $.dialog({
-            title: "{{ trans('admin.select_image') }}",
-            content:"URL:{{ url(config('admin.route.prefix').'/elfinder/popup') }}/" + url,
-            animation: 'scale',
-            closeAnimation: 'scale',
-            backgroundDismiss: true,
-            //theme: 'supervan',
-            columnClass:'xlarge',
-            /*onContentReady: function () {
-                var self = this;
-            },*/
-        });
-    }
-
-    function listSelectedRows() {
-        var selected = [];
-        $('.grid-row-checkbox:checked').each(function () {
-            selected.push($(this).data('id'));
-        });
-        if (selected.length < 1) {
-            $.alert({
-                title:false,
-                type: 'red',
-                content: "{{ trans('admin.please_select_data') }}",
-                buttons:{
-                    yes:{
-                        text:"{{ trans('admin.ok') }}"
-                    }
-                }
-            });
-            /*$.dialog({
-                title: false,
-                content: '{{ trans('admin.please_select_data') }}',
-            });*/
-            return false;
-        }
-        return selected;
+    Admin.init();
+    Admin.info = {
+        timeout_load:'{{ trans('admin.timeout_load') }}',
+        error_msg:'{{ trans('admin.failed') }}',
+        imageSelectorTitle:'{{ trans('admin.select_image') }}',
+        imageSelectorUrl:"{{ url(config('admin.route.prefix').'/elfinder/popup') }}",
+        deleteTitle:'{{ trans('admin.delete_confirm') }}',
+        deleteText : "{{ trans('admin.delete') }}",
+        cancelText : "{{ trans('admin.cancel') }}",
+        trashMessage : "{{ trans('admin.trash_message') }}",
+        deleteMessage : "{{ trans('admin.delete_message') }}",
+        pleaseSelectData : "{{ trans('admin.please_select_data') }}",
+        ok : "{{ trans('admin.ok') }}",
+        csrf_token: '{{ csrf_token() }}'
     };
 
-    function ajaxDelete(url, ids, type){
-
-        if(type == 'trash'){
-            var message = "{{ trans('admin.trash_message') }}"
-        }else{
-            var message = "{{ trans('admin.delete_message') }}";
-        }
-
-        $.confirm({
-            title: '{{ trans('admin.delete_confirm') }}',
-            content: message,
-            autoClose: 'cancelAction|6000',
-            buttons: {
-                deleteAction: {
-                    text: "{{ trans('admin.delete') }}",
-                    action: function () {
-                        $.ajax({
-                            method: 'post',
-                            url: url,
-                            data: {
-                                _method: 'DELETE',
-                                _token: "{{ csrf_token() }}",
-                                ids:ids,
-                            },
-                            success: function (data) {
-                                $.pjax.reload('#pjax-container');
-                                toastr.success(data.message);
-                            }
-                        });
-                    }
-                },
-                cancelAction: {
-                    text: '{{ trans('admin.cancel') }}'
-                }
-            }
-        });
-    }
 
     $(function () {
         toastr.clear();
         @if (session('toastr_success'))
-        toastr.success('{{ session('toastr_success') }}')
+        toastr.success('{{ session('toastr_success') }}');
         @endisset
 
         @foreach($errors->all() as $error)
-        toastr.error('{{ $error }}', '{{ trans('admin.failed') }}')
+        toastr.error('{{ $error }}', '{{ trans('admin.failed') }}');
         @endforeach
     });
 </script>

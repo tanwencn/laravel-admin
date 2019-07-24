@@ -16,7 +16,7 @@
             },
             getFileCallback: function (file) {
                 processSelectedFile(file, '{{ $input_id  }}');
-                elfinder_container.close();
+                Admin.hideImageSelector();
             },
             //height:'100%',
             onlyMimes:JSON.parse('{!! json_encode($onlyMimes)  !!} '),

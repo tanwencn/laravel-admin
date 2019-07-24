@@ -60,7 +60,7 @@ var Admin = function () {
             $('.grid-batch-delete,.grid-row-delete').on('click', function () {
                 var selected = [];
                 if ($(this).hasClass('grid-batch-delete')) {
-                    selected = listSelectedRows();
+                    selected = Admin.listSelectedRows();
                     if (!selected) {
                         return false;
                     }

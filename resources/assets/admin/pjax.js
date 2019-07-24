@@ -14,12 +14,12 @@ $(function () {
 
     $(document).on('pjax:timeout', function (event) {
         event.preventDefault();
-        toastr.warning(timeout_load);
+        toastr.warning(Admin.info.timeout_load);
         NProgress.done();
     });
     $(document).on('pjax:error', function (event, textStatus) {
         event.preventDefault();
-        toastr.error(error_msg);
+        toastr.error(Admin.info.error_msg);
         NProgress.done();
     });
 

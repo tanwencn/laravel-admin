@@ -35,7 +35,7 @@
 
         $(function () {
             $('.select-image').click(function () {
-                showImageSelector('logo?multiple=false');
+                Admin.showImageSelector('logo?multiple=false');
             });
 
             $('.btn-save').click(function () {

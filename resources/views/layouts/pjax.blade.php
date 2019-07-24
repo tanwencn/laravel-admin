@@ -34,15 +34,16 @@
         <script>
             $(function () {
                 Admin.init();
-                currentMenu('{{ url()->current() }}');
+                Admin.activityMenu('{{ url()->current() }}');
+                Admin.info.csrf_token = '{{ csrf_token() }}';
 
                 toastr.clear();
                 @if (session('toastr_success'))
-                toastr.success('{{ session('toastr_success') }}')
+                toastr.success('{{ session('toastr_success') }}');
                 @endisset
 
                 @foreach($errors->all() as $error)
-                toastr.error('{{ $error }}', '{{ trans('admin.failed') }}')
+                toastr.error('{{ $error }}', '{{ trans('admin.failed') }}');
                 @endforeach
             });
         </script>
