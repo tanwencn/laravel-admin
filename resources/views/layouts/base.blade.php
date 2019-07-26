@@ -180,7 +180,7 @@
 <script src="{{ asset('/vendor/laravel-admin/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('/vendor/laravel-admin/bootstrap-duallistbox/js/jquery.bootstrap-duallistbox.min.js') }}"></script>
 @if(config('app.locale') != 'en')
-    <script src="{{ asset('/vendor/laravel-admin/select2/js/i18n/'. config('app.locale') .'.js') }}"></script>
+    <script src="{{ asset('/vendor/laravel-admin/select2/js/i18n/'. strtolower(config('app.locale')) .'.js') }}"></script>
 @endif
 
 <script src="{{ asset('vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>

@@ -49,7 +49,7 @@ class BootPermissionsCommand extends Command
     {
         //$this->info('Start to initialize permissions');
         // Reset cached roles and permissions
-        app()['cache']->forget('spatie.permission.cache');
+        app('cache')->forget('spatie.permission.cache');
 
         $this->ability('dashboard');
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Tanwencn\Admin\Consoles\BootPermissionsCommand;
+use Tanwencn\Admin\Consoles\BuildDirCommand;
 use Tanwencn\Admin\Consoles\InstallCommand;
 use Tanwencn\Admin\Foundation\Admin;
 use Tanwencn\Admin\Http\ViewComposers\BootsrapComposer;
@@ -35,6 +36,7 @@ class AdminServiceProvider extends ServiceProvider
 
             $this->commands([
                 InstallCommand::class,
+                BuildDirCommand::class,
                 BootPermissionsCommand::class
             ]);
         }

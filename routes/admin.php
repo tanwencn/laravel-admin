@@ -6,13 +6,12 @@ Route::prefix(config('admin.route.prefix', 'admin'))->middleware('web')->namespa
     $router->get('logout', 'LoginController@logout')->name('admin.logout');
 });
 
-Admin::router()->group(function ($router) {
-
-    $router->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {
+Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {
         $router->any('elfinder/connector', ['as' => 'elfinder.connector', 'uses' => 'ElfinderController@showConnector']);
         $router->get('elfinder/popup/{input_id}', ['as' => 'admin.elfinder.popup', 'uses' => 'ElfinderController@showPopup']);
     });
-    $router->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
+
+Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
         $router->get('/', 'DashboardController@index')->name('admin.dashboard');
 
@@ -28,6 +27,5 @@ Admin::router()->group(function ($router) {
 
     });
 
-    if(file_exists(config('admin.route.routes')))
-        $router->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
-});
+if(file_exists(config('admin.route.routes')))
+    Admin::router()->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
