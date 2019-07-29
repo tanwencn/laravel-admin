@@ -49,7 +49,7 @@
                     <table class="table table-hover table-striped">
                         <tbody>
                         <tr class="nowrap">
-                            <th><input type="checkbox" class="grid-select-all"></th>
+                            <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
                             <th>ID</th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
@@ -60,7 +60,7 @@
                             <tr>
                                 <td>
                                     @if($role->name != 'superadmin')
-                                        <input type="checkbox" class="grid-row-checkbox" data-id="{{ $role->id }}">
+                                        <input type="checkbox" class="grid-row-checkbox checkbox-style" data-id="{{ $role->id }}">
                                     @endif
                                 </td>
                                 <td>

@@ -128,17 +128,8 @@
 <!-- end #content -->
 
 <script>
-
-    function processSelectedFile(file, requestingField) {
-        $('#avatar').val(file.url);
-    }
-
-    $(function () {
-        $('.select2').select2();
-
-        $('.select-image').click(function () {
-            Admin.showImageSelector('logo?multiple=false');
-        });
+    Admin.boot(function(){
+        Finder.disk().click('.select-image', '#avatar');
     });
 </script>
 @endsection

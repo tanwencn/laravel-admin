@@ -19,7 +19,7 @@ $(function () {
     });
     $(document).on('pjax:error', function (event, textStatus) {
         event.preventDefault();
-        toastr.error(Admin.info.error_msg);
+        toastr.error(Admin.info.failed);
         NProgress.done();
     });
 

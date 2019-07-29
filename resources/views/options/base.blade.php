@@ -10,19 +10,14 @@
     </style>
 
     <div class="col-md-3" style="padding-left:0;">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="box-header no-padding"></div>
-
-            <div class="box-body no-padding">
-                <ul class="nav nav-stacked">
+        <div class="box box-solid">
+            <div class="box-body no-padding" style="">
+                <ul class="nav nav-pills nav-stacked">
                     @include('admin::options.nav')
                 </ul>
             </div>
-            <div class="box-footer no-padding"></div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.widget-user -->
     </div>
     <div class="col-md-9" style="padding-right:0;">
         <form method="POST" action="{{ Admin::action('save') }}" class="form-horizontal">

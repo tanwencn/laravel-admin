@@ -7,8 +7,8 @@ Route::prefix(config('admin.route.prefix', 'admin'))->middleware('web')->namespa
 });
 
 Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {
-        $router->any('elfinder/connector', ['as' => 'elfinder.connector', 'uses' => 'ElfinderController@showConnector']);
-        $router->get('elfinder/popup/{input_id}', ['as' => 'admin.elfinder.popup', 'uses' => 'ElfinderController@showPopup']);
+        $router->any('elfinder/connector', ['as' => 'elfinder.connector', 'uses' => 'Controller@showConnector']);
+        $router->get('elfinder/show', ['as' => 'admin.elfinder.show', 'uses' => 'Controller@showIndex']);
     });
 
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {

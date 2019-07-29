@@ -11,22 +11,18 @@ return [
         'routes' => app_path('routes/admin.php')
     ],
 
-    'pjax' => true,
-
-    /*
-     * Laravel-admin upload setting.
-     */
-    'file' => [
+    'default' => [
         'disk' => 'public',
+        'uploadOverwrite' => false,
+        'uploadMaxSize' => '3M',
+        'uploadAllow' => ['image'],
         'onlyMimes' => ['image'],
-        'options' => [
-            'uploadOverwrite' => false,
-            'tmbURL' => '/.tmb',
-            'uploadAllow' => ['image'],
-            'uploadOrder' => ['allow'],
-            'uploadMaxSize' => '5M',
-            'URL' => '/storage'
-        ]
+        'uploadOrder' => ['allow'],
+        'path' => 'images',
+        'tmbPath'    => 'thumbnails/images',
+        'URL' => '/storage/images',
+        'tmbURL' => '/thumbnails/images',
+        'alias' => 'Gallery'
     ],
 
     'auth' => [
@@ -47,7 +43,7 @@ return [
     'middleware' => [
         'web',
         \Tanwencn\Admin\Http\Middleware\Authenticate::class,
-        \Tanwencn\Admin\Http\Middleware\AdminMenu::class,
+        \Tanwencn\Admin\Http\Middleware\Menu::class,
         \Tanwencn\Admin\Http\Middleware\FilterIfPjax::class,
         \Tanwencn\Admin\Http\Middleware\HttpLog::class
     ],

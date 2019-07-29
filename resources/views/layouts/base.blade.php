@@ -8,11 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link rel="shortcut icon" href="{{ asset('vendor/laravel-admin/logo.png') }}" type="image/x-icon">
-    <!-- elfinder -->
-    <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/elfinder.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/theme.css') }}">
-    <!-- elfinder -->
 
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap/css/bootstrap.min.css') }}">
@@ -36,7 +31,8 @@
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/jquery-confirm/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/iCheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap-switch/css/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap-duallistbox/css/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('/vendor/laravel-admin/bootstrap-duallistbox/css/bootstrap-duallistbox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css') }}">
 
 {!! Admin::asset()->css() !!}
@@ -46,6 +42,8 @@
 
     <!-- jQuery 3 -->
     <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/vendor/laravel-admin/admin/app.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,7 +71,7 @@
             </a>
 
             <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">xx
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -92,10 +90,12 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ route('admin.users.edit', Auth::id()) }}" class="btn btn-default btn-flat">{{ trans('admin.edit_profile') }}</a>
+                                    <a href="{{ route('admin.users.edit', Auth::id()) }}"
+                                       class="btn btn-default btn-flat">{{ trans('admin.edit_profile') }}</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
+                                    <a href="{{ route('admin.logout') }}"
+                                       class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
                                 </div>
                             </li>
                         </ul>
@@ -187,43 +187,31 @@
 
 <!-- elfinder -->
 <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
 <!-- elfinder -->
 
 {{--<script src="{{ asset('vendor/laravel-admin/transliteration-1.6.2/lib/browser/transliteration.min.js') }}"></script>--}}
-
-<script src="{{ asset('/vendor/laravel-admin/admin/app.js') }}"></script>
-
 {!! Admin::asset()->js() !!}
 
 <script>
-    Admin.init();
-    Admin.info = {
-        timeout_load:'{{ trans('admin.timeout_load') }}',
-        error_msg:'{{ trans('admin.failed') }}',
-        imageSelectorTitle:'{{ trans('admin.select_image') }}',
-        imageSelectorUrl:"{{ url(config('admin.route.prefix').'/elfinder/popup') }}",
-        deleteTitle:'{{ trans('admin.delete_confirm') }}',
-        deleteText : "{{ trans('admin.delete') }}",
-        cancelText : "{{ trans('admin.cancel') }}",
-        trashMessage : "{{ trans('admin.trash_message') }}",
-        deleteMessage : "{{ trans('admin.delete_message') }}",
-        pleaseSelectData : "{{ trans('admin.please_select_data') }}",
-        ok : "{{ trans('admin.ok') }}",
+    @foreach($errors->all() as $error)
+    Admin.errors.push('{{ $error }}');
+    @endforeach
+        Admin.info = {
+        timeout_load: '{{ trans('admin.timeout_load') }}',
+        failed: '{{ trans('admin.failed') }}',
+        deleteTitle: '{{ trans('admin.delete_confirm') }}',
+        deleteText: "{{ trans('admin.delete') }}",
+        cancelText: "{{ trans('admin.cancel') }}",
+        trashMessage: "{{ trans('admin.trash_message') }}",
+        deleteMessage: "{{ trans('admin.delete_message') }}",
+        pleaseSelectData: "{{ trans('admin.please_select_data') }}",
+        ok: "{{ trans('admin.ok') }}",
+        toastr_success: '{{ session('toastr_success') }}',
         csrf_token: '{{ csrf_token() }}'
     };
 
-
-    $(function () {
-        toastr.clear();
-        @if (session('toastr_success'))
-        toastr.success('{{ session('toastr_success') }}');
-        @endisset
-
-        @foreach($errors->all() as $error)
-        toastr.error('{{ $error }}', '{{ trans('admin.failed') }}');
-        @endforeach
-    });
+    Admin.elfinder = ({title:"{{ trans('admin.select_file') }}", url:"{{ route('admin.elfinder.show') }}"});
+    Admin.init();
 </script>
 </body>
 </html>

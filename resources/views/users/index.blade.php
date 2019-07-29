@@ -49,7 +49,7 @@
                 <table class="table table-hover table-striped">
                     <tbody>
                     <tr class="nowrap">
-                        <th><input type="checkbox" class="grid-select-all"></th>
+                        <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
                         <th>ID</th>
                         <th>{{ trans('admin.email') }}</th>
                         <th>{{ trans('admin.name') }}</th>
@@ -62,7 +62,7 @@
                         <tr>
                             <td>
                                 @if($user->id > 1)
-                                    <input type="checkbox" class="grid-row-checkbox" data-id="{{ $user->id }}">
+                                    <input type="checkbox" class="grid-row-checkbox checkbox-style" data-id="{{ $user->id }}">
                                 @endif
                             </td>
                             <td>

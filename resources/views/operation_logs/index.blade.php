@@ -78,8 +78,10 @@
         <!-- end panel -->
     </div>
     <script>
-        $('.modal .modal-body pre').each(function($key, $val){
-            $(this).html(JSON.stringify(JSON.parse($($val).html()), null, 2));
+        Admin.boot(function(){
+            $('.modal .modal-body pre').each(function($key, $val){
+                $(this).html(JSON.stringify(JSON.parse($($val).html()), null, 2));
+            });
         });
     </script>
 @endsection

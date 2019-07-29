@@ -33,18 +33,14 @@
 
         <script>
             $(function () {
+                @foreach($errors->all() as $error)
+                Admin.errors.push('{{ $error }}');
+                @endforeach
+
+                Admin.info.csrf_token = '{{ csrf_token() }}';
+                Admin.info.toastr_success = '{{ session('toastr_success') }}';
                 Admin.init();
                 Admin.activityMenu('{{ url()->current() }}');
-                Admin.info.csrf_token = '{{ csrf_token() }}';
-
-                toastr.clear();
-                @if (session('toastr_success'))
-                toastr.success('{{ session('toastr_success') }}');
-                @endisset
-
-                @foreach($errors->all() as $error)
-                toastr.error('{{ $error }}', '{{ trans('admin.failed') }}');
-                @endforeach
             });
         </script>
     </div>

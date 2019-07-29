@@ -65,19 +65,8 @@
 <!-- end #content -->
 
 <script>
-
-    function processSelectedFile(file, requestingField) {
-        $('#avatar').val(file.url);
-    }
-
-    $(function () {
-        $('.select2').select2();
-
-        $('select[name="permissions[]"]').bootstrapDualListbox()
-
-        $('.select-image').click(function () {
-            Admin.showImageSelector('logo?multiple=false');
-        });
+    Admin.boot(function(){
+        $('select[name="permissions[]"]').bootstrapDualListbox();
     });
 </script>
 @endsection

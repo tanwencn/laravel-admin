@@ -12,9 +12,8 @@ namespace Tanwencn\Admin\Http\Middleware;
 use Closure;
 use Tanwencn\Admin\Facades\Admin;
 
-class AdminMenu
+class Menu
 {
-
     /**
      * Handle an incoming request.
      *
