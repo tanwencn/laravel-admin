@@ -1,16 +1,16 @@
 @if(!request()->ajax())
 
     <!-- elfinder -->
-   <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}"/>
-   {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/elfinder.min.css') }}">--}}
-   {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/theme.css') }}">--}}
-   <!-- elfinder -->
-       <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
-       <!-- elfinder -->
-       <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
-       <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
-       <!-- elfinder -->
-    @endif
+    <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}"/>
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/elfinder.min.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/theme.css') }}">--}}
+    <!-- elfinder -->
+    <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
+    <!-- elfinder -->
+    <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
+    <!-- elfinder -->
+@endif
 
 <div id="elfinder"></div>
 <script type="text/javascript" charset="utf-8">
@@ -19,7 +19,7 @@
     $(function () {
         var opts = {
             //cssAutoLoad : ['/vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css'],
-            cssAutoLoad : true,
+            cssAutoLoad: true,
             commandsOptions: {
                 getfile: {
                     multiple: !!parseInt("{{ $multiple }}"),
@@ -80,14 +80,14 @@
             soundPath: '{{ asset('vendor/laravel-admin/elfinder/sounds') }}'
         };
 
-       // opts.getFileCallback = function(){};
+        // opts.getFileCallback = function(){};
         if (typeof Finder !== 'undefined') {
             opts.getFileCallback = function (file, fm) {
-                if(file instanceof Array){
-                    $.each(file, function(i){
+                if (file instanceof Array) {
+                    $.each(file, function (i) {
                         file[i].absoluteUrl = fm.convAbsUrl(file[i].url);
                     })
-                }else {
+                } else {
                     file.absoluteUrl = fm.convAbsUrl(file.url);
                 }
 
