@@ -20,6 +20,7 @@
         var opts = {
             //cssAutoLoad : ['/vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css'],
             cssAutoLoad: true,
+            baseUrl:'{{ asset('vendor/laravel-admin/elfinder') }}/',
             commandsOptions: {
                 getfile: {
                     multiple: !!parseInt("{{ $multiple }}"),

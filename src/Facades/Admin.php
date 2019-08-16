@@ -9,6 +9,17 @@ namespace Tanwencn\Admin\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static \Tanwencn\Admin\Foundation\Asset asset
+ * @method static \Tanwencn\Admin\Foundation\Menu menu
+ * @method static \Tanwencn\Admin\Foundation\Table table
+ * @method static \Tanwencn\Admin\Foundation\Side side
+ * @method static object user
+ * @method static \Illuminate\Routing\Route router
+ * @method static \Illuminate\View\View view
+ * @method static void dashboard
+ */
+
 class Admin extends Facade
 {
     /**

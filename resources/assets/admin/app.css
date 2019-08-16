@@ -99,7 +99,7 @@ ol, ul {
 	padding: 5px 10px;
 }
 
-.nowrap th{white-space: nowrap}
+table thead th{white-space: nowrap}
 
 .invalid {
 	background-color: #f6c9cc !important;

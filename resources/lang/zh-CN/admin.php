@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'guard' => '守卫',
     'superadmin' => '超级管理员',
     'edit_profile' => '修改个人信息',
     'dashboard' => '仪表盘',

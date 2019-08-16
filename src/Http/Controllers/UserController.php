@@ -12,6 +12,7 @@ namespace Tanwencn\Admin\Http\Controllers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Tanwencn\Admin\Database\Eloquent\User;
@@ -21,6 +22,13 @@ use Tanwencn\Admin\Facades\Admin;
 class UserController extends Controller
 {
     use ValidatesRequests;
+
+    public function __construct()
+    {
+        $fileds = ['email', 'name'];
+        array_unshift($fileds, config('admin.user.username', 'email'));
+        View::share('user_name_fileds', array_filter(array_unique($fileds)));
+    }
 
     public function index(Request $request)
     {
@@ -35,7 +43,8 @@ class UserController extends Controller
         }
 
         $results = $model->paginate();
-
+        if($request->ajax())
+            return $results;
         return $this->view('index', compact('results'));
     }
 
@@ -47,7 +56,7 @@ class UserController extends Controller
     protected function _form(User $model)
     {
         $model->load('metas');
-        $roles = Role::all()->pluck('name', 'name');
+        $roles = Role::where('guard_name', 'admin')->get()->pluck('name', 'name');
 
         return $this->view('add_edit', compact('model', 'roles'));
     }
@@ -65,18 +74,7 @@ class UserController extends Controller
     public function store()
     {
         $model = new User();
-        return $this->save($model, [
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($model->id)
-            ],
-            //'role' => 'required',
-            'name' => 'required|string|max:255',
-            'password' => 'required|string|min:6|confirmed'
-        ]);
+        return $this->save($model);
     }
 
     public function update($id)
@@ -85,36 +83,31 @@ class UserController extends Controller
             $this->authorize('edit_user');
 
         $model = User::findOrFail($id);
-        return $this->save($model, [
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($model->id)
-            ],
-            //'role' => 'required',
-            'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:6|confirmed'
-        ]);
+        return $this->save($model);
     }
 
-    protected function save(User $model, $validates)
+    protected function save(User $model)
     {
-        $request = request();
+        $request = request()->replace(array_filter(request()->all()));
+
+        $validates = [
+            'email' => ['email', 'max:255'],
+            'role' => 'required',
+            'name' => ['max:255'],
+            'password' => 'min:6|confirmed'
+        ];
+
+        $login_filed = config('admin.user.username', 'email');
+        $validates[$login_filed] = array_merge($validates[$login_filed], ['required', Rule::unique('users')->ignore($model->id)]);
 
         $this->validate($request, $validates);
 
         $input = array_filter($request->except('role'));
 
-        if (!empty($input['password'])) {
-            $input['password'] = bcrypt($input['password']);
-        }
-
         $roles = array_filter($request->input('role', []));
 
-        RelationHelper::boot($model)->save($input, function ($model) use ($roles) {
-            if(!empty($roles)) {
+        RelationHelper::boot($model)->save(array_filter($input), function ($model) use ($roles) {
+            if (!empty($roles)) {
                 if (Auth::user()->hasRole('superadmin'))
                     $model->syncRoles($roles);
             }
@@ -127,7 +120,7 @@ class UserController extends Controller
 
     public function destroy($id, Request $request)
     {
-        $ids = $id?[$id]:$request->input('ids');
+        $ids = $id ? [$id] : $request->input('ids');
 
         foreach ($ids as $id) {
             if ($id == 1) continue;

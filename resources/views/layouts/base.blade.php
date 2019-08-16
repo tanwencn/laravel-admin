@@ -12,6 +12,8 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap/css/bootstrap.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}" />
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/font-awesome/css/font-awesome.min.css') }}">
 
@@ -31,8 +33,7 @@
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/jquery-confirm/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/iCheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap-switch/css/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet"
-          href="{{ asset('/vendor/laravel-admin/bootstrap-duallistbox/css/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@4.4.1/dist/css/bootstrap/tabulator_bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css') }}">
 
 {!! Admin::asset()->css() !!}
@@ -178,7 +179,6 @@
 <script src="{{ asset('/vendor/laravel-admin/sortable/Sortable.min.js') }}"></script>
 <script src="{{ asset('/vendor/laravel-admin/imsky-holder/holder.min.js') }}"></script>
 <script src="{{ asset('/vendor/laravel-admin/select2/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/bootstrap-duallistbox/js/jquery.bootstrap-duallistbox.min.js') }}"></script>
 @if(config('app.locale') != 'en')
     <script src="{{ asset('/vendor/laravel-admin/select2/js/i18n/'. strtolower(config('app.locale')) .'.js') }}"></script>
 @endif
@@ -188,6 +188,8 @@
 <!-- elfinder -->
 <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
 <!-- elfinder -->
+
+<script src="https://unpkg.com/tabulator-tables@4.4.1/dist/js/tabulator.min.js"></script>
 
 {{--<script src="{{ asset('vendor/laravel-admin/transliteration-1.6.2/lib/browser/transliteration.min.js') }}"></script>--}}
 {!! Admin::asset()->js() !!}

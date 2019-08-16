@@ -11,31 +11,33 @@ return [
         'routes' => app_path('routes/admin.php')
     ],
 
-    'default' => [
-        'disk' => 'public',
-        'uploadOverwrite' => false,
-        'uploadMaxSize' => '3M',
-        'uploadAllow' => ['image'],
-        'onlyMimes' => ['image'],
-        'uploadOrder' => ['allow'],
-        'path' => 'images',
-        'tmbPath'    => 'thumbnails/images',
-        'URL' => '/storage/images',
-        'tmbURL' => '/thumbnails/images',
-        'alias' => 'Gallery'
+    'elfinder' => [
+        'default' => [
+            'disk' => 'public',
+            'uploadOverwrite' => false,
+            'uploadMaxSize' => '3M',
+            'uploadAllow' => ['image'],
+            'onlyMimes' => ['image'],
+            'uploadOrder' => ['allow'],
+            'path' => 'images',
+            'tmbPath' => 'thumbnails/images',
+            'URL' => '/storage/images',
+            'tmbURL' => '/thumbnails/images',
+            'alias' => 'Gallery'
+        ]
     ],
 
     'auth' => [
         'guards' => [
             'admin' => [
-                'driver'   => 'session',
+                'driver' => 'session',
                 'provider' => 'admin',
             ],
         ],
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model'  => \Tanwencn\Admin\Database\Eloquent\User::class
+                'model' => \Tanwencn\Admin\Database\Eloquent\User::class
             ],
         ]
     ],

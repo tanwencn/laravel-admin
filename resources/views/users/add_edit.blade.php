@@ -20,31 +20,20 @@
                 </div>
                 <div class="box-body">
                     <div class="form-horizontal">
-                        <div class="form-group {{ $errors->has('email')?"has-error":"" }}">
-                            <label class="control-label col-md-2">{{ trans('admin.email') }}：</label>
+                        @foreach($user_name_fileds as $filed)
+                        <div class="form-group {{ $errors->has($filed)?"has-error":"" }}">
+                            <label class="control-label col-md-2">{{ trans('admin.'.$filed) }}：</label>
                             <div class="col-md-8">
-                                @if($errors->has('email'))
+                                @if($errors->has($filed))
                                     <label class="control-label">
-                                        <i class="fa fa-times-circle-o"></i>{{$errors->first('email')}}
+                                        <i class="fa fa-times-circle-o"></i>{{$errors->first($filed)}}
                                     </label>
                                 @endif
-                                <input type="text" name="email" class="form-control"
-                                       value="{{ old('email', $model->email)}}">
+                                <input type="text" name="{{ $filed }}" class="form-control"
+                                       value="{{ old($filed, $model->{$filed})}}">
                             </div>
                         </div>
-
-                        <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
-                            <label class="control-label col-md-2">{{ trans('admin.name') }}：</label>
-                            <div class="col-md-8">
-                                @if($errors->has('name'))
-                                    <label class="control-label">
-                                        <i class="fa fa-times-circle-o"></i>{{$errors->first('name')}}
-                                    </label>
-                                @endif
-                                <input type="text" name="name" class="form-control"
-                                       value="{{ old('name', $model->name)}}">
-                            </div>
-                        </div>
+                        @endforeach
 
                         <div class="form-group {{ $errors->has('metas.avatar')?"has-error":"" }}">
                             <label class="control-label col-md-2">{{ trans('admin.avatar') }}：</label>

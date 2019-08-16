@@ -41,6 +41,9 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
+        static::creating(function ($model) {
+            if(!$model->password) $model->password = config('admin.user.default_password');
+        });
         static::deleting(function ($model) {
             if (method_exists($model, 'isForceDeleting') && !$model->isForceDeleting()) {
                 return;
@@ -53,6 +56,10 @@ class User extends Authenticatable
     public function getNameAttribute($value)
     {
         return $value ?: $this->email;
+    }
+
+    public function setPasswordAttribute($value){
+        return bcrypt($value);
     }
 
     public function metas()

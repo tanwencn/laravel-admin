@@ -19,7 +19,7 @@ use Tanwencn\Admin\Consoles\BootPermissionsCommand;
 use Tanwencn\Admin\Consoles\BuildDirCommand;
 use Tanwencn\Admin\Consoles\InstallCommand;
 use Tanwencn\Admin\Foundation\Admin;
-use Tanwencn\Admin\Http\ViewComposers\BootsrapComposer;
+use Tanwencn\Admin\Http\BootstrapComposer;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -58,7 +58,7 @@ class AdminServiceProvider extends ServiceProvider
 
         View::composer(
             ['admin::*'],
-            BootsrapComposer::class
+            BootstrapComposer::class
         );
     }
 

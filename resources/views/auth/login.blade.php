@@ -33,15 +33,15 @@
     <p class="login-box-msg">{{ trans('admin.login') }}</p>
 
     <form action="{{ route('admin.login') }}" method="post">
-      <div class="form-group has-feedback {!! !$errors->has('email') ?: 'has-error' !!}">
+      <div class="form-group has-feedback {!! !$errors->has($username) ?: 'has-error' !!}">
 
-        @if($errors->has('email'))
-          @foreach($errors->get('email') as $message)
+        @if($errors->has($username))
+          @foreach($errors->get($username) as $message)
             <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label></br>
           @endforeach
         @endif
 
-        <input type="input" class="form-control" placeholder="{{ trans('admin.email') }}" name="email" value="{{ old('email') }}">
+        <input type="input" class="form-control" placeholder="{{ trans('admin.'.$username) }}" name="{{ $username }}" value="{{ old($username) }}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">

@@ -46,16 +46,20 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
+                    <table class="table bootstrap-table"></table>
                     <table class="table table-hover table-striped">
-                        <tbody>
-                        <tr class="nowrap">
+                        <thead>
+                        <tr>
                             <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
                             <th>ID</th>
                             <th>{{ trans('admin.name') }}</th>
+                            <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         @foreach($results as $role)
                             <tr>
                                 <td>
@@ -67,6 +71,7 @@
                                     {{ $role->id }}
                                 </td>
                                 <td>{{ $role->name }}</td>
+                                <td>{{ $role->guard_name }}</td>
                                 <td>{{ $role->created_at }}</td>
                                 <td>{{ $role->updated_at }}</td>
                                 <td>

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'guard' => 'Guard',
     'superadmin' => 'Superadmin',
     'edit_profile' => 'Edit Profile',
     'dashboard' => 'Dashboard',

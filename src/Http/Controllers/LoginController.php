@@ -43,7 +43,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('admin::auth.login');
+        return view('admin::auth.login')->with('username', $this->username());
     }
 
     public function logout(Request $request)
@@ -63,5 +63,10 @@ class LoginController extends Controller
     protected function guard()
     {
         return Auth::guard('admin');
+    }
+
+    public function username()
+    {
+        return config('admin.user.username', 'email');
     }
 }
