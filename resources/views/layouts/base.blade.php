@@ -33,7 +33,6 @@
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/jquery-confirm/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/iCheck/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap-switch/css/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@4.4.1/dist/css/bootstrap/tabulator_bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css') }}">
 
 {!! Admin::asset()->css() !!}
@@ -188,8 +187,6 @@
 <!-- elfinder -->
 <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
 <!-- elfinder -->
-
-<script src="https://unpkg.com/tabulator-tables@4.4.1/dist/js/tabulator.min.js"></script>
 
 {{--<script src="{{ asset('vendor/laravel-admin/transliteration-1.6.2/lib/browser/transliteration.min.js') }}"></script>--}}
 {!! Admin::asset()->js() !!}
