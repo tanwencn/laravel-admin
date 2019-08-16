@@ -60,7 +60,7 @@
                                             <i class="fa fa-times-circle-o"></i>{{$errors->first('permissions')}}
                                         </label>
                                     @endif
-                                    <table class="table table-bordered table-striped permissions">
+                                    <table class="table table-bordered permissions">
                                         <thead>
                                         <th width="80"><input type="checkbox" class="grid-select-all checkbox-style"></th>
                                         <th>{{ trans_choice('admin.permissions', 0) }}</th>
