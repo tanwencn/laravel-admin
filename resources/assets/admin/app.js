@@ -11,6 +11,7 @@ var Admin = function () {
             this.boots.push(call);
         },
         onece: function () {
+            var self = this;
             toastr.options = {
                 progressBar: true
             };
@@ -50,7 +51,7 @@ var Admin = function () {
                     }
                 }
 
-                this.delete($(this).data('url'), selected, $(this).data('type'));
+                self.delete($(this).data('url'), selected, $(this).data('type'));
             });
 
         },
@@ -187,7 +188,7 @@ var Admin = function () {
         listSelectedRows: function () {
             var selected = [];
             $('.grid-row-checkbox:checked').each(function () {
-                selected.push($(this).data('id'));
+                selected.push(this.value);
             });
             if (selected.length < 1) {
                 $.alert({

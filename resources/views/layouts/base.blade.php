@@ -42,7 +42,7 @@
 
     <!-- jQuery 3 -->
     <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('/vendor/laravel-admin/admin/app.js') }}"></script>
+    <script src="{{ asset('/vendor/laravel-admin/admin/app.min.js') }}"></script>
     <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

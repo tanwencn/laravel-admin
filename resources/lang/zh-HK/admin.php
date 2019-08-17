@@ -68,8 +68,13 @@ return [
     'add_role' => '添加角色',
     'edit_role' => '編輯角色',
     'delete_role' => '刪除角色',
-    'permissions' => '權限',
     'slug' => '别名',
+
+    'permission' => '權限',
+    'view_permission' => '查看權限',
+    'add_permission' => '添加權限',
+    'edit_permission' => '編輯權限',
+    'delete_permission' => '刪除權限',
 
     'created_at' => '創建時間',
     'updated_at' => '更新時間',

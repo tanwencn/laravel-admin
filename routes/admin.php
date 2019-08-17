@@ -21,6 +21,8 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
 
         $router->resource('roles', 'RoleController')->names('admin.roles');
 
+        $router->resource('permissions', 'PermissionController')->names('admin.permissions');
+
         $router->get('options/general', 'OptionController@general')->name('admin.options.general');
 
         $router->post('options/save', 'OptionController@save');

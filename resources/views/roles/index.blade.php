@@ -64,7 +64,7 @@
                             <tr>
                                 <td>
                                     @if($role->name != 'superadmin')
-                                        <input type="checkbox" class="grid-row-checkbox checkbox-style" data-id="{{ $role->id }}">
+                                        <input type="checkbox" class="grid-row-checkbox checkbox-style" value="{{ $role->id }}">
                                     @endif
                                 </td>
                                 <td>

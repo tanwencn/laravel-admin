@@ -71,6 +71,12 @@ return [
     'permissions' => '許可權',
     'slug' => '别名',
 
+    'permission' => '許可權',
+    'view_permission' => '查看許可權',
+    'add_permission' => '添加許可權',
+    'edit_permission' => '編輯許可權',
+    'delete_permission' => '刪除許可權',
+
     'created_at' => '創建時間',
     'updated_at' => '更新時間',
 

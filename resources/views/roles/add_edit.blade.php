@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('permissions')?"has-error":"" }}">
-                                <label class="control-label col-md-2">{{ trans_choice('admin.permissions', 1) }}
+                                <label class="control-label col-md-2">{{ trans_choice('admin.permission', 1) }}
                                     ：</label>
                                 <div class="col-md-8">
                                     @if($errors->has('permissions'))
@@ -63,7 +63,7 @@
                                     <table class="table table-condensed table-bordered permissions">
                                         <thead>
                                         <th width="80"><input type="checkbox" class="grid-select-all checkbox-style"></th>
-                                        <th>{{ trans_choice('admin.permissions', 0) }}</th>
+                                        <th>{{ trans_choice('admin.permission', 0) }}</th>
                                         <th>{{ trans('admin.guard') }}</th>
                                         </thead>
                                         <tbody>

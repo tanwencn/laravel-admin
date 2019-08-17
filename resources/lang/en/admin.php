@@ -6,7 +6,6 @@ return [
     'edit_profile' => 'Edit Profile',
     'dashboard' => 'Dashboard',
     'control_panel' => 'Control Panel',
-    'all_abilities' => 'all permissions',
     'login' => 'Login',
     'logout' => 'Logout',
     'name' => 'Name',
@@ -68,7 +67,12 @@ return [
     'add_role' => 'Add Role',
     'edit_role' => 'Edit Role',
     'delete_role' => 'Delete the role',
-    'permissions' => 'Permissions',
+
+    'permission' => 'Permission|Permissions',
+    'view_permission' => 'View Permission',
+    'add_permission' => 'Add Permission',
+    'edit_permission' => 'Edit Permission',
+    'delete_permission' => 'Delete the Permission',
     'slug' => 'Slug',
 
     'created_at' => 'Created at',

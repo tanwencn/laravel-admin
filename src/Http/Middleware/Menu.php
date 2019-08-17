@@ -26,11 +26,13 @@ class Menu
     {
         Admin::menu()->new('<i class="fa fa-dashboard"></i> <span>'.trans_choice('admin.dashboard', 0).'</span>')->uri('/')->auth('dashboard');
 
-        Admin::menu()->new('<i class="fa fa-lock"></i> <span>'.trans_choice('admin.role', 0).'</span>')->uri('roles')->auth('view_role');
+        Admin::menu()->new('<i class="fa fa-users"></i> <span>'.trans_choice('admin.role', 0).'</span>')->uri('roles')->auth('view_role');
+
+        Admin::menu()->new('<i class="fa fa-lock"></i> <span>'.trans_choice('admin.permission', 0).'</span>')->uri('permissions')->auth('view_permission');
 
         Admin::menu()->new('<i class="fa fa-user"></i> <span>'.trans_choice('admin.user', 0).'</span>')->uri('users')->auth('view_user');
 
-        Admin::menu()->new('<i class="fa fa-cog"></i> <span>'.trans_choice('admin.setting', 0).'</span>')->uri('options/general')->auth('general_settings');
+        Admin::menu()->new('<i class="fa fa-cog"></i> <span>'.trans_choice('admin.setting', 0).'</span>')->uri('options/general')->sort(98)->auth('general_settings');
 
         Admin::menu()->new('<i class="fa fa-outdent"></i> <span>'.trans_choice('admin.operationlog', 0).'</span>')->sort(99)->route('admin.operationlog')->auth('operationlog');
 

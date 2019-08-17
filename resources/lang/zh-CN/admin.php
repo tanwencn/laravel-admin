@@ -6,7 +6,6 @@ return [
     'edit_profile' => '修改个人信息',
     'dashboard' => '仪表盘',
     'control_panel' => '控制面板',
-    'all_abilities' => '所有权限',
     'login' => '登录',
     'logout' => '登出',
     'email' => '邮箱',
@@ -68,7 +67,6 @@ return [
     'add_role' => '添加角色',
     'edit_role' => '编辑角色',
     'delete_role' => '删除角色',
-    'permissions' => '权限',
     'slug' => '标识',
 
     'created_at' => '创建时间',
@@ -138,6 +136,11 @@ return [
     'no_items' => '没有项目。',
     'please_select_data' => '请选择数据!',
 
+    'permission' => '权限',
+    'view_permission' => '查看权限',
+    'add_permission' => '添加权限',
+    'edit_permission' => '修改权限',
+    'delete_permission' => '删除权限',
 
     'user' => '用户',
     'view_user' => '查看用户',
