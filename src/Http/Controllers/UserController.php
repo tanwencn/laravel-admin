@@ -43,8 +43,7 @@ class UserController extends Controller
         }
 
         $results = $model->paginate();
-        if($request->ajax())
-            return $results;
+
         return $this->view('index', compact('results'));
     }
 
