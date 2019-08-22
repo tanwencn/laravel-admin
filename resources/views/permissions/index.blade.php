@@ -63,7 +63,7 @@
                                 <td>
                                     <input type="checkbox" class="grid-row-checkbox checkbox-style" value="{{ $permission->id }}">
                                 </td>
-                                <td>{{ $permission->name }}</td>
+                                <td>{{ str_after(trans('admin.'.$permission->name), 'admin.') }}</td>
                                 <td>{{ $permission->guard_name }}</td>
                                 <td>{{ $permission->updated_at }}</td>
                                 <td>

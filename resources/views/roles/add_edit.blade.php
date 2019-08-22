@@ -101,7 +101,7 @@
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
                 $('.data-list').html($('template.' + name).html());
-                $('.data-list>table').scrollTableBody(  );
+                $('.data-list>table').scrollTableBody();
                 $('.checkbox-style').iCheck({
                     checkboxClass: 'icheckbox_flat-red',
                     increaseArea: '10%' // optional

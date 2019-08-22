@@ -48,6 +48,8 @@ class Asset
 
     public function add($path, $position = null, $type = null)
     {
+        if (empty($path)) return $this;
+
         if (!$position)
             $position = $this->position;
 
@@ -63,14 +65,12 @@ class Asset
         return $this;
     }
 
-    public function addBag($path)
+    public function addBag($path, $position = null, $type = null)
     {
-        $cssPath = str_ireplace('{type}', 'css', $path);
-        $jsPath = str_ireplace('{type}', 'js', $path);
-        return $this->add($cssPath . '.css')->add($jsPath . '.js');
+        return $this->add(str_ireplace('{type}', 'css', $path) . '.css', $position, $type)->add(str_ireplace('{type}', 'js', $path) . '.js', $position, $type);
     }
 
-    private function parserPath($path)
+    protected function parserPath($path)
     {
         if (starts_with($path, ['http:', 'https:', '//'])) {
             return $path;
@@ -79,16 +79,42 @@ class Asset
         return asset($path);
     }
 
-    private function parserAsset($itmes)
+    protected function parserAsset($itmes)
     {
         if (empty($itmes)) return null;
 
         return collect($itmes)->sortBy('position')->map(function ($item) {
-            if (ends_with($item['url'], '.css')) {
-                return '<link rel="stylesheet" href="' . $item['url'] . '">';
-            } else {
-                return '<script src="' . $item['url'] . '"></script>';
-            }
+            if (ends_with($item['url'], '.css'))
+                return '<link rel="stylesheet" href="' . $item['url'] . '">' . "\n";
+            else
+                return '<script src="' . $item['url'] . '"></script>' . "\n";
+
         })->implode('');
+    }
+
+    public function jsdelivrCombile(...$paths)
+    {
+        $css = [];
+        $js = [];
+        foreach ($paths as $path) {
+            if (ends_with($path, '.css'))
+                $css[] = $path;
+            else
+                $js[] = $path;
+        }
+
+        return $this->add('combine/'.implode(',', $css))->add('combine/'.implode(',', $js));
+    }
+
+    public function jsdelivr($path, $position = null, $type = null)
+    {
+        if ($path == 'combine/') return $this;
+
+        return $this->add('https://cdn.jsdelivr.net/' . $path, $position, $type);
+    }
+
+    public function jsdelivrBag($path, $position = null, $type = null)
+    {
+        return $this->jsdelivr(str_ireplace('{type}', 'css', $path) . '.css', $position, $type)->jsdelivr(str_ireplace('{type}', 'js', $path) . '.js', $position, $type);
     }
 }
