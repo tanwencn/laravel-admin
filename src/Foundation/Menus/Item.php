@@ -48,6 +48,9 @@ class Item
 
     public function child($title, \Closure $closure = null)
     {
+        if(!str_contains($title, '<i'))
+            $title = '<i class="fa fa-circle-o"></i><span>'.$title.'</span>';
+
         $item = new static($title);
         if (!is_null($closure))
             $closure($item);

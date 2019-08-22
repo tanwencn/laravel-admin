@@ -46,7 +46,8 @@ return [
         'web',
         \Tanwencn\Admin\Http\Middleware\Authenticate::class,
         \Tanwencn\Admin\Http\Middleware\Menu::class,
-        \Tanwencn\Admin\Http\Middleware\FilterIfPjax::class,
+        \Tanwencn\Admin\Http\Middleware\Asset::class,
+        \Tanwencn\Admin\Http\Middleware\Pjax::class,
         \Tanwencn\Admin\Http\Middleware\HttpLog::class
     ],
 

@@ -29,7 +29,7 @@ var Admin = function () {
             NProgress.done();
 
 
-            $('body').on('change', '.grid-row-checkbox:not(.checkbox-style)', function () {
+            $('#pjax-container').on('change', '.grid-row-checkbox:not(.checkbox-style)', function () {
                 if (this.checked) {
                     $(this).closest('tr').css('background-color', '#ffffd5');
                 } else {
@@ -37,12 +37,12 @@ var Admin = function () {
                 }
             });
 
-            $('body').on('change', '.grid-select-all:not(.checkbox-style)', function () {
+            $('#pjax-container').on('change', '.grid-select-all:not(.checkbox-style)', function () {
                 $('.grid-row-checkbox').prop('checked',this.checked).trigger('change');
             });
 
 
-            $('body').on('click', '.grid-batch-delete,.grid-row-delete', function () {
+            $('#pjax-container').on('click', '.grid-batch-delete,.grid-row-delete', function () {
                 var selected = [];
                 if ($(this).hasClass('grid-batch-delete')) {
                     selected = Admin.listSelectedRows();
@@ -61,7 +61,9 @@ var Admin = function () {
                 AdminOnece = false;
             }
 
-            $('.select2').select2();
+            $('#pjax-container .box').boxWidget();
+            $('#pjax-container table.table-scroll').scrollTableBody();
+            $('#pjax-container .select2').select2();
 
             toastr.clear();
             if (this.info.toastr_success != '') {
@@ -72,10 +74,8 @@ var Admin = function () {
                 toastr.error(e, Admin.info.failed);
             });
             Admin.errors = [];
-
-            $('.box').boxWidget();
             /** list **/
-            $('input.checkbox-style').iCheck({
+            $('#pjax-container input.checkbox-style').iCheck({
                 checkboxClass: 'icheckbox_flat-blue',
                 increaseArea: '10%' // optional
             });
@@ -89,7 +89,7 @@ var Admin = function () {
             this.boots = [];
         },
         icheckEvent:function(){
-            $('.grid-row-checkbox.checkbox-style').on('ifChanged', function () {
+            $('#pjax-container .grid-row-checkbox.checkbox-style').on('ifChanged', function () {
                 if (this.checked) {
                     $(this).closest('tr').css('background-color', '#ffffd5');
                 } else {
@@ -97,15 +97,15 @@ var Admin = function () {
                 }
             });
 
-            $('.grid-select-all.checkbox-style').on('ifChanged', function () {
+            $('#pjax-container .grid-select-all.checkbox-style').on('ifChanged', function () {
                 if (this.checked) {
-                    $('.grid-row-checkbox.checkbox-style').iCheck('check');
+                    $('#pjax-container .grid-row-checkbox.checkbox-style').iCheck('check');
                 } else {
-                    $('.grid-row-checkbox.checkbox-style').iCheck('uncheck');
+                    $('#pjax-container .grid-row-checkbox.checkbox-style').iCheck('uncheck');
                 }
             });
 
-            $('.grid-row-checkbox.checkbox-style:checked').closest('tr').css('background-color', '#ffffd5');
+            $('#pjax-container .grid-row-checkbox.checkbox-style:checked').closest('tr').css('background-color', '#ffffd5');
         },
         query: function (q) {
             var parms = [];
@@ -125,12 +125,6 @@ var Admin = function () {
                 } else {
                     parms.push(name + '=' + val);
                 }
-                /*if ((typeof val) == 'object') {
-                    var n = {};
-                    //val = val.join('&'+name+'[]=')
-                    //name = name + '[]';
-                }*/
-
             });
             return parms.join('&');
         },
@@ -187,7 +181,7 @@ var Admin = function () {
 
         listSelectedRows: function () {
             var selected = [];
-            $('.grid-row-checkbox:checked').each(function () {
+            $('#pjax-container .grid-row-checkbox:checked').each(function () {
                 selected.push(this.value);
             });
             if (selected.length < 1) {

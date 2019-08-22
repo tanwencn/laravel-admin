@@ -54,24 +54,18 @@
                             <div class="form-group {{ $errors->has('permissions')?"has-error":"" }}">
                                 <label class="control-label col-md-2">{{ trans_choice('admin.permission', 1) }}
                                     ：</label>
-                                <div class="col-md-8">
-                                    @if($errors->has('permissions'))
-                                        <label class="control-label">
-                                            <i class="fa fa-times-circle-o"></i>{{$errors->first('permissions')}}
-                                        </label>
-                                    @endif
-                                    <table class="table table-condensed table-bordered permissions">
-                                        <thead>
-                                        <th width="80"><input type="checkbox" class="grid-select-all checkbox-style"></th>
-                                        <th>{{ trans_choice('admin.permission', 0) }}</th>
-                                        <th>{{ trans('admin.guard') }}</th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                    @foreach($permissions_group as $guard => $permissions)
-                                        <template class="{{ $guard }}">
-                                            @foreach($permissions as $permission)
+                                <div class="col-md-8 data-list"></div>
+                                @foreach($guards as $guard)
+                                    <template class="{{ $guard }}">
+                                        <table class="table table-condensed table-bordered permissions">
+                                            <thead>
+                                            <th width="80"><input type="checkbox" class="grid-select-all checkbox-style"></th>
+                                            <th>{{ trans_choice('admin.permission', 0) }}</th>
+                                            <th>{{ trans('admin.guard') }}</th>
+                                            </thead>
+                                            <tbody>
+                                            @isset($permissions_group[$guard])
+                                            @foreach($permissions_group[$guard] as $permission)
                                                 <tr>
                                                     <td><input type="checkbox" name="permissions[]"
                                                                {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
@@ -80,9 +74,11 @@
                                                     <td>{{ $permission->guard_name }}</td>
                                                 </tr>
                                             @endforeach
-                                        </template>
-                                    @endforeach
-                                </div>
+                                                @endisset
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -102,16 +98,11 @@
 
     <script>
         Admin.boot(function () {
-
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_flat-red',
-                increaseArea: '10%' // optional
-            });
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
-                $('table.permissions>tbody').html($('template.' + name).html());
-                $('.grid-select-all.checkbox-style').iCheck('uncheck');
-                $('input').iCheck({
+                $('.data-list').html($('template.' + name).html());
+                $('.data-list>table').scrollTableBody(  );
+                $('.checkbox-style').iCheck({
                     checkboxClass: 'icheckbox_flat-red',
                     increaseArea: '10%' // optional
                 });

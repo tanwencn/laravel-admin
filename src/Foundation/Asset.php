@@ -13,22 +13,37 @@ use BadMethodCallException;
 
 class Asset
 {
-    protected $css;
+    protected $head;
 
-    protected $js;
+    protected $footer;
 
     public function __call($name, $arguments)
     {
-        if (in_array($name, ['css', 'js'])) {
+        if (in_array($name, ['head', 'footer'])) {
             if (empty($arguments)) return $this->parserAsset($this->{$name});
-
-            $this->{$name}[] = [
-                'url' => $this->parserPath($arguments[0]),
-                'postion' => isset($arguments[1]) ? $arguments : 100
-            ];
         } else {
             throw new BadMethodCallException("Method {$name} does not exist.");
         }
+    }
+
+    public function add($path, $position = 100, $type = null)
+    {
+        $path = trim($path);
+        if (!$type)
+            $type = ends_with($path, '.css') ? 'head' : 'footer';
+
+        $this->{$type}[] = [
+            'url' => $this->parserPath($path),
+            'position' => $position
+        ];
+        return $this;
+    }
+
+    public function addBag($path)
+    {
+        $cssPath = str_ireplace('{type}', 'css', $path);
+        $jsPath = str_ireplace('{type}', 'js', $path);
+        return $this->add($cssPath . '.css')->add($jsPath . '.js');
     }
 
     private function parserPath($path)

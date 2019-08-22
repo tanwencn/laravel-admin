@@ -1,14 +1,14 @@
 @if(!request()->ajax())
 
     <!-- elfinder -->
-    <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}"/>
+    <link rel="stylesheet" href="http://admin.test/vendor/laravel-admin/jquery-ui/jquery-ui.min.css">
     {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/elfinder.min.css') }}">--}}
     {{--<link rel="stylesheet" type="text/css" href="{{ asset('vendor/laravel-admin/elfinder/css/theme.css') }}">--}}
     <!-- elfinder -->
-    <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
     <!-- elfinder -->
-    <script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-admin/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Studio-42/elFinder@2.1/js/elfinder.min.js"></script>
     <!-- elfinder -->
 @endif
 
@@ -20,7 +20,7 @@
         var opts = {
             //cssAutoLoad : ['/vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css'],
             cssAutoLoad: true,
-            baseUrl:'{{ asset('vendor/laravel-admin/elfinder') }}/',
+            baseUrl:'https://cdn.jsdelivr.net/gh/Studio-42/elFinder@2.1/',
             commandsOptions: {
                 getfile: {
                     multiple: !!parseInt("{{ $multiple }}"),

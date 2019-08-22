@@ -47,8 +47,7 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table bootstrap-table"></table>
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped table-scroll" data-rows-to-display="10">
                         <thead>
                         <tr>
                             <th><input type="checkbox" class="grid-select-all checkbox-style"></th>

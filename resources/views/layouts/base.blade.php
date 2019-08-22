@@ -9,43 +9,9 @@
 
     <link rel="shortcut icon" href="{{ asset('vendor/laravel-admin/logo.png') }}" type="image/x-icon">
 
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap/css/bootstrap.min.css') }}">
+{!! Admin::asset()->head() !!}
 
-    <link rel="stylesheet" href="{{ asset('vendor/laravel-admin/jquery-ui/themes/base/minified/jquery-ui.min.css') }}" />
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/font-awesome/css/font-awesome.min.css') }}">
-
-    <!-- select2 -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/select2/css/select2.min.css') }}">
-
-    <!-- nestable -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/nestable/nestable.css') }}">
-
-    <!-- AdminLTE Theme style -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/admin-lte/css/AdminLTE.min.css') }}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/admin-lte/css/skins/_all-skins.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/toastr/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/nprogress/nprogress.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/jquery-confirm/jquery-confirm.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/iCheck/skins/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap-switch/css/bootstrap-switch.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap3-editable/css/bootstrap-editable.css') }}">
-
-{!! Admin::asset()->css() !!}
-
-<!-- app -->
-    <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/admin/app.min.css') }}">
-
-    <!-- jQuery 3 -->
-    <script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('/vendor/laravel-admin/admin/app.min.js') }}"></script>
-    <script src="{{ asset('vendor/laravel-admin/elfinder/js/elfinder.min.js') }}"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -159,37 +125,8 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('/vendor/laravel-admin/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/nprogress/nprogress.js') }}"></script>
-<!-- Slimscroll -->
-<script src="{{ asset('/vendor/laravel-admin/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<!-- FastClick -->
-<script src="{{ asset('/vendor/laravel-admin/fastclick/fastclick.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('/vendor/laravel-admin/admin-lte/js/adminlte.min.js') }}"></script>
-
-<script src="{{ asset('/vendor/laravel-admin/iCheck/icheck.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/nestable/nestable.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/toastr/toastr.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/jquery-pjax/pjax.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/jquery-confirm/jquery-confirm.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/sortable/Sortable.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/imsky-holder/holder.min.js') }}"></script>
-<script src="{{ asset('/vendor/laravel-admin/select2/js/select2.full.min.js') }}"></script>
-@if(config('app.locale') != 'en')
-    <script src="{{ asset('/vendor/laravel-admin/select2/js/i18n/'. strtolower(config('app.locale')) .'.js') }}"></script>
-@endif
-
-<script src="{{ asset('vendor/laravel-admin/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
-
-<!-- elfinder -->
-<script src="{{ asset('vendor/laravel-admin/jquery-ui/ui/minified/jquery-ui.min.js') }}"></script>
-<!-- elfinder -->
-
 {{--<script src="{{ asset('vendor/laravel-admin/transliteration-1.6.2/lib/browser/transliteration.min.js') }}"></script>--}}
-{!! Admin::asset()->js() !!}
+{!! Admin::asset()->footer() !!}
 
 <script>
     @foreach($errors->all() as $error)
@@ -209,7 +146,7 @@
         csrf_token: '{{ csrf_token() }}'
     };
 
-    Admin.elfinder = ({title:"{{ trans('admin.select_file') }}", url:"{{ route('admin.elfinder.show') }}"});
+    Admin.elfinder = ({title: "{{ trans('admin.select_file') }}", url: "{{ route('admin.elfinder.show') }}"});
     Admin.init();
 </script>
 </body>
