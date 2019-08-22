@@ -42,7 +42,7 @@ class User extends Authenticatable
     {
         parent::boot();
         static::creating(function ($model) {
-            if(!$model->password) $model->password = config('admin.user.default_password');
+            if(!$model->password) $model->password = config('admin.user.default_password', '123456');
         });
         static::deleting(function ($model) {
             if (method_exists($model, 'isForceDeleting') && !$model->isForceDeleting()) {

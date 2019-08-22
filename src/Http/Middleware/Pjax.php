@@ -26,8 +26,8 @@ class Pjax
 
     public function __construct()
     {
-        Admin::asset()->add('https://cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js');
-        Admin::asset()->add('/vendor/laravel-admin/admin/pjax.min.js', 9999);
+        Admin::asset()->after('https://cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js');
+        Admin::asset()->after('/vendor/laravel-admin/admin/pjax.min.js');
     }
 
     /**

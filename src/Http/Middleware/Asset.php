@@ -25,8 +25,8 @@ class Asset
     public function handle($request, Closure $next)
     {
         Admin::asset()
-            ->add('/vendor/laravel-admin/admin/app.min.css', 999, 'head')
-            ->add('/vendor/laravel-admin/admin/app.min.js', 999, 'head')
+            ->before('/vendor/laravel-admin/admin/app.min.css')
+            ->before('/vendor/laravel-admin/admin/app.min.js')
             ->add('/vendor/laravel-admin/jquery-scrollTable/jquery-scrollTable.min.js')
             ->add('https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css', 990)
             ->add('https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/js/adminlte.min.js', 990)

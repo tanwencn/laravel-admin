@@ -9,25 +9,48 @@
 
 namespace Tanwencn\Admin\Foundation;
 
-use BadMethodCallException;
-
 class Asset
 {
+    protected $before;
+
     protected $head;
 
     protected $footer;
 
-    public function __call($name, $arguments)
+    protected $after;
+
+    protected $position;
+
+    public function __construct()
     {
-        if (in_array($name, ['head', 'footer'])) {
-            if (empty($arguments)) return $this->parserAsset($this->{$name});
-        } else {
-            throw new BadMethodCallException("Method {$name} does not exist.");
-        }
+        $this->position = 0;
     }
 
-    public function add($path, $position = 100, $type = null)
+    public function head()
     {
+        return $this->parserAsset($this->head) . $this->parserAsset($this->before);
+    }
+
+    public function footer()
+    {
+        return $this->parserAsset($this->footer) . $this->parserAsset($this->after);
+    }
+
+    public function before($path, $position = null)
+    {
+        return $this->add($path, $position, 'before');
+    }
+
+    public function after($path, $position = null)
+    {
+        return $this->add($path, $position, 'after');
+    }
+
+    public function add($path, $position = null, $type = null)
+    {
+        if (!$position)
+            $position = $this->position;
+
         $path = trim($path);
         if (!$type)
             $type = ends_with($path, '.css') ? 'head' : 'footer';
@@ -36,6 +59,7 @@ class Asset
             'url' => $this->parserPath($path),
             'position' => $position
         ];
+        $this->position += 10;
         return $this;
     }
 
