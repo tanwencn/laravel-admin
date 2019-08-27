@@ -22,7 +22,9 @@ class LogViewController extends Controller
         $tree = [];
         $log_path = storage_path('logs');
         $files = iterator_to_array(
-            Finder::create()->files()->ignoreDotFiles(true)->in($log_path)->reverseSorting()->sortByModifiedTime(),
+            Finder::create()->files()->ignoreDotFiles(true)->in($log_path)->sort(function ($a, $b) {
+                return -($a->getMTime() - $b->getMTime());
+            }),
             false
         );
 
