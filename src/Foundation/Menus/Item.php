@@ -61,5 +61,6 @@ class Item
     public function auth($authority)
     {
         $this->authority = $authority;
+        return $this;
     }
 }

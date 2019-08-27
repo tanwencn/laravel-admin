@@ -103,7 +103,7 @@ class Asset
                 $js[] = $path;
         }
 
-        return $this->add('combine/'.implode(',', $css))->add('combine/'.implode(',', $js));
+        return $this->jsdelivr('combine/'.implode(',', $css))->jsdelivr('combine/'.implode(',', $js));
     }
 
     public function jsdelivr($path, $position = null, $type = null)

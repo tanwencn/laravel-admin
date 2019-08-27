@@ -26,6 +26,8 @@ class Menu
     {
         Admin::menu()->new('<i class="fa fa-dashboard"></i> <span>'.trans_choice('admin.dashboard', 0).'</span>')->uri('/')->auth('dashboard');
 
+        Admin::menu()->new('<i class="fa fa-server"></i> <span>Laravel Logs</span>')->uri('logs')->auth('laravel_logs')->sort(100);
+
         Admin::menu()->new('<i class="fa fa-users"></i> <span>'.trans_choice('admin.role', 0).'</span>')->uri('roles')->auth('view_role');
 
         Admin::menu()->new('<i class="fa fa-lock"></i> <span>'.trans_choice('admin.permission', 0).'</span>')->uri('permissions')->auth('view_permission');

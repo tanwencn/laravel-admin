@@ -33,6 +33,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $model = User::with('roles');
+        if (!Auth::user()->hasRole('superadmin'))
+            $model->whereHas('roles', function ($query) {
+                $query->where('name', '!=', 'superadmin');
+            });
 
         $search = $request->query('search');
         if (!empty($search)) {
@@ -55,7 +59,11 @@ class UserController extends Controller
     protected function _form(User $model)
     {
         $model->load('metas');
-        $roles = Role::where('guard_name', 'admin')->get()->pluck('name', 'name');
+        $role = Role::where('guard_name', 'admin');
+        if (!Auth::user()->hasRole('superadmin'))
+            $role->where('name', '!=', 'superadmin');
+
+        $roles = $role->get()->pluck('name', 'name');
 
         return $this->view('add_edit', compact('model', 'roles'));
     }
@@ -107,8 +115,10 @@ class UserController extends Controller
 
         RelationHelper::boot($model)->save(array_filter($input), function ($model) use ($roles) {
             if (!empty($roles)) {
-                if (Auth::user()->hasRole('superadmin'))
-                    $model->syncRoles($roles);
+                if (!Auth::user()->hasRole('superadmin'))
+                    $roles = array_diff($roles, ['superadmin']);
+
+                $model->syncRoles($roles);
             }
         });
 
@@ -142,6 +152,4 @@ class UserController extends Controller
             'destroy' => 'delete_user'
         ];
     }
-
-
 }

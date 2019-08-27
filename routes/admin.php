@@ -13,6 +13,8 @@ Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) 
 
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
+        $router->get('/logs', 'LogViewController@index')->name('admin.logs');
+
         $router->get('/', 'DashboardController@index')->name('admin.dashboard');
 
         $router->get('/operationlog', 'OperationLogController@index')->name('admin.operationlog');
