@@ -65,6 +65,7 @@
     </div>
     <script>
         Admin.boot(function () {
+            $('.nav li.active').parents('ul.collapse').addClass('in');
             $('.view').click(function () {
                 var target = $(this).data('target');
                 $.dialog({
