@@ -8,13 +8,13 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/font-awesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@4/css/font-awesome.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/admin-lte/css/AdminLTE.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('/vendor/laravel-admin/iCheck/skins/square/blue.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck@1.0/skins/all.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,19 +78,19 @@
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
-<script src="{{ asset('/vendor/laravel-admin/jquery/jquery.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="{{ asset('/vendor/laravel-admin/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
-<script src="{{ asset('/vendor/laravel-admin/iCheck/icheck.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/icheck@1.0/icheck.min.js"></script>
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
     });
-  });
 </script>
 </body>
 </html>
