@@ -1,6 +1,6 @@
 @extends('admin::layouts.app')
 
-@section('active_title', trans_choice('admin.operationlog', 1), false)
+@section('title', trans_choice('admin.operationlog', 1))
 
 @section('content')
     <!-- begin row -->
@@ -8,36 +8,31 @@
         <!-- begin col-12 -->
         <div class="col-md-12">
             <div class="box box-default">
-                <!-- /.box-header -->
-                <div class="box-header">
-                    <h3 class="box-title">日志列表</h3>
-                </div>
-
-                <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped">
-                        <tbody>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover table-striped table-scroll" data-table-height="490">
+                        <thead>
                         <tr class="nowrap">
-                            <th>ID</th>
                             <th>{{ trans('admin.user') }}</th>
                             <th>{{ trans('admin.method') }}</th>
                             <th>{{ trans('admin.uri') }}</th>
                             <th>{{ trans('admin.content') }}</th>
+                            <th>{{ trans('admin.format') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         @foreach($results as $log)
                             <tr>
-                                <td>
-                                    {{ $log->id }}
-                                </td>
                                 <td>{{ $log->user->name }}</td>
                                 <td><span class="label bg-green">{{ $log->method }}</span></td>
                                 <td><code>{{ $log->uri }}</code></td>
+                                <td><pre>{{ $log->body }}</pre></td>
                                 <td>
-                                    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal-default{{ $log->id }}">
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default{{ $log->id }}">
                                         {{ trans('admin.click_view') }}
                                     </button>
                                 </td>
-                                <td>{{ $log->created_at }}</td>
+                                <td style="white-space:nowrap">{{ $log->created_at }}</td>
                             </tr>
                             <div class="modal fade" id="modal-default{{ $log->id }}">
                                 <div class="modal-dialog">
@@ -79,7 +74,7 @@
     </div>
     <script>
         Admin.boot(function(){
-            $('.modal .modal-body pre').each(function($key, $val){
+            $('.modal-body pre').each(function($key, $val){
                 $(this).html(JSON.stringify(JSON.parse($($val).html()), null, 2));
             });
         });

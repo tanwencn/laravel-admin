@@ -189,6 +189,7 @@ return [
     'method' => 'Method',
     'uri' => 'URI',
     'click_view' => 'Click View',
+    'format' => 'Format',
 
     'theme' => 'Theme'
 ];

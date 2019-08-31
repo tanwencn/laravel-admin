@@ -190,6 +190,7 @@ return [
     'method' => '方法',
     'uri' => 'URI',
     'click_view' => '點擊查看',
+    'format' => '格式化',
 
     'theme' => '主題'
 ];

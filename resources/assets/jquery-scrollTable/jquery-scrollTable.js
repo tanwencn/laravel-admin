@@ -6,8 +6,7 @@
     var scrollBarWidth = 15, fixedTableWidth;
 
     $.fn.scrollTableBody = function(options) {
-        defaults = $.extend(defaults, this.data());
-        options = $.extend(defaults, options);
+        options = $.extend({}, defaults, options, this.data());
 
         var table = this;
 

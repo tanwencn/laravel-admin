@@ -40,6 +40,7 @@
                         <th>Context</th>
                         <th>Date</th>
                         <th>Content</th>
+                        <th>More</th>
                         </thead>
                         <tbody>
                         @foreach($data as $key => $val)
@@ -47,13 +48,29 @@
                                 <td style="white-space: nowrap;">{{ $val[3] }}</td>
                                 <td style="white-space: nowrap;">{{ $val[2] }}</td>
                                 <td style="white-space: nowrap;">{{ $val[1] }}</td>
-                                <td><a class="btn btn-xs btn-default view" data-target="#grid-collapse-{{ $key }}"> View
-                                    </a>
+                                <td>
+                                    <code style="word-break:break-word">
+                                        {{ trim($val[4]) }}
+                                    </code>
                                 </td>
+                                <td><button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#modal-default{{ $key }}"> View </button></td>
                             </tr>
-                            <template id="grid-collapse-{{ $key }}">
-                                <div style="white-space: pre-wrap;background: #333;color: #fff; padding: 10px;">{{ $val[4].$val[5] }}</div>
-                            </template>
+                            <div class="modal fade" id="modal-default{{ $key }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Content</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <pre>{{ $val[4].$val[5] }}</pre>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
                         @endforeach
                         </tbody>
                     </table>
@@ -66,15 +83,6 @@
     <script>
         Admin.boot(function () {
             $('.nav li.active').parents('ul.collapse').addClass('in');
-            $('.view').click(function () {
-                var target = $(this).data('target');
-                $.dialog({
-                    boxWidth: '80%',
-                    useBootstrap: false,
-                    title: 'View Info!',
-                    content: $(target).html(),
-                });
-            });
         });
     </script>
 @endsection
