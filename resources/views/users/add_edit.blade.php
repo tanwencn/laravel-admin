@@ -2,7 +2,8 @@
 
 @section('title', trans_choice('admin.'.($model->id?'edit_user':'add_user'), 1))
 
-@section('breadcrumbs') <li><a href="{{ Admin::action('index') }}"> {{ trans_choice('admin.user', 1) }}</a></li> @endsection
+@section('breadcrumbs')
+    <li><a href="{{ Admin::action('index') }}"> {{ trans_choice('admin.user', 1) }}</a></li> @endsection
 
 @section('content')
     <form action="{{ Admin::action('form', $model) }}"
@@ -22,7 +23,7 @@
                         <div class="form-horizontal">
                             @foreach($user_name_fileds as $filed)
                                 <div class="form-group {{ $errors->has($filed)?"has-error":"" }}">
-                                    <label class="control-label col-md-2">{{ trans('admin.'.$filed) }}：</label>
+                                    <label class="control-label col-md-2 asterisk">{{ trans('admin.'.$filed) }}：</label>
                                     <div class="col-md-8">
                                         @if($errors->has($filed))
                                             <label class="control-label">
@@ -43,34 +44,40 @@
                                             <i class="fa fa-times-circle-o"></i>{{$errors->first('metas.avatar')}}
                                         </label>
                                     @endif
-                                    <input id="avatar" readonly style="width:300px; float: left" name="metas[avatar]" type="text"
+                                    <input id="avatar" readonly style="width:300px; float: left" name="metas[avatar]"
+                                           type="text"
                                            class="form-control"
                                            value="{{ old('metas.avatar', $model->getMetas('avatar')) }}">
                                     <button type="button" style="width: 100px; float: left;"
-                                            class="btn btn-default select-image"><i class="glyphicon glyphicon-folder-open"></i> {{ trans('admin.select_image') }}</button>
+                                            class="btn btn-default select-image"><i
+                                                class="glyphicon glyphicon-folder-open"></i> {{ trans('admin.select_image') }}
+                                    </button>
                                 </div>
                             </div>
-                            <div class="form-group {{ $errors->has('role')?"has-error":"" }}">
-                                <label class="control-label col-md-2">{{ trans_choice('admin.role', 1) }}：</label>
-                                <div class="col-md-8">
-                                    @if($errors->has('role'))
-                                        <label class="control-label">
-                                            <i class="fa fa-times-circle-o"></i>{{$errors->first('role')}}
-                                        </label>
-                                    @endif
-                                    <select name="role[]" class="select2 form-control" multiple="multiple">
-                                        @foreach($roles as $name => $title)
-                                            <option {{ in_array($name, old('role', $model->roles->pluck('name')->all()))?'selected':'' }} value="{{ $name }}">{{ $title }}</option>
-                                        @endforeach
-                                    </select>
+                            @can('edit_role')
+                                <div class="form-group {{ $errors->has('role')?"has-error":"" }}">
+                                    <label class="control-label col-md-2 asterisk">{{ trans_choice('admin.role', 1) }}：</label>
+                                    <div class="col-md-8">
+                                        @if($errors->has('role'))
+                                            <label class="control-label asterisk">
+                                                <i class="fa fa-times-circle-o"></i>{{$errors->first('role')}}
+                                            </label>
+                                        @endif
+                                        <select name="role[]" class="select2 form-control" multiple="multiple">
+                                            @foreach($roles as $name => $title)
+                                                <option {{ in_array($name, old('role', $model->roles->pluck('name')->all()))?'selected':'' }} value="{{ $name }}">{{ $title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            @endcan
                             @if($model->id)
                                 <div class="form-group">
                                     <label for="password" class="col-sm-2 control-label"></label>
 
                                     <div class="col-sm-8">
-                                        <div class="callout callout-warning" style="margin:20px 0 0 0">{{ trans('admin.chang_password_tip') }}</div>
+                                        <div class="callout callout-warning"
+                                             style="margin:20px 0 0 0">{{ trans('admin.chang_password_tip') }}</div>
                                     </div>
                                 </div>
                             @endif
@@ -115,7 +122,7 @@
     <!-- end #content -->
 
     <script>
-        Admin.boot(function(){
+        Admin.boot(function () {
             Finder.disk().click('.select-image', '#avatar');
         });
     </script>

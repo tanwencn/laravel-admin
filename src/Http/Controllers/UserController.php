@@ -115,8 +115,10 @@ class UserController extends Controller
 
         RelationHelper::boot($model)->save(array_filter($input), function ($model) use ($roles) {
             if (!empty($roles)) {
-                if (!Auth::user()->hasRole('superadmin'))
-                    $roles = array_diff($roles, ['superadmin']);
+                if(Auth::user()->can('edit_role')){
+                    if (!Auth::user()->hasRole('superadmin'))
+                        $roles = array_diff($roles, ['superadmin']);
+                }
 
                 $model->syncRoles($roles);
             }

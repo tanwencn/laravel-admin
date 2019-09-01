@@ -51,7 +51,6 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
-                            <th>ID</th>
                             @foreach($user_name_fileds as $filed)
                                 <th>{{ trans('admin.'.$filed) }}</th>
                             @endforeach
@@ -69,9 +68,6 @@
                                         <input type="checkbox" class="grid-row-checkbox checkbox-style"
                                                value="{{ $user->id }}">
                                     @endif
-                                </td>
-                                <td>
-                                    {{ $user->id }}
                                 </td>
                                 @foreach($user_name_fileds as $filed)
                                     <td>{{ $user->$filed }}</td>

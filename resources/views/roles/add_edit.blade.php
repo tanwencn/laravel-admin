@@ -22,7 +22,7 @@
                     <div class="box-body">
                         <div class="form-horizontal">
                             <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
-                                <label class="control-label col-md-2">{{ trans('admin.name') }}：</label>
+                                <label class="control-label col-md-2 asterisk">{{ trans('admin.name') }}：</label>
                                 <div class="col-md-8">
                                     @if($errors->has('name'))
                                         <label class="control-label">
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('guard')?"has-error":"" }}">
-                                <label class="control-label col-md-2">{{ trans('admin.guard') }}：</label>
+                                <label class="control-label col-md-2 asterisk">{{ trans('admin.guard') }}：</label>
                                 <div class="col-md-8">
                                     @if($errors->has('guard'))
                                         <label class="control-label">

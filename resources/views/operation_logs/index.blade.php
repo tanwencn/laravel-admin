@@ -28,28 +28,17 @@
                                 <td><code>{{ $log->uri }}</code></td>
                                 <td><pre>{{ $log->body }}</pre></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-default{{ $log->id }}">
+                                    <button type="button" class="btn btn-primary btn-xs model-collapse" data-target="#collapse{{ $log->id }}">
                                         {{ trans('admin.click_view') }}
                                     </button>
                                 </td>
                                 <td style="white-space:nowrap">{{ $log->created_at }}</td>
                             </tr>
-                            <div class="modal fade" id="modal-default{{ $log->id }}">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">{{ trans('admin.content') }}</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <pre>{{ $log->body }}</pre>
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
+                            <tr class="collapse" id="collapse{{$log->id}}">
+                                <td colspan="6">
+                                    <pre>{{ $log->body }}</pre>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -74,8 +63,12 @@
     </div>
     <script>
         Admin.boot(function(){
-            $('.modal-body pre').each(function($key, $val){
+            $('.collapse pre').each(function($key, $val){
                 $(this).html(JSON.stringify(JSON.parse($($val).html()), null, 2));
+            });
+            $('.model-collapse').click(function () {
+                var target = $(this).data('target');
+                $(target).toggle();
             });
         });
     </script>

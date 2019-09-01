@@ -50,7 +50,6 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
-                            <th>ID</th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
@@ -65,9 +64,6 @@
                                     @if($role->name != 'superadmin')
                                         <input type="checkbox" class="grid-row-checkbox checkbox-style" value="{{ $role->id }}">
                                     @endif
-                                </td>
-                                <td>
-                                    {{ $role->id }}
                                 </td>
                                 <td>{{ $role->name }}</td>
                                 <td>{{ $role->guard_name }}</td>
