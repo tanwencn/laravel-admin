@@ -42,7 +42,7 @@
 
                     <div class="box-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="search" class="form-control pull-right" value=""
+                            <input type="search" name="search" class="form-control pull-right" value=""
                                    placeholder="Search...">
 
                             <div class="input-group-btn">
@@ -53,13 +53,15 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover table-striped table-scroll" data-table-height="508">
+                    <table class="table table-hover table-striped no-data" data-scroll-y="490">
                         <thead>
-                        <th>Level</th>
-                        <th>Context</th>
-                        <th>Date</th>
-                        <th>Content</th>
-                        <th>More</th>
+                        <tr>
+                            <th>Level</th>
+                            <th>Context</th>
+                            <th>Date</th>
+                            <th>Content</th>
+                            <th>More</th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($data as $key => $val)
@@ -107,26 +109,18 @@
     </div>
     <script>
         Admin.boot(function () {
+            var table = $('.table').DataTable({
+                searching:true,
+                dom: 'Brtip',
+                buttons: [
+                    'print'
+                ]
+            });
 
             $('.nav li.active').parents('ul.collapse').addClass('in');
             $('.btn-search').click(function () {
                 NProgress.start();
-                //var key = $('input[name="search"]').val();
-                // 声明变量
-                var filter, tr;
-                filter = $('input[name="search"]').val().toUpperCase();
-                tr = $('.table').find('tr');
-
-                // 循环表格每一行，查找匹配项
-                tr.each(function (i, tr) {
-                    tr = $(tr);
-                    tr.show();
-                    var inner = tr.text();
-
-                    if (inner.toUpperCase().indexOf(filter) < 0) {
-                        tr.hide();
-                    }
-                });
+                table.search($('input[name="search"]').val()).draw();
                 NProgress.done();
             });
         });

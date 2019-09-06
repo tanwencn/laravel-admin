@@ -47,10 +47,10 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped table-scroll">
+                    <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
+                            <th class="table-select"></th>
                             @foreach($user_name_fileds as $filed)
                                 <th>{{ trans('admin.'.$filed) }}</th>
                             @endforeach
@@ -63,10 +63,9 @@
                         <tbody>
                         @foreach($results as $user)
                             <tr>
-                                <td>
+                                <td class="table-select">
                                     @if($user->id > 1)
-                                        <input type="checkbox" class="grid-row-checkbox checkbox-style"
-                                               value="{{ $user->id }}">
+                                        {{ $user->id }}
                                     @endif
                                 </td>
                                 @foreach($user_name_fileds as $filed)

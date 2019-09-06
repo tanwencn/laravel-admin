@@ -47,10 +47,10 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped" data-rows-to-display="10">
+                    <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
+                            <th class="table-select"></th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
@@ -60,9 +60,7 @@
                         <tbody>
                         @foreach($results as $permission)
                             <tr>
-                                <td>
-                                    <input type="checkbox" class="grid-row-checkbox checkbox-style" value="{{ $permission->id }}">
-                                </td>
+                                <td class="table-select">{{ $permission->id }}</td>
                                 <td>{{ str_after(trans('admin.'.$permission->name), 'admin.') }}</td>
                                 <td>{{ $permission->guard_name }}</td>
                                 <td>{{ $permission->updated_at }}</td>
@@ -100,9 +98,4 @@
         </div>
         <!-- end panel -->
     </div>
-    <script>
-        Admin.boot(function () {
-            $('.table').DataTable();
-        });
-    </script>
 @endsection

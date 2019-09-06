@@ -28,6 +28,27 @@ var Admin = function () {
 
             NProgress.done();
 
+            $.extend( $.fn.dataTable.defaults, {
+                paging: false,
+                ordering: false,
+                searching: false,
+                info: false,
+                scrollY: 400,
+                scrollCollapse:true,
+                headerCallback: function(thead, data, start, end, display ) {
+                    var th = $(thead).find('th').eq(0);
+                    if(th.hasClass('table-select'))
+                        th.html( '<input type="checkbox" class="grid-select-all checkbox-style">' );
+                },
+                rowCallback:function(row, data, index){
+                    var td = $('td:eq(0)', row);
+                    var id = $.trim(data[0]);
+                    if(td.hasClass('table-select') && id)
+                        td.html('<input type="checkbox" class="grid-row-checkbox checkbox-style" value="'+ $.trim(data[0]) +'">');
+                    if(td.hasClass('table-index'))
+                        td.html(index+1);
+                }
+            });
 
             $('#pjax-container').on('change', '.grid-row-checkbox:not(.checkbox-style)', function () {
                 if (this.checked) {
@@ -62,7 +83,7 @@ var Admin = function () {
             }
 
             $('#pjax-container .box').boxWidget();
-            $('#pjax-container table.table-scroll').scrollTableBody();
+            $('#pjax-container .table:not(.no-data)').DataTable();
             $('#pjax-container .select2').select2();
 
             toastr.clear();

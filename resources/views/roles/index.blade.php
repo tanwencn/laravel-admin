@@ -46,10 +46,10 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped table-scroll">
+                    <table class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
+                            <th class="table-select"></th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
@@ -60,9 +60,9 @@
                         <tbody>
                         @foreach($results as $role)
                             <tr>
-                                <td>
+                                <td class="table-select">
                                     @if($role->name != 'superadmin')
-                                        <input type="checkbox" class="grid-row-checkbox checkbox-style" value="{{ $role->id }}">
+                                        {{ $role->id }}
                                     @endif
                                 </td>
                                 <td>{{ $role->name }}</td>
