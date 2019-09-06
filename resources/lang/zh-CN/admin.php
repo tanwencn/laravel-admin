@@ -7,7 +7,7 @@ return [
     'dashboard' => '仪表盘',
     'control_panel' => '控制面板',
     'login' => '登录',
-    'logout' => '登出',
+    'logout' => '退出登录',
     'email' => '邮箱',
     'name' => '名称',
     'username' => '用户名',

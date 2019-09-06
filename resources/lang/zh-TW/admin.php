@@ -8,7 +8,7 @@ return [
     'control_panel' => '控制面板',
     'all_abilities' => '所有許可權',
     'login' => '登錄',
-    'logout' => '登出',
+    'logout' => '退出登录',
     'email' => '邮箱',
     'name' => '名稱',
     'username' => '用戶名',

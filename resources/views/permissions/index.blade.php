@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped table-scroll" data-rows-to-display="10">
+                    <table class="table table-hover table-striped" data-rows-to-display="10">
                         <thead>
                         <tr>
                             <th><input type="checkbox" class="grid-select-all checkbox-style"></th>
@@ -100,4 +100,9 @@
         </div>
         <!-- end panel -->
     </div>
+    <script>
+        Admin.boot(function () {
+            $('.table').DataTable();
+        });
+    </script>
 @endsection

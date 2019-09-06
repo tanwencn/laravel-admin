@@ -77,14 +77,16 @@ class Menu
     protected function parser($items)
     {
         return collect($items)->sortBy('sort')->map(function ($val) {
-            $this->parser($val->children);
+            $val->children = array_filter($this->parser($val->children)->toArray());
 
             return $val;
 
         })->filter(function ($val) {
+            if(empty($val->children) && starts_with($val->url, 'javascript')) return false;
+
             $user = $this->auth->user();
 
-            return empty($val->authority) || $user->can($val->authority);
+            return empty($val->authority) || $user->can(trim($val->authority));
 
         });
     }

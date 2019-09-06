@@ -10,7 +10,8 @@
     <link rel="shortcut icon" href="{{ asset('vendor/laravel-admin/logo.png') }}" type="image/x-icon">
 
 {!! Admin::asset()->head() !!}
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
