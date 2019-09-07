@@ -15,13 +15,16 @@ return [
 
     'elfinder' => [
         'default' => [
-            'disk' => 'public',
-            'uploadOverwrite' => false,
-            'uploadMaxSize' => '3M',
-            'onlyMimes' => ['image'],
-            'uploadOrder' => ['allow'],
-            'path' => 'images',
-            'alias' => 'Gallery'
+            'process' => Tanwencn\Admin\FinderProcess::class,
+            'options' => [
+                'disk' => 'public',
+                'uploadOverwrite' => false,
+                'uploadMaxSize' => '3M',
+                'onlyMimes' => ['image'],
+                'uploadOrder' => ['allow'],
+                'path' => 'images',
+                'alias' => 'Gallery'
+            ]
         ]
     ],
 
@@ -42,11 +45,11 @@ return [
 
     'middleware' => [
         'web',
-        \Tanwencn\Admin\Http\Middleware\Authenticate::class,
-        \Tanwencn\Admin\Http\Middleware\Menu::class,
-        \Tanwencn\Admin\Http\Middleware\Asset::class,
-        \Tanwencn\Admin\Http\Middleware\Pjax::class,
-        \Tanwencn\Admin\Http\Middleware\HttpLog::class
+        Tanwencn\Admin\Http\Middleware\Authenticate::class,
+        Tanwencn\Admin\Http\Middleware\Menu::class,
+        Tanwencn\Admin\Http\Middleware\Asset::class,
+        Tanwencn\Admin\Http\Middleware\Pjax::class,
+        Tanwencn\Admin\Http\Middleware\HttpLog::class
     ],
 
     'logger' => [

@@ -21,9 +21,9 @@
                     </div>
                     <div class="box-body">
                         <div class="form-horizontal">
-                            @foreach($user_name_fileds as $filed)
+                            @foreach($user_name_fileds as $key => $filed)
                                 <div class="form-group {{ $errors->has($filed)?"has-error":"" }}">
-                                    <label class="control-label col-md-2 asterisk">{{ trans('admin.'.$filed) }}：</label>
+                                    <label class="control-label col-md-2 {{ $key==0?"asterisk":"" }}">{{ trans('admin.'.$filed) }}：</label>
                                     <div class="col-md-8">
                                         @if($errors->has($filed))
                                             <label class="control-label">

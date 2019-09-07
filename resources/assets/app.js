@@ -6,7 +6,6 @@ var Admin = function () {
         data: {},
         boots: [],
         errors: [],
-        elfinder: {},
         boot: function (call) {
             this.boots.push(call);
         },
@@ -222,98 +221,3 @@ var Admin = function () {
         }
     }
 }();
-
-var Finder = function (c) {
-    this.key = Math.floor(Math.random() * (999999 - 100000)) + 100000;
-    Finder.instances[this.key] = this;
-    var container;
-    var completeCall = null;
-
-    var config = {
-        title: "",
-        url: "",
-        query: {
-            j_instance_key:this.key,
-            disks: ['default'],
-            multiple: false
-        }
-    };
-
-    this.config = function (c) {
-        $.each(c, function (key, val) {
-            if ($.inArray(key, ["title", "url"]) >= 0) {
-                config[key] = val;
-            } else {
-                config.query[key] = val;
-            }
-        });
-        return this;
-    };
-
-    this.config(Admin.elfinder);
-    if (c != undefined)
-        this.config(c);
-
-    var event_el = null;
-    this.click = function (el, call) {
-        event_el = $(el);
-        var self = this;
-        if (typeof call !== 'function') {
-            var selector = call;
-            call = function (file) {
-                $(selector).val(file.url)
-            };
-        }
-
-        event_el.on('click', function () {
-            self.success(call).open();
-        });
-    };
-    this.success = function (call) {
-        completeCall = call;
-        return this;
-    };
-    this.getUrl = function () {
-        if (config.url.indexOf("?") != -1)
-            return config.url + "&" + Admin.query(config.query);
-        else
-            return config.url + "?" + Admin.query(config.query);
-    };
-    this.multiple = function (bool) {
-        return this.config({multiple: bool})
-    };
-    this.open = function () {
-        container = $.dialog({
-            title: config.title,
-            content: "URL:" + this.getUrl(),
-            animation: 'scale',
-            closeAnimation: 'scale',
-            backgroundDismiss: true,
-            //theme: 'supervan',
-            columnClass: 'xlarge',
-            /*onContentReady: function () {
-                var self = this;
-            },*/
-        });
-        return this;
-    };
-    this.close = function (file) {
-        completeCall(file, event_el);
-        container.close();
-    };
-};
-Finder.instances = {};
-Finder.instance = function(key){
-    return Finder.instances[key];
-};
-Finder.disk = function (disk) {
-    var c = {};
-    if(disk != undefined) {
-        if (!(disk instanceof Array || disk instanceof Object))
-            c.disk = [disk];
-        else
-            c.disk = [disk];
-    }
-
-    return new Finder(c);
-};

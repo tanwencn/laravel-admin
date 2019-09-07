@@ -154,7 +154,7 @@
         csrf_token: '{{ csrf_token() }}'
     };
 
-    Admin.elfinder = ({title: "{{ trans('admin.select_file') }}", url: "{{ route('admin.elfinder.show') }}"});
+    Finder.default = {title: "{{ trans('admin.select_file') }}", url: "{{ route('admin.elfinder.show') }}"};
     Admin.init();
 </script>
 </body>

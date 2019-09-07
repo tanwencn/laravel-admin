@@ -25,8 +25,9 @@ class Asset
     public function handle($request, Closure $next)
     {
         Admin::asset()
-            ->before('/vendor/laravel-admin/admin/app.min.css')
-            ->before('/vendor/laravel-admin/admin/app.min.js')
+            ->before('/vendor/laravel-admin/app.min.css')
+            ->before('/vendor/laravel-admin/app.min.js')
+            ->before('/vendor/laravel-elfinder/app.min.js')
             ->jsdelivr('npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css', 999)
             ->jsdelivr('npm/admin-lte@2.4.17/dist/js/adminlte.min.js', 999)
             /** 插件 */
@@ -35,7 +36,7 @@ class Asset
             ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/css/dataTables.bootstrap.min.css')
             ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/js/jquery.dataTables.min.js', 'gh/DataTables/DataTables@1.10.19/media/js/dataTables.bootstrap.min.js')
 
-            ->addBag('vendor/laravel-admin/jquery-ui/jquery-ui.min')
+            ->addBag('vendor/laravel-elfinder/jquery-ui/jquery-ui.min')
             ->jsdelivr('gh/Studio-42/elFinder@2.1/js/elfinder.min.js')
 
             ->jsdelivrBag('npm/bootstrap@3/dist/{type}/bootstrap.min')
