@@ -18,13 +18,9 @@ return [
             'disk' => 'public',
             'uploadOverwrite' => false,
             'uploadMaxSize' => '3M',
-            'uploadAllow' => ['image'],
             'onlyMimes' => ['image'],
             'uploadOrder' => ['allow'],
             'path' => 'images',
-            'tmbPath' => 'thumbnails/images',
-            'URL' => '/storage/images',
-            'tmbURL' => '/thumbnails/images',
             'alias' => 'Gallery'
         ]
     ],

@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="box box-widget">
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover table-striped no-data">
+                    <table class="table table-hover table-striped no-data" data-scroll-y="480">
                         <thead>
                         <tr>
                             <th>{{ trans('admin.user') }}</th>

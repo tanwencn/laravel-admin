@@ -33,6 +33,26 @@ class Controller extends BaseController
         return view('admin::elfinder.standalonepopup')->with($this->getViewVars());
     }
 
+    protected function mergeRootConfig($config, $disk){
+        if(!empty($config['onlyMimes']) && !isset($config['uploadAllow'])){
+            $config['uploadAllow'] = $config['onlyMimes'];
+        }
+        if(empty($config['URL'])){
+            $config['URL'] = $disk->url($config['path']);
+        }
+        if(empty($config['tmbPath'])) {
+            $config['tmbPath'] = str_finish($disk->path($config['path']), DIRECTORY_SEPARATOR).'.tmb';
+            $config['tmbURL'] = str_finish($disk->url($config['path']), DIRECTORY_SEPARATOR).'.tmb';
+        }
+
+        $config['attributes'][] = [
+            'pattern' => '/'. basename($config['tmbPath']) .'/',
+            'hidden'    => true
+        ];
+
+        return $config;
+    }
+
     public function showConnector()
     {
         $roots = [];
@@ -41,11 +61,12 @@ class Controller extends BaseController
             $config = config("admin.elfinder.{$key}");
             $disk = app('filesystem')->disk($config['disk']);
             if ($disk instanceof FilesystemAdapter) {
-                $roots[$key] = array_merge($config, [
+                $roots[$key] = array_merge($this->mergeRootConfig($config, $disk), [
                     'driver' => 'Flysystem',
                     'filesystem' => $disk->getDriver(),
                     'alias' => isset($config['alias']) ? $config['alias'] : $key,
-                    'admin_key' => $key
+                    'admin_key' => $key,
+                    'accessControl'=>'access'
                 ]);
             }
         }

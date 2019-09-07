@@ -30,10 +30,10 @@ class Asset
             ->jsdelivr('npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css', 999)
             ->jsdelivr('npm/admin-lte@2.4.17/dist/js/adminlte.min.js', 999)
             /** 插件 */
-            ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/css/jquery.dataTables.min.css', 'gh/DataTables/DataTables@1.10.19/media/css/dataTables.bootstrap.min.css')
-            ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/js/jquery.dataTables.min.js', 'gh/DataTables/DataTables@1.10.19/media/js/dataTables.bootstrap.min.js')
             ->jsdelivr('npm/jquery@3.4/dist/jquery.min.js', null, 'head')
             ->jsdelivrCombile('npm/fastclick@1.0/lib/fastclick.min.js', 'gh/rochal/jQuery-slimScroll@1.3/jquery.slimscroll.min.js')
+            ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/css/dataTables.bootstrap.min.css')
+            ->jsdelivrCombile('gh/DataTables/DataTables@1.10.19/media/js/jquery.dataTables.min.js', 'gh/DataTables/DataTables@1.10.19/media/js/dataTables.bootstrap.min.js')
 
             ->addBag('vendor/laravel-admin/jquery-ui/jquery-ui.min')
             ->jsdelivr('gh/Studio-42/elFinder@2.1/js/elfinder.min.js')

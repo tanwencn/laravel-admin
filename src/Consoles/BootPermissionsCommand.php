@@ -71,7 +71,7 @@ class BootPermissionsCommand extends Command
 
         if (User::count() == 0) {
             $user = User::create([
-                'name'           => 'Administor',
+                'name'           => 'administrator',
                 'email'          => 'admin@admin.com',
                 'password'       => bcrypt('admin')
             ]);
