@@ -20,7 +20,7 @@
         "symfony/dom-crawler": "^4.1",
         "arrilot/laravel-widgets": "^3.12",
         "spatie/laravel-permission" : "^2.12",
-        "tanwencn/laravel-elfinder" : "^0.1"
+        "tanwencn/laravel-elfinder" : "^1.0.1"
     },
     "autoload": {
         "psr-4": {
