@@ -65,7 +65,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          {{ csrf_field() }}
           <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
         </div>
         <!-- /.col -->
