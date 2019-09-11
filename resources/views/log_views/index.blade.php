@@ -6,7 +6,7 @@
     <!-- begin row -->
     <div class="row">
         <!-- begin col-12 -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="box box-default">
                 <div class="box-header">
                     <h3 class="box-title">Files</h3>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="box box-default">
                 <div class="box-header">
 

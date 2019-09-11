@@ -18,7 +18,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-black sidebar-mini fixed">
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
     <header class="main-header">
@@ -137,6 +137,9 @@
 {!! Admin::asset()->footer() !!}
 
 <script>
+    console.log($('body').attr('class'));
+    console.log($('body').prop('class'));
+    console.log($('body').class);
     @foreach($errors->all() as $error)
     Admin.errors.push('{{ $error }}');
     @endforeach
