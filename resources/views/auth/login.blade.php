@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{ trans('admin.login') }} &nbsp;&nbsp; {{ option('web_name') }} &#8212; TaneCN</title>
+  <title>{{ trans('admin.login') }} &nbsp;&nbsp; {{ option('web_name', config('app.name')) }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -26,7 +26,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ route('admin.login') }}"><b>{{config('admin.name')}}</b></a>
+    <a href="{{ route('admin.login') }}"><b>{{ option('web_name', config('app.name')) }}</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

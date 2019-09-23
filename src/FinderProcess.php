@@ -9,6 +9,7 @@
 namespace Tanwencn\Admin;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Tanwencn\Elfinder\Interfaces\FinderAuth;
 use Tanwencn\Elfinder\Interfaces\FinderOption;
 
@@ -27,7 +28,7 @@ class FinderProcess implements FinderAuth,FinderOption
 
     public function option($options):array {
         if(!$this->user->hasRole('superadmin'))
-            $options['path'] = str_finish($options['path'], DIRECTORY_SEPARATOR).$this->user->id;
+            $options['path'] = Str::finish($options['path'], DIRECTORY_SEPARATOR).$this->user->id;
 
         return $options;
     }

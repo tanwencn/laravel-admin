@@ -1,6 +1,6 @@
 <?php
 
-Route::prefix(config('admin.route.prefix', 'admin'))->middleware('web')->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
+Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
     $router->get('login', 'LoginController@showLoginForm')->name('admin.login');
     $router->post('login', 'LoginController@login')->name('admin.login');
     $router->get('logout', 'LoginController@logout')->name('admin.logout');
@@ -31,5 +31,5 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
 
     });
 
-if(file_exists(config('admin.route.routes')))
-    Admin::router()->namespace(config('admin.route.namespaces'))->group(config('admin.route.routes'));
+if(file_exists(config('admin.router.routes')))
+    Admin::router()->namespace(config('admin.router.namespaces'))->group(config('admin.route.routes'));

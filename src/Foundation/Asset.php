@@ -9,6 +9,8 @@
 
 namespace Tanwencn\Admin\Foundation;
 
+use Illuminate\Support\Str;
+
 class Asset
 {
     protected $before;
@@ -55,7 +57,7 @@ class Asset
 
         $path = trim($path);
         if (!$type)
-            $type = ends_with($path, '.css') ? 'head' : 'footer';
+            $type = Str::endsWith($path, '.css') ? 'head' : 'footer';
 
         $this->{$type}[] = [
             'url' => $this->parserPath($path),
@@ -72,7 +74,7 @@ class Asset
 
     protected function parserPath($path)
     {
-        if (starts_with($path, ['http:', 'https:', '//'])) {
+        if (Str::startsWith($path, ['http:', 'https:', '//'])) {
             return $path;
         }
 
@@ -84,7 +86,7 @@ class Asset
         if (empty($itmes)) return null;
 
         return collect($itmes)->sortBy('position')->map(function ($item) {
-            if (ends_with($item['url'], '.css'))
+            if (Str::endsWith($item['url'], '.css'))
                 return '<link rel="stylesheet" href="' . $item['url'] . '">' . "\n";
             else
                 return '<script src="' . $item['url'] . '"></script>' . "\n";
@@ -97,7 +99,7 @@ class Asset
         $css = [];
         $js = [];
         foreach ($paths as $path) {
-            if (ends_with($path, '.css'))
+            if (Str::endsWith($path, '.css'))
                 $css[] = $path;
             else
                 $js[] = $path;

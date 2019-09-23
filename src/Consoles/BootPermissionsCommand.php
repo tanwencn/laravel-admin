@@ -10,6 +10,7 @@
 namespace Tanwencn\Admin\Consoles;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Contracts\Role;
 use Tanwencn\Admin\Database\Eloquent\User;
@@ -69,12 +70,10 @@ class BootPermissionsCommand extends Command
 
         $roleClass::findOrCreate('superadmin', 'admin');
 
-        if (User::count() == 0) {
-            $user = User::create([
-                'name'           => 'administrator',
-                'email'          => 'admin@admin.com',
-                'password'       => bcrypt('admin')
-            ]);
+        $user = User::firstOrNew(['email' => 'admin@admin.com']);
+        $user->name = 'administrator';
+        $user->password = 'admin';
+        if($user->save()) {
             $user->assignRole('superadmin');
         }
 
@@ -90,7 +89,7 @@ class BootPermissionsCommand extends Command
 
     protected function abilityResources($name)
     {
-        $name = snake_case(class_basename($name));
+        $name = Str::snake(class_basename($name));
 
         $abilitys = [
             'view',

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@yield('title') &nbsp;&nbsp;&nbsp;{{ option('web_name') }} &#8212; TaneCN</title>
+    <title>@yield('title') &nbsp;&nbsp;&nbsp;{{ option('web_name', config('app.name')) }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -18,21 +18,21 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="{{ config('admin.layout.body_class') }}">
 <div class="wrapper">
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="javascript:void(0);" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>T</b>c</span>
+            <span class="logo-mini">{!! config('admin.layout.logo_mini') !!}</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Tane</b>CN</span>
+            <span class="logo-lg">{!! config('admin.layout.logo') !!}</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
-            <a href="javascript:;" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <a href="javascript:void(0);" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
 
@@ -79,16 +79,16 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- /.search form -->
-            {{--<div class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </div>--}}
-            <!-- sidebar menu: : style can be found in sidebar.less -->
+        {{--<div class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            </button>
+          </span>
+            </div>
+        </div>--}}
+        <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
                 {!! Admin::menu()->render() !!}
@@ -125,21 +125,20 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
-        </div>
-        <strong>Made by The <a href="http://www.tanecn.com" target="_blank">TaneCN</a>.</strong>
-    </footer>
+    @if(config('admin.layout.footer') !== false)
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            {!! config('admin.layout.footer') !!}
+        </footer>
+    @endif
 </div>
 <!-- ./wrapper -->
 
 {!! Admin::asset()->footer() !!}
 
 <script>
-    console.log($('body').attr('class'));
-    console.log($('body').prop('class'));
-    console.log($('body').class);
     @foreach($errors->all() as $error)
     Admin.errors.push('{{ $error }}');
     @endforeach

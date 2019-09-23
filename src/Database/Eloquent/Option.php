@@ -27,14 +27,16 @@ class Option extends Model
 
     public static function findByName(string $name, string $defalut = '')
     {
-        return Cache::remember('t_options_' . $name, 7200, function () use ($defalut, $name) {
+        $data = Cache::remember('t_options_' . $name, 7200, function () use ($name) {
             try {
                 $model = static::query()->where('name', $name)->select('value')->first();
             } catch (\Exception $e) {
-                return $defalut;
+                return null;
             }
 
-            return $model ? $model->value : $defalut;
+            return $model && $model->value ? $model->value : null;
         });
+
+        return $data ?: $defalut;
     }
 }

@@ -11,6 +11,7 @@ namespace Tanwencn\Admin\Consoles;
 
 use Illuminate\Console\Command;
 use Tanwencn\Admin\AdminServiceProvider;
+use Tanwencn\Elfinder\ElfinderServiceProvider;
 
 class InstallCommand extends Command
 {
@@ -55,25 +56,14 @@ class InstallCommand extends Command
         $this->call('vendor:publish', [
             '--provider' => AdminServiceProvider::class
         ]);
+        $this->call('vendor:publish', [
+            '--provider' => ElfinderServiceProvider::class
+        ]);
         /*$this->call('vendor:publish', [
             '--provider' => PermissionServiceProvider::class,
             '--tag' => 'migrations'
         ]);*/
         $this->call('migrate');
-
-        /*$this->info('Attempting to set User model as parent to App\User');
-        if (file_exists(app_path('User.php'))) {
-            $str = file_get_contents(app_path('User.php'));
-
-            if ($str !== false) {
-                $str = str_replace('extends Authenticatable', "extends \Tanwencn\Admin\Database\Eloquent\User", $str);
-
-                file_put_contents(app_path('User.php'), $str);
-            }
-        } else {
-            $this->warn('Unable to locate "app/User.php".  Did you move this file?');
-            $this->warn('You will need to update this manually.  Change "extends Authenticatable" to "extends \Tanwencn\Admin\Database\Eloquent\User" in your User model');
-        }*/
 
         $this->call('admin:registerPermissions');
     }

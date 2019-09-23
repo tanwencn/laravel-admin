@@ -48,7 +48,7 @@
                                            type="text"
                                            class="form-control"
                                            value="{{ old('metas.avatar', $model->getMetas('avatar')) }}">
-                                    <button type="button" style="width: 100px; float: left;"
+                                    <button type="button" style="float: left;"
                                             class="btn btn-default select-image"><i
                                                 class="glyphicon glyphicon-folder-open"></i> {{ trans('admin.select_image') }}
                                     </button>

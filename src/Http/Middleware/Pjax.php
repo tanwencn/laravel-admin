@@ -42,7 +42,7 @@ class Pjax
     {
         $response = $next($request);
 
-        if (!$request->pjax() || $response->isRedirection()) {
+        if (!$request->pjax() || $response->isRedirection() || $response->isServerError()) {
             return $response;
         }
 

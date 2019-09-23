@@ -9,6 +9,8 @@
 
 namespace Tanwencn\Admin\Foundation;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Auth\AuthManager;
 use Tanwencn\Admin\Foundation\Menus\Item;
@@ -21,6 +23,8 @@ class Menu
 
     private $uri_prefix;
 
+    protected $sort = 10;
+
     /**
      * Menu constructor.
      * @param AuthManager $auth
@@ -28,11 +32,12 @@ class Menu
     public function __construct(AuthManager $auth)
     {
         $this->auth = $auth;
-        $this->uri_prefix = config('admin.route.prefix', 'admin');
+        $this->uri_prefix = config('admin.router.prefix', 'admin');
     }
 
     public function new($title){
-        $item = new Item($title);
+        $item = new Item($title, $this->sort);
+        $this->sort++;
         $this->items[] = $item;
         return $item;
     }
@@ -62,7 +67,7 @@ class Menu
         }
         if (empty($parameters['sort'])) $parameters['sort'] = 10;
 
-        array_set($this->items, $name, $parameters);
+        Arr::set($this->items, $name, $parameters);
 
         foreach ($children as $childName => $child) {
             $this->define($childName, $child, $name);
@@ -82,7 +87,7 @@ class Menu
             return $val;
 
         })->filter(function ($val) {
-            if(empty($val->children) && starts_with($val->url, 'javascript')) return false;
+            if(empty($val->children) && Str::startsWith($val->url, 'javascript')) return false;
 
             $user = $this->auth->user();
 

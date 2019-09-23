@@ -21,10 +21,10 @@ class Item
     public $children;
     public $authority;
 
-    public function __construct($title)
+    public function __construct($title, $sort=10)
     {
         $this->title = $title;
-        $this->sort = 10;
+        $this->sort = $sort;
         $this->url = 'javascript:void(0);';
     }
 
@@ -42,7 +42,7 @@ class Item
 
     public function uri($uri)
     {
-        $this->url = url(config('admin.route.prefix', 'admin') . '/' . $uri);
+        $this->url = url(config('admin.router.prefix', 'admin') . '/' . $uri);
         return $this;
     }
 

@@ -57,7 +57,7 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        return '/'.config('admin.route.prefix', 'admin');
+        return '/'.config('admin.router.prefix', 'admin');
     }
 
     protected function guard()

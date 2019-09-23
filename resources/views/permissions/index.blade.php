@@ -61,7 +61,7 @@
                         @foreach($results as $permission)
                             <tr>
                                 <td class="table-select">{{ $permission->id }}</td>
-                                <td>{{ str_after(trans('admin.'.$permission->name), 'admin.') }}</td>
+                                <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
                                 <td>{{ $permission->guard_name }}</td>
                                 <td>{{ $permission->updated_at }}</td>
                                 <td>

@@ -13,6 +13,7 @@ use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Routing\Router;
 use BadMethodCallException;
+use Illuminate\Support\Str;
 
 class Admin
 {
@@ -40,13 +41,13 @@ class Admin
         if ($action == 'form') {
             return !empty($parms) ? $this->action('update', $parms) : $this->action('store');
         }
-        $controller = str_before($this->router->current()->getActionName(), '@');
-        return action(str_start($controller, '\\') . '@' . $action, $parms);
+        $controller = Str::before($this->router->current()->getActionName(), '@');
+        return action(Str::start($controller, '\\') . '@' . $action, $parms);
     }
 
     public function router()
     {
-        return $this->router->prefix($this->config->get('admin.route.prefix', 'admin'))->middleware('admin');
+        return $this->router->prefix($this->config->get('admin.router.prefix', 'admin'))->middleware('admin');
     }
 
     public function view($view = null, $data = [], $mergData = [])
@@ -61,7 +62,7 @@ class Admin
 
     public function __call($name, $arguments)
     {
-        $class = str_start(__NAMESPACE__ . str_start(studly_case($name), '\\'), '\\');
+        $class = Str::start(__NAMESPACE__ . Str::start(Str::studly($name), '\\'), '\\');
 
         if (isset($this->instances[$class])) return $this->instances[$class];
 

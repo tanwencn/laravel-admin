@@ -70,7 +70,7 @@
                                                     <td><input type="checkbox" name="permissions[]"
                                                                {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
                                                                value="{{ $permission->id }}"></td>
-                                                    <td>{{ str_after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
+                                                    <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
                                                     <td>{{ $permission->guard_name }}</td>
                                                 </tr>
                                             @endforeach
@@ -101,7 +101,7 @@
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
                 $('.data-list').html($('template.' + name).html());
-                $('.data-list>table').scrollTableBody();
+                $('.data-list>table').DataTable({searching:true});
                 $('.checkbox-style').iCheck({
                     checkboxClass: 'icheckbox_flat-red',
                     increaseArea: '10%' // optional

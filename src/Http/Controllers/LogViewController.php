@@ -10,6 +10,7 @@
 namespace Tanwencn\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
@@ -40,7 +41,7 @@ class LogViewController extends Controller
             if($current == $fileName)
                 $current_file = $file;
 
-            array_set($tree, $key, $fileName);
+            Arr::set($tree, $key, $fileName);
         }
 
         $statistics = "";
