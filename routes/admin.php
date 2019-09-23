@@ -32,4 +32,4 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
     });
 
 if(file_exists(config('admin.router.routes')))
-    Admin::router()->namespace(config('admin.router.namespaces'))->group(config('admin.route.routes'));
+    Admin::router()->namespace(config('admin.router.namespaces'))->group(config('admin.router.routes'));
