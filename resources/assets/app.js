@@ -21,6 +21,11 @@ var Admin = function () {
             $(document).ajaxStart(function () {
                 NProgress.start();
             });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': Admin.info.csrf_token
+                }
+            });
             $(document).ajaxStop(function () {
                 NProgress.done();
             });
