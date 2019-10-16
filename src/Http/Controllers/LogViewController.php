@@ -35,8 +35,8 @@ class LogViewController extends Controller
             $key = $info['dirname'] == '.' ? $info['filename'] : str_replace('/', '.', $info['dirname']) . '.' . $info['filename'];
             $fileName = $log_path.'/'.$pathname;
 
-            if(is_file($fileName) && !$current)
-                $current = $fileName;
+            /*if(is_file($fileName) && !$current)
+                $current = $fileName;*/
 
             if($current == $fileName)
                 $current_file = $file;
@@ -46,7 +46,7 @@ class LogViewController extends Controller
 
         $statistics = "";
 
-        $data = $this->data($current_file);
+        $data = $current?$this->data($current_file):[];
 
         return $this->view('index', compact('tree', 'statistics', 'current', 'data'));
     }
