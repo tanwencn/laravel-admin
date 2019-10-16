@@ -20,8 +20,9 @@ class Item
     public $url;
     public $children;
     public $authority;
+    public $target;
 
-    public function __construct($title, $sort=10)
+    public function __construct($title, $sort = 10)
     {
         $this->title = $title;
         $this->sort = $sort;
@@ -46,10 +47,21 @@ class Item
         return $this;
     }
 
+    public function url($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    public function blank(){
+        $this->target = '_blank';
+        return $this;
+    }
+
     public function child($title, \Closure $closure = null)
     {
-        if(!str_contains($title, '<i'))
-            $title = '<i class="fa fa-circle-o"></i><span>'.$title.'</span>';
+        if (!str_contains($title, '<i'))
+            $title = '<i class="fa fa-circle-o"></i><span>' . $title . '</span>';
 
         $item = new static($title);
         if (!is_null($closure))

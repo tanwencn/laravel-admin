@@ -1,6 +1,6 @@
 @foreach($items as $val)
     <li class="{{ $val->children ? "treeview" : "" }} {{ url()->current() == $val->url ? "active" : "" }}">
-        <a href="{{ $val->url }}">
+        <a target="{{ $val->target?:'_self' }}" href="{{ $val->url }}">
             {!! $val->title !!}
             @if($val->children)
                 <span class="pull-right-container">
