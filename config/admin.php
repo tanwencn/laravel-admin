@@ -2,7 +2,12 @@
 
 return [
 
-    'name' => 'Laravel Admin',
+    'layout' => [
+        'body_class' => 'hold-transition skin-black sidebar-mini',
+        'logo' => '<strong>Laravel</strong> Admin',
+        'logo_mini' => '<strong>L</strong> A',
+        'footer' => '<strong>Made by The <a href="http://www.tanecn.com" target="_blank">TaneCN</a>.</strong>'
+    ],
 
     'router' => [
         'prefix' => 'admin',
@@ -14,7 +19,6 @@ return [
             Tanwencn\Admin\Http\Middleware\Menu::class,
             Tanwencn\Admin\Http\Middleware\Asset::class,
             Tanwencn\Admin\Http\Middleware\Pjax::class,
-            App\Admin\Middleware\Menu::class,
             Tanwencn\Admin\Http\Middleware\HttpLog::class
         ]
     ],
