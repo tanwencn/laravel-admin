@@ -4,13 +4,19 @@ return [
 
     'name' => 'Laravel Admin',
 
-    /*
-     * Route configuration.
-     */
-    'route' => [
+    'router' => [
         'prefix' => 'admin',
         'namespaces' => 'App\\Admin\\Controllers',
-        'routes' => app_path('routes/admin.php')
+        'routes' => app_path('routes/admin.php'),
+        'middleware' => [
+            'web',
+            Tanwencn\Admin\Http\Middleware\Authenticate::class,
+            Tanwencn\Admin\Http\Middleware\Menu::class,
+            Tanwencn\Admin\Http\Middleware\Asset::class,
+            Tanwencn\Admin\Http\Middleware\Pjax::class,
+            App\Admin\Middleware\Menu::class,
+            Tanwencn\Admin\Http\Middleware\HttpLog::class
+        ]
     ],
 
     'elfinder' => [
@@ -41,15 +47,6 @@ return [
                 'model' => \Tanwencn\Admin\Database\Eloquent\User::class
             ],
         ]
-    ],
-
-    'middleware' => [
-        'web',
-        Tanwencn\Admin\Http\Middleware\Authenticate::class,
-        Tanwencn\Admin\Http\Middleware\Menu::class,
-        Tanwencn\Admin\Http\Middleware\Asset::class,
-        Tanwencn\Admin\Http\Middleware\Pjax::class,
-        Tanwencn\Admin\Http\Middleware\HttpLog::class
     ],
 
     'logger' => [
