@@ -12,7 +12,7 @@ title: 安装使用
 ## 开始安装
 ### 1.在laravel项目根目录下，通过 Composer 安装扩展包
 ```composer
-composer install tanwencn/laravel-admin
+composer require tanwencn/laravel-admin
 ```
 
 ### 2.修改配置文件
