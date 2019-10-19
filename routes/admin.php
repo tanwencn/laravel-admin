@@ -13,17 +13,17 @@ Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) 
 
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
-        $router->get('/logs', 'LogViewController@index')->name('admin.logs');
+        $router->get('/logs', 'LogViewController@index')->name('logs');
 
-        $router->get('/operationlog', 'OperationLogController@index')->name('admin.operationlog');
+        $router->get('/operationlog', 'OperationLogController@index')->name('operationlog');
 
-        $router->resource('users', 'UserController')->names('admin.users');;
+        $router->resource('users', 'UserController')->names('users');;
 
-        $router->resource('roles', 'RoleController')->names('admin.roles');
+        $router->resource('roles', 'RoleController')->names('roles');
 
-        $router->resource('permissions', 'PermissionController')->names('admin.permissions');
+        $router->resource('permissions', 'PermissionController')->names('permissions');
 
-        $router->get('options/general', 'OptionController@general')->name('admin.options.general');
+        $router->get('options/general', 'OptionController@general')->name('options.general');
 
         $router->post('options/save', 'OptionController@save');
 

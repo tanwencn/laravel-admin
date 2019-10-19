@@ -47,7 +47,7 @@ class Admin
 
     public function router()
     {
-        return $this->router->prefix($this->config->get('admin.router.prefix', 'admin'))->middleware('admin');
+        return $this->router->prefix($this->config->get('admin.router.prefix', 'admin'))->name('admin.')->middleware('admin');
     }
 
     public function view($view = null, $data = [], $mergData = [])
