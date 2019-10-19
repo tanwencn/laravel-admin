@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers, ValidatesRequests;
+    use AuthenticatesUsers, ValidatesRequests,Package;
 
     /**
      * Where to redirect users after login.
@@ -43,7 +43,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('admin::auth.login')->with('username', $this->username());
+        return view('admin::_auth.login')->with('username', $this->username());
     }
 
     public function logout(Request $request)

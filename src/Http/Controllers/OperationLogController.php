@@ -14,6 +14,8 @@ use Tanwencn\Admin\Database\Eloquent\OperationLog;
 
 class OperationLogController extends Controller
 {
+    use Package;
+
     public function index(){
         $this->authorize('operationlog');
 

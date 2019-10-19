@@ -107,7 +107,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route(config('admin.router.index')) }}">
                         <i class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
                 @yield('breadcrumbs')
                 <li class="active">@hasSection('active_title')
@@ -128,7 +128,7 @@
     @if(config('admin.layout.footer') !== false)
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 1.0
+                <b>Version</b> 1
             </div>
             {!! config('admin.layout.footer') !!}
         </footer>

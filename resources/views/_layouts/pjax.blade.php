@@ -18,7 +18,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li>
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route(config('admin.router.index')) }}">
                         <i class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
                 @yield('breadcrumbs')
                 <li class="active">@yield('title')</li>

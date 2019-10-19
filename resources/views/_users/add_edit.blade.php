@@ -1,4 +1,4 @@
-@extends('admin::layouts.app')
+@extends('admin::_layouts.app')
 
 @section('title', trans_choice('admin.'.($model->id?'edit_user':'add_user'), 1))
 

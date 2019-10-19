@@ -21,7 +21,7 @@ use Tanwencn\Admin\Facades\Admin;
 
 class UserController extends Controller
 {
-    use ValidatesRequests;
+    use ValidatesRequests,Package;
 
     public function __construct()
     {

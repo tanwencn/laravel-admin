@@ -17,7 +17,7 @@ use Tanwencn\Admin\Facades\Admin;
 
 class PermissionController extends Controller
 {
-    use ValidatesRequests;
+    use ValidatesRequests,Package;
 
     public function __construct()
     {

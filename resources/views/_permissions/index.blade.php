@@ -1,6 +1,6 @@
-@extends('admin::layouts.app')
+@extends('admin::_layouts.app')
 
-@section('title', trans_choice('admin.role', 1))
+@section('title', trans_choice('admin.permission', 0))
 
 @section('content')
     <!-- begin row -->
@@ -16,19 +16,20 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            @can('delete_role')
-                            <li>
-                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                            </li>
+                            @can('delete_permission')
+                                <li>
+                                    <a href="javascript:void(0)" class="grid-batch-delete"
+                                       data-url="{{ route('admin.permissions.destroy', 0) }}">{{ trans('admin.delete') }}</a>
+                                </li>
                             @endcan
                         </ul>
                     </div>
 
-                    @can('add_role')
-                    <div class="btn-group">
-                        <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
-                                    class="fa fa-plus f-s-12"></i> {{ trans('admin.add_role') }}</a>
-                    </div>
+                    @can('add_permission')
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
+                                        class="fa fa-plus f-s-12"></i> {{ trans('admin.add_permission') }}</a>
+                        </div>
                     @endcan
 
                     <div class="box-tools">
@@ -52,33 +53,26 @@
                             <th class="table-select"></th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
-                            <th>{{ trans('admin.created_at') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($results as $role)
+                        @foreach($results as $permission)
                             <tr>
-                                <td class="table-select">
-                                    @if($role->name != 'superadmin')
-                                        {{ $role->id }}
-                                    @endif
-                                </td>
-                                <td>{{ $role->name }}</td>
-                                <td>{{ $role->guard_name }}</td>
-                                <td>{{ $role->created_at }}</td>
-                                <td>{{ $role->updated_at }}</td>
+                                <td class="table-select">{{ $permission->id }}</td>
+                                <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
+                                <td>{{ $permission->guard_name }}</td>
+                                <td>{{ $permission->updated_at }}</td>
                                 <td>
-                                    @can('edit_role')
-                                    <a href="{{ Admin::action('edit', $role->id) }}">{{ trans('admin.edit') }}</a> &nbsp;
+                                    @can('edit_permission')
+                                        <a href="{{ Admin::action('edit', $permission->id) }}">{{ trans('admin.edit') }}</a>
+                                        &nbsp;
                                     @endcan
-                                    @can('delete_role')
-                                    @if($role->name !='superadmin')
+                                    @can('delete_permission')
                                         <a href="javascript:void(0);"
-                                           data-url="{{ route('admin.roles.destroy', $role->id) }}"
+                                           data-url="{{ route('admin.permissions.destroy', $permission->id) }}"
                                            class="grid-row-delete">{{ trans('admin.delete') }}</a>
-                                    @endif
                                     @endcan
                                 </td>
                             </tr>

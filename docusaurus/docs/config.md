@@ -37,6 +37,9 @@ title: 配置项
 ### router.routes
 路由文件的路径。
 
+### router.index
+首页路由名称
+
 ## 中间件(router.middleware)
 这里包含了后台路由所有的中间件，你的自定义中间件也在这里添加。
 

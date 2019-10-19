@@ -15,8 +15,6 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
 
         $router->get('/logs', 'LogViewController@index')->name('admin.logs');
 
-        $router->get('/', 'DashboardController@index')->name('admin.dashboard');
-
         $router->get('/operationlog', 'OperationLogController@index')->name('admin.operationlog');
 
         $router->resource('users', 'UserController')->names('admin.users');;
@@ -31,5 +29,6 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
 
     });
 
-if(file_exists(config('admin.router.routes')))
+if(file_exists(config('admin.router.routes'))) {
     Admin::router()->namespace(config('admin.router.namespaces'))->group(config('admin.router.routes'));
+}

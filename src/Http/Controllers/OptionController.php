@@ -16,13 +16,13 @@ use Tanwencn\Admin\Facades\Admin;
 
 class OptionController extends Controller
 {
-    use AuthorizesRequests;
+    use AuthorizesRequests,Package;
 
     public function general()
     {
         $this->authorize('admin.setting');
 
-        return Admin::view('options.general');
+        return view('admin::_options.general');
     }
 
     public function save()

@@ -8,7 +8,6 @@
 module.exports = {
   docs: {
     "Laravel Admin": ['introduction', 'install', 'config'],
-    "基本使用": ['menu', 'asset', 'view', 'controller'],
-    "高级使用": ['rewrite_view'],
+    "基本使用": ['menu', 'asset', 'view', 'controller', 'permission']
   },
 };

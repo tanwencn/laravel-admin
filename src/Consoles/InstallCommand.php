@@ -59,12 +59,11 @@ class InstallCommand extends Command
         $this->call('vendor:publish', [
             '--provider' => ElfinderServiceProvider::class
         ]);
-        /*$this->call('vendor:publish', [
-            '--provider' => PermissionServiceProvider::class,
-            '--tag' => 'migrations'
-        ]);*/
+
         $this->call('migrate');
 
         $this->call('admin:registerPermissions');
+
+        $this->call('admin:build');
     }
 }

@@ -18,7 +18,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    use ValidatesRequests;
+    use ValidatesRequests,Package;
 
     public function __construct()
     {

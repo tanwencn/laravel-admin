@@ -10,7 +10,7 @@
         </a>
         @if ($val->children)
             <ul class="treeview-menu">
-                {!! view('admin::menu', [
+                {!! view('admin::_menu', [
             'items' => $val->children
         ]) !!}
             </ul>

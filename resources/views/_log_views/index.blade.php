@@ -1,4 +1,4 @@
-@extends('admin::layouts.app')
+@extends('admin::_layouts.app')
 
 @section('title', "Laravel Logs")
 

@@ -7,15 +7,16 @@
  * 时间: 2018/4/13 15:55
  */
 
-namespace Tanwencn\Admin\Http\Controllers;
+namespace App\Admin\Controllers;
 
 use Tanwencn\Admin\Facades\Admin;
+use Tanwencn\Admin\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class IndexController extends Controller
 {
-    public function index(){
+    public function dashboard(){
         $this->authorize('dashboard');
-        return Admin::view('dashboard.index');
+        return Admin::view('index.dashboard');
     }
 
 }

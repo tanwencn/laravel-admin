@@ -1,4 +1,4 @@
-@extends('admin::layouts.app')
+@extends('admin::_layouts.app')
 
 @section('title', trans('admin.'.($model->id?'edit_permission':'add_permission')))
 

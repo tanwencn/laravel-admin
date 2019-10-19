@@ -1,6 +1,6 @@
-@extends('admin::layouts.app')
+@extends('admin::_layouts.app')
 
-@section('title', trans_choice('admin.user', 1))
+@section('title', trans_choice('admin.role', 1))
 
 @section('content')
     <!-- begin row -->
@@ -16,20 +16,19 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            @can('delete_user')
-                                <li>
-                                    <a href="javascript:void(0)" class="grid-batch-delete"
-                                       data-url="{{ route('admin.users.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                                </li>
+                            @can('delete_role')
+                            <li>
+                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
+                            </li>
                             @endcan
                         </ul>
                     </div>
 
-                    @can('add_user')
-                        <div class="btn-group">
-                            <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
-                                        class="fa fa-plus f-s-12"></i> {{ trans('admin.add_user') }}</a>
-                        </div>
+                    @can('add_role')
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
+                                    class="fa fa-plus f-s-12"></i> {{ trans('admin.add_role') }}</a>
+                    </div>
                     @endcan
 
                     <div class="box-tools">
@@ -51,44 +50,35 @@
                         <thead>
                         <tr>
                             <th class="table-select"></th>
-                            @foreach($user_name_fileds as $filed)
-                                <th>{{ trans('admin.'.$filed) }}</th>
-                            @endforeach
-                            <th>{{ trans_choice('admin.role', 0) }}</th>
+                            <th>{{ trans('admin.name') }}</th>
+                            <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($results as $user)
+                        @foreach($results as $role)
                             <tr>
                                 <td class="table-select">
-                                    @if($user->id > 1)
-                                        {{ $user->id }}
+                                    @if($role->name != 'superadmin')
+                                        {{ $role->id }}
                                     @endif
                                 </td>
-                                @foreach($user_name_fileds as $filed)
-                                    <td>{{ $user->$filed }}</td>
-                                @endforeach
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->guard_name }}</td>
+                                <td>{{ $role->created_at }}</td>
+                                <td>{{ $role->updated_at }}</td>
                                 <td>
-                                    @foreach ($user->roles->pluck('name') as $role)
-                                        <span class="label label-success label-many">{{ $role }}</span>
-                                    @endforeach
-                                </td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
-                                <td>
-                                    @can('edit_user')
-                                        <a href="{{ Admin::action('edit', $user) }}">{{ trans('admin.edit') }}</a>
-                                        &nbsp;
+                                    @can('edit_role')
+                                    <a href="{{ Admin::action('edit', $role->id) }}">{{ trans('admin.edit') }}</a> &nbsp;
                                     @endcan
-                                    @can('delete_user')
-                                        @if($user->id > 1 && Auth::user()->can('delete_user'))
-                                            <a href="javascript:void(0);"
-                                               data-url="{{ route('admin.users.destroy', $user->id) }}"
-                                               class="grid-row-delete">{{ trans('admin.delete') }}</a>
-                                        @endif
+                                    @can('delete_role')
+                                    @if($role->name !='superadmin')
+                                        <a href="javascript:void(0);"
+                                           data-url="{{ route('admin.roles.destroy', $role->id) }}"
+                                           class="grid-row-delete">{{ trans('admin.delete') }}</a>
+                                    @endif
                                     @endcan
                                 </td>
                             </tr>

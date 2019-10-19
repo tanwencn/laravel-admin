@@ -24,12 +24,6 @@ class Side
         $this->auth = $auth;
     }
 
-    public function add($title, $class, $authority = 'dashboard', $position = 10)
-    {
-        $this->names[$class] = $title;
-        \Widget::group('admin_menu_sides')->position($position)->addWidget(SideWidget::class, [], $title, $class);
-    }
-
     public function names($class = null)
     {
         if (is_null($class)) {

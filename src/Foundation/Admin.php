@@ -55,11 +55,6 @@ class Admin
         return view("admin::{$view}", $data, $mergData);
     }
 
-    public function dashboard($widget, $config = [], $position = 100)
-    {
-        \Widget::group('admin_dashboard')->position($position)->addWidget($widget, $config);
-    }
-
     public function __call($name, $arguments)
     {
         $class = Str::start(__NAMESPACE__ . Str::start(Str::studly($name), '\\'), '\\');

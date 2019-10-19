@@ -16,7 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Tanwencn\Admin\Consoles\BootPermissionsCommand;
-use Tanwencn\Admin\Consoles\BuildDirCommand;
+use Tanwencn\Admin\Consoles\BuildCommand;
 use Tanwencn\Admin\Consoles\InstallCommand;
 use Tanwencn\Admin\Foundation\Admin;
 use Tanwencn\Admin\Http\BootstrapComposer;
@@ -36,13 +36,15 @@ class AdminServiceProvider extends ServiceProvider
 
             $this->commands([
                 InstallCommand::class,
-                BuildDirCommand::class,
+                BuildCommand::class,
                 BootPermissionsCommand::class
             ]);
         }
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
-        
+
+        $this->loadViewsFrom(app_path('Admin/Views'), 'admin');
+
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admin');
 
         /*Relation::morphMap([

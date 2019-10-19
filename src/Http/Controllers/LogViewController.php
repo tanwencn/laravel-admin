@@ -16,6 +16,8 @@ use Symfony\Component\Finder\Finder;
 
 class LogViewController extends Controller
 {
+    use Package;
+
     public function index(Request $request)
     {
         $current = $request->filled('f')?decrypt($request->query('f'), false):"";

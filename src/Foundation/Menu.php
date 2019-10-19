@@ -102,7 +102,7 @@ class Menu
      */
     public function render()
     {
-        return view('admin::menu', [
+        return view('admin::_menu', [
             'items' => $this->parser($this->items)
         ]);
     }

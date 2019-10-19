@@ -6,7 +6,7 @@ title: 视图
 后台使用了```Laravel```的```Blade```模板引擎和```AdminLTE```模板框架做为布局和样式标准。
 
 ## 加载视图
-视图的加载可以参考```Laravel```的官方文档。同时后台提供了简单的二次封装，常规情况下，你可以直接使用```Admin::view('index');```来进行视图加载。当然你也可以在控制器文档中找到另一种高度定制的加载方法。
+视图的加载可以参考```Laravel```的官方文档。同时后台提供了简单的二次封装，常规情况下，你可以直接使用```Admin::view('index/dashboard');```来进行视图加载。
 
 ## 布局示例
 
@@ -57,3 +57,12 @@ Admin.boot(function () {
     //js代码
 });
 ```
+
+## 视图重写
+如果你需要重写扩展包的视图，比如想自定义一个登录页面，可以按照以下方法进行操作。
+
+### 1.复制视图文件到指定位置
+复制```/vendor/tanwencn/laravel-admin/resources/views```下的所有文件和目录到```/resources/views/vendor/admin```目录。
+
+###  2.更改登录页的模板文件
+打开登录页模板文件：```/resources/views/vendor/admin/_auth/login.blade.php```，在此对其进行修改完成后保存即可。
