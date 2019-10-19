@@ -17,7 +17,7 @@ return [
     'router' => [
         'prefix' => 'admin',
         'namespaces' => 'App\\Admin\\Controllers',
-        'routes' => app_path('app/Admin/routes.php'),
+        'routes' => app_path('Admin/routes.php'),
         'index' => 'admin.dashboard',
         'middleware' => [
             'web',
