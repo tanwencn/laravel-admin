@@ -10,11 +10,7 @@
 namespace Tanwencn\Admin\Consoles;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
-use Spatie\Permission\Contracts\Permission;
-use Spatie\Permission\Contracts\Role;
 use Symfony\Component\Finder\Finder;
-use Tanwencn\Admin\Database\Eloquent\User;
 
 class BuildCommand extends Command
 {
@@ -61,10 +57,10 @@ class BuildCommand extends Command
 
         foreach ($directories as $director){
             $path = $base_path.$director->getRelativePathname();
-            if (!is_dir($path)) {
+            if (!file_exists($path)) {
                 $this->files->makeDirectory($path, 0777, true, true);
             } else {
-                $this->line("<error>{$path} directory already exists !</error> ");
+                $this->error("{$path} directory already exists !");
             }
         }
 
@@ -73,13 +69,13 @@ class BuildCommand extends Command
         );
         foreach ($files as $file){
             $path = $base_path.$file->getRelativePathname();
-            if (!is_dir($path)) {
+            if (!file_exists($path)) {
                 $this->files->copy($file->getPathname(), $path);
             } else {
-                $this->line("<error>{$path} file already exists !</error> ");
+                $this->error("{$path} file already exists !");
             }
         }
 
-        $this->line("<info>Directory build completed !</info> ");
+        $this->info("Directory build completed !");
     }
 }
