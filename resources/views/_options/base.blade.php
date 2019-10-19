@@ -13,7 +13,7 @@
         <div class="box box-solid">
             <div class="box-body no-padding" style="">
                 <ul class="nav nav-pills nav-stacked">
-                    @include('admin::options.nav')
+                    @include('admin::_options.nav')
                 </ul>
             </div>
             <!-- /.box-body -->

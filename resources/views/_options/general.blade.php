@@ -1,4 +1,4 @@
-@extends('admin::options.base')
+@extends('admin::_options.base')
 
 @section('form')
     <div class="form-group">
