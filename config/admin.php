@@ -2,6 +2,11 @@
 
 return [
 
+    'user' => [
+        'username' => 'name',
+        'default_password' => '123456'
+    ],
+
     'layout' => [
         'body_class' => 'hold-transition skin-black sidebar-mini',
         'logo' => '<strong>Laravel</strong> Admin',
