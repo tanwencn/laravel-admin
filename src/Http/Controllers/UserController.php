@@ -9,6 +9,7 @@
 
 namespace Tanwencn\Admin\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,12 +17,13 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Tanwencn\Admin\Database\Eloquent\User;
+use Tanwencn\Admin\Database\Eloquent\UserMeta;
 use Tanwencn\Admin\Database\RelationHelper;
 use Tanwencn\Admin\Facades\Admin;
 
 class UserController extends Controller
 {
-    use ValidatesRequests,Package;
+    use ValidatesRequests, Package;
 
     public function __construct()
     {
@@ -113,16 +115,18 @@ class UserController extends Controller
 
         $roles = array_filter($request->input('role', []));
 
-        RelationHelper::boot($model)->save(array_filter($input), function ($model) use ($roles) {
-            if (!empty($roles)) {
-                if(Auth::user()->can('edit_role')){
-                    if (!Auth::user()->hasRole('superadmin'))
-                        $roles = array_diff($roles, ['superadmin']);
-                }
+        $model->fill($input);
 
-                $model->syncRoles($roles);
-            }
-        });
+        $model->save();
+
+        $model->saveMetas($input['metas']);
+
+        if (!empty($roles) && Auth::user()->can('edit_role')) {
+            if (!Auth::user()->hasRole('superadmin'))
+                $roles = array_diff($roles, ['superadmin']);
+
+            $model->syncRoles($roles);
+        }
 
         $url = Auth::user()->can('view_user') ? Admin::action('index') : Admin::action('edit', $model->id);
 

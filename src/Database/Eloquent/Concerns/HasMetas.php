@@ -24,6 +24,16 @@ trait HasMetas
         return $this->metas->getRanks($key);
     }
 
+    public function saveMetas($data){
+        $data = array_filter($data);
+        foreach ($data as $key => $val){
+            if(!isset($val['meta_key'])) {
+                $val = ['meta_key' => $key, 'meta_value' => $val];
+            }
+            $this->metas()->updateOrCreate(['meta_key' => $val['meta_key']], $val);
+        }
+    }
+
     public function relationFormatMetas($data){
         $metas = [];
         $data = array_filter($data);

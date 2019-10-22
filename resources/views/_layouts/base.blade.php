@@ -128,7 +128,7 @@
     @if(config('admin.layout.footer') !== false)
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 1
+                <b>Version</b> 2
             </div>
             {!! config('admin.layout.footer') !!}
         </footer>

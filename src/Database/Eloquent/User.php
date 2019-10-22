@@ -62,11 +62,6 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function metas()
-    {
-        return $this->hasMany(UserMeta::class, 'target_id');
-    }
-
     public function getAvatarAttribute()
     {
         return $this->getMetas('avatar') ?: asset('/vendor/laravel-admin/logo.png');

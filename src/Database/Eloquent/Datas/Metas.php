@@ -9,6 +9,7 @@
 
 namespace Tanwencn\Admin\Database\Eloquent\Datas;
 
+use Illuminate\Support\Str;
 use Tanwencn\Admin\Database\Collection\RanksCollection;
 
 trait Metas
@@ -26,7 +27,7 @@ trait Metas
 
     public function base()
     {
-        return $this->belongsTo(str_before(get_class($this), 'Meta'), 'target_id');
+        return $this->belongsTo(Str::before(get_class($this), 'Meta'), 'target_id');
     }
 
     public function newCollection(array $models = [])
