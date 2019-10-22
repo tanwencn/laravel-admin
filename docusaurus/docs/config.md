@@ -43,7 +43,7 @@ title: 配置项
 控制器的```namespaces```
 
 ### router.routes
-路由文件的路径。
+路由文件的路径。这个文件中的路由命名会自动加上```admin.```前缀。如命名```$route->name('index')```，实际命名为```admin.index```。
 
 ### router.index
 首页路由名称
