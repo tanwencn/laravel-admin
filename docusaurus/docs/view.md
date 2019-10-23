@@ -37,7 +37,7 @@ Admin.boot(function () {
 
 ### 面包屑
 上面的例子提供了一个面包屑选项，系统本身会默认用仪表盘做为起始面包屑，当前视图标题做为结束面包屑，比如此选项为空的情况下，默认生成的面包屑就为```仪表盘>添加文章```。
-```blade
+```html
 @section('breadcrumbs') //面包屑
 <li><a href="{{ Admin::action('index') }}"> 所有文章</a></li>
 @endsection
@@ -68,7 +68,7 @@ Admin.boot(function () {
 打开登录页模板文件：```/resources/views/vendor/admin/_auth/login.blade.php```，在此对其进行修改完成后保存即可。
 
 ## 表格
-```blade
+```html
 <table class="table table-hover table-striped">
     <thead>
         <tr>

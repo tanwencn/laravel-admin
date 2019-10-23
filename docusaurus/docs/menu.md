@@ -17,7 +17,7 @@ public function handle($request, Closure $next)
         Admin::menu()->new('<i class="fa fa-weixin"></i> <span>一级菜单</span>')
             ->child('二级菜单', function (Item $menu) {
                 $menu->route('admin.menu')->auth('二级菜单所需要的权限');
-            })
+            });
         Admin::menu()->new('<i class="fa fa-weixin"></i> <span>一级菜单</span>')
             ->child('二级菜单2', function (Item $menu) {
                 $menu->route('admin.menu');
@@ -29,6 +29,9 @@ public function handle($request, Closure $next)
     }
 ```
 以上就是菜单注册的全过程，```Admin::menu()->new()```会返回一个新的菜单对象，这个对象的所有函数都会返回当前菜单。```$menu->child()```类似于```new()```，不同在地方在于```child()```不会返回给你子菜单，子菜单的所有操作都在闭包中进行。
+
+## 图标
+图标参考:```https://fontawesome.com/v4.7.0/icons/```
 
 ## 可用方法
 

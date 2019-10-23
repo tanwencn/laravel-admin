@@ -6,8 +6,9 @@
  */
 
 module.exports = {
-  docs: {
-    "Laravel Admin": ['introduction', 'install', 'config'],
-    "基本使用": ['menu', 'asset', 'view', 'controller', 'permission']
-  },
+    docs: {
+        "Laravel Admin": ['introduction', 'install', 'config'],
+        "基本使用": ['menu', 'asset', 'view', 'controller', 'permission'],
+        "定制化示例": ['captcha']
+    },
 };

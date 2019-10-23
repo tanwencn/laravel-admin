@@ -70,7 +70,7 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         config(Arr::dot(config('admin.elfinder', []), 'elfinder.roots.'));
-        config(Arr::dot(config('admin.auth', []), 'auth.'));
+        config(Arr::dot(Arr::except(config('admin.auth', []), 'login'), 'auth.'));
 
         $this->app->singleton('admin', function ($app) {
             return new Admin($app['config'], $app['auth'], $app['router']);

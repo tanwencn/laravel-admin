@@ -2,11 +2,6 @@
 
 return [
 
-    'user' => [
-        'username' => 'name',
-        'default_password' => '123456'
-    ],
-
     'layout' => [
         'body_class' => 'hold-transition skin-black sidebar-mini',
         'logo' => '<strong>Laravel</strong> Admin',
@@ -21,17 +16,17 @@ return [
         'index' => 'admin.dashboard',
         'middleware' => [
             'web',
-            Tanwencn\Admin\Http\Middleware\Authenticate::class,
-            Tanwencn\Admin\Http\Middleware\Menu::class,
-            Tanwencn\Admin\Http\Middleware\Asset::class,
-            Tanwencn\Admin\Http\Middleware\Pjax::class,
-            Tanwencn\Admin\Http\Middleware\HttpLog::class
+            'Tanwencn\Admin\Http\Middleware\Authenticate',
+            'Tanwencn\Admin\Http\Middleware\Menu',
+            'Tanwencn\Admin\Http\Middleware\Asset',
+            'Tanwencn\Admin\Http\Middleware\Pjax',
+            'Tanwencn\Admin\Http\Middleware\HttpLog'
         ]
     ],
 
     'elfinder' => [
         'default' => [
-            'process' => Tanwencn\Admin\FinderProcess::class,
+            'process' => 'Tanwencn\Admin\FinderProcess',
             'options' => [
                 'disk' => 'public',
                 'uploadOverwrite' => false,
@@ -45,6 +40,11 @@ return [
     ],
 
     'auth' => [
+        'login' => [
+            'controller' => 'Tanwencn\Admin\Http\Controllers\LoginController',
+            'username' => 'name',
+            'default_password' => '123456'
+        ],
         'guards' => [
             'admin' => [
                 'driver' => 'session',

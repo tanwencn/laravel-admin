@@ -67,6 +67,6 @@ class LoginController extends Controller
 
     public function username()
     {
-        return config('admin.user.username', 'email');
+        return config('admin.auth.login.username', 'email');
     }
 }

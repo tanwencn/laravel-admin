@@ -1,9 +1,9 @@
 <?php
 
-Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
-    $router->get('login', 'LoginController@showLoginForm')->name('admin.login');
-    $router->post('login', 'LoginController@login')->name('admin.login');
-    $router->get('logout', 'LoginController@logout')->name('admin.logout');
+Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(function ($router) {
+    $router->get('login', config('admin.auth.login.controller').'@showLoginForm')->name('admin.login');
+    $router->post('login', config('admin.auth.login.controller').'@login')->name('admin.login');
+    $router->get('logout', config('admin.auth.login.controller').'@logout')->name('admin.logout');
 });
 
 Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {

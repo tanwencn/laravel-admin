@@ -5,14 +5,6 @@ title: 配置项
 
 安装完成后，会生成一个```config/admin.php```配置文件，所有的配置项都能在这里找到。
 
-## 登录设置
-
-### user.username
-登录字段，默认为邮箱登录。
-
-### user.default_password
-新建后台用户的默认密码，在没有设置或填写密码的情况下生效。
-
 ## 布局
 
 后台布局配置项，和前端相关的配置都在这里。
@@ -66,6 +58,23 @@ pjax内容过滤中间件，删除这个中间件，会自动取消pjax功能
 ### Tanwencn\Admin\Http\Middleware\HttpLog
 写入后台操作日志的地方。
 
+## 登录设置
+
+### auth.login.controller
+登录控制器，如若需要重写，可在这里写自定义控制器。
+
+### auth.login.username
+登录字段，默认为邮箱登录。
+
+### auth.login.default_password
+新建后台用户的默认密码，在没有设置或填写密码的情况下生效。
+
+
+## 授权(auth)
+参考Laravel官方文档的config.auth设置项。
+
+## 文件管理器(elfinder)
+
 ## 操作日志
 后台操作日志配置。
 
@@ -74,8 +83,3 @@ pjax内容过滤中间件，删除这个中间件，会自动取消pjax功能
 
 ### logger.except
 不需要记录的字段。
-
-## 授权(auth)
-参考Laravel官方文档的config.auth设置项。
-
-## 文件管理器(elfinder)

@@ -28,7 +28,7 @@ class UserController extends Controller
     public function __construct()
     {
         $fileds = ['email', 'name'];
-        array_unshift($fileds, config('admin.user.username', 'email'));
+        array_unshift($fileds, config('admin.auth.login.username', 'email'));
         View::share('user_name_fileds', array_filter(array_unique($fileds)));
     }
 
@@ -106,7 +106,7 @@ class UserController extends Controller
             'password' => 'min:6|confirmed'
         ];
 
-        $login_filed = config('admin.user.username', 'email');
+        $login_filed = config('admin.auth.login.username', 'email');
         $validates[$login_filed] = array_merge($validates[$login_filed], ['required', Rule::unique('users')->ignore($model->id)]);
 
         $this->validate($request, $validates);
