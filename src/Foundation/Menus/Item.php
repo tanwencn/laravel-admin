@@ -9,6 +9,7 @@
 
 namespace Tanwencn\Admin\Foundation\Menus;
 
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Illuminate\Auth\AuthManager;
 use function PHPSTORM_META\type;
@@ -60,7 +61,7 @@ class Item
 
     public function child($title, \Closure $closure = null)
     {
-        if (!str_contains($title, '<i'))
+        if (!Str::contains($title, '<i'))
             $title = '<i class="fa fa-circle-o"></i><span>' . $title . '</span>';
 
         $item = new static($title);
