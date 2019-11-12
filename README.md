@@ -1,30 +1,19 @@
-# Laravel Admin
+---
+id: introduction
+title: 介绍
+sidebar_label: 介绍
+---
 
-Laravel Admin System, supporting Laravel >= 5.5!
+Laravel Admin 提供一个基础的RBAC的后台管理框架，并在此基础上提供一些后台基础功能。
 
-## Installation Steps
+- [查看文档](https://www.tanecn.com/docs/introduction)
+- [在线演示](https://demo.tanecn.com/admin)，账号密码均为```demo```，每三分钟重置一次密码。
 
-### 1.Require the Package
-```bash
-composer require tanwencn/laravel-admin
-```
 
-### 2.Configuration database
-Next make sure to create a new database and add your database credentials to your .env file:
-```bash
-DB_HOST=localhost
-DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
-```
+## 前言
+使用此扩展包，需要一定的前端基础，当然也不需要精通。如果你能使用```Bootstrap```框架进行简单的排版，能编写基础的```Javascrip```脚本，这完全足够了。
 
-### 3.Run The Installer
-```bash
-php artisan admin:install
-```
+如果你不想做这些事情，并且对前端排版没有定制需求，可以使用```z-song/laravel-admin```。一个非常强大的后台扩展包，你几乎可以用PHP来编写并完成所有的前端部份。
 
-### Default an Admin User
-    URL:http://youwebsite/admin
-    email: admin@admin.com   
-    password: admin
-
+## 预览
+![Laravel Admin](https://www.tanecn.com/img/preview.jpg)
