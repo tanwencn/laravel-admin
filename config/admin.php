@@ -54,7 +54,7 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model' => \Tanwencn\Admin\Database\Eloquent\User::class
+                'model' => Tanwencn\Admin\Database\Eloquent\User::class
             ],
         ]
     ],

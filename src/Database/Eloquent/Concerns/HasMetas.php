@@ -16,12 +16,12 @@ trait HasMetas
 {
     public function metas()
     {
-        return $this->hasMany(static::class.'Meta', 'target_id');
+        return $this->hasMany($this->getMorphClass().'Meta', 'target_id');
     }
 
-    public function getMetas($key)
+    public function getMetas($key, $default = null)
     {
-        return $this->metas->getRanks($key);
+        return $this->metas->getRanks($key)?:$default;
     }
 
     public function saveMetas($data){

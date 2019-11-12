@@ -9,24 +9,23 @@
 
 namespace Tanwencn\Admin\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
-use Tanwencn\Admin\Database\Eloquent\User;
-use Tanwencn\Admin\Database\Eloquent\UserMeta;
-use Tanwencn\Admin\Database\RelationHelper;
 use Tanwencn\Admin\Facades\Admin;
 
 class UserController extends Controller
 {
     use ValidatesRequests, Package;
 
+    protected $model;
+
     public function __construct()
     {
+        $this->model = config('admin.auth.providers.admin.model');
         $fileds = ['email', 'name'];
         array_unshift($fileds, config('admin.auth.login.username', 'email'));
         View::share('user_name_fileds', array_filter(array_unique($fileds)));
@@ -34,7 +33,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $model = User::with('roles');
+        $model = $this->model::with('roles');
         if (!Auth::user()->hasRole('superadmin'))
             $model->whereHas('roles', function ($query) {
                 $query->where('name', '!=', 'superadmin');
@@ -45,6 +44,9 @@ class UserController extends Controller
             $model->where(function ($query) use ($search) {
                 $query->where('email', 'like', "%{$search}%");
                 $query->orWhere('name', 'like', "%{$search}%");
+                $query->orWhereHas('metas', function ($build) use ($search) {
+                    $build->where('meta_value', 'like', "%{$search}%");
+                });
             });
         }
 
@@ -55,10 +57,10 @@ class UserController extends Controller
 
     public function create()
     {
-        return $this->_form(new User());
+        return $this->_form(new $this->model());
     }
 
-    protected function _form(User $model)
+    protected function _form($model)
     {
         $model->load('metas');
         $role = Role::where('guard_name', 'admin');
@@ -75,14 +77,14 @@ class UserController extends Controller
         if (Auth::id() != $id)
             $this->authorize('edit_user');
 
-        $model = User::with('roles')->findOrFail($id);
+        $model = $this->model::with('roles')->findOrFail($id);
 
         return $this->_form($model);
     }
 
     public function store()
     {
-        $model = new User();
+        $model = new $this->model();
         return $this->save($model);
     }
 
@@ -91,11 +93,11 @@ class UserController extends Controller
         if (Auth::id() != $id)
             $this->authorize('edit_user');
 
-        $model = User::findOrFail($id);
+        $model = $this->model::findOrFail($id);
         return $this->save($model);
     }
 
-    protected function save(User $model)
+    protected function save($model)
     {
         $request = request()->replace(array_filter(request()->all()));
 
@@ -139,7 +141,7 @@ class UserController extends Controller
 
         foreach ($ids as $id) {
             if ($id == 1) continue;
-            $model = User::findOrFail($id);
+            $model = $this->model::findOrFail($id);
             $model->delete();
         }
 

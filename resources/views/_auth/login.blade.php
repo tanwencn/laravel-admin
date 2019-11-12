@@ -36,9 +36,7 @@
       <div class="form-group has-feedback {!! !$errors->has($username) ?: 'has-error' !!}">
 
         @if($errors->has($username))
-          @foreach($errors->get($username) as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label></br>
-          @endforeach
+            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first($username)}}</label></br>
         @endif
 
         <input type="input" class="form-control" placeholder="{{ trans('admin.'.$username) }}" name="{{ $username }}" value="{{ old($username) }}">
@@ -47,9 +45,7 @@
       <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
 
         @if($errors->has('password'))
-          @foreach($errors->get('password') as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label></br>
-          @endforeach
+            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first(password)}}</label></br>
         @endif
 
         <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
