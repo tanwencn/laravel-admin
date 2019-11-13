@@ -7,7 +7,7 @@ sidebar_label: 介绍
 Laravel Admin 提供一个基础的RBAC的后台管理框架，并在此基础上提供一些后台基础功能。
 
 - [查看文档](https://www.tanecn.com/docs/introduction)
-- [在线演示](https://demo.tanecn.com/admin)(账号密码均为```demo```，每三分钟重置一次密码。)
+- [在线演示](https://demo.tanecn.com/admin)(账号密码```demo:demo```)
 
 
 ## 前言
