@@ -30,7 +30,7 @@ Admin.boot(function () {
     //or Finder.disk('default').click('.select-image', '#avatar');
 });
 ```
-上方代码会在```.select-image```的点击事件中打开选择器，然后会把选中的图片地址传给```#avatar```。第二个参数接受闭包，同时会把值传入闭包，这在对特殊处理和多选过程中非常有用。
+上方代码会在```.select-image```的点击事件中打开选择器，然后会把选中的图片地址作为值给到```#avatar```。
 
 ## 多选
 ```javascript
@@ -41,3 +41,4 @@ Admin.boot(function () {
     });
 });
 ```
+与单选不同的是，第二个参数接受闭包，同时会把值传入闭包，这在对多选和其它特殊处理过程中非常有用。

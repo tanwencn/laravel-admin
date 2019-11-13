@@ -8,7 +8,7 @@
 module.exports = {
     docs: {
         "Laravel Admin": ['introduction', 'install', 'config'],
-        "基本使用": ['menu', 'asset', 'view', 'controller', 'permission', 'elfinder'],
-        "定制化示例": ['captcha']
+        "基本使用": ['menu', 'asset', 'view', 'controller', 'permission'],
+        "插件": ['elfinder', 'captcha', 'navigation', 'blog', 'ecommerce']
     },
 };
