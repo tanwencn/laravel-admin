@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasMetas
 {
+    protected $hasMetasClass;
+
+    public function initializeHasMetas(){
+        $this->hasMetasClass = file_exists(static::class.'Meta')?static::class.'Meta':UserMeta::class;
+    }
+    
     public function metas()
     {
         return $this->hasMany($this->getMorphClass().'Meta', 'target_id');

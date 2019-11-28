@@ -15,15 +15,13 @@ use Tanwencn\Admin\Database\Collection\RanksCollection;
 trait Metas
 {
     public $relation_key = 'meta_key';
-
-    protected function bootIfNotBooted()
-    {
-        parent::bootIfNotBooted();
-
+    
+    public function initializeMetas(){
         $this->timestamps = false;
         $this->setTouchedRelations(['base']);
         $this->fillable(['meta_key', 'meta_value']);
     }
+
 
     public function base()
     {
