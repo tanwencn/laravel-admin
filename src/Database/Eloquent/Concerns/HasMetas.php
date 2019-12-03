@@ -22,7 +22,7 @@ trait HasMetas
     
     public function metas()
     {
-        return $this->hasMany($this->getMorphClass().'Meta', 'target_id');
+        return $this->hasMany($this->hasMetasClass, 'target_id');
     }
 
     public function getMetas($key, $default = null)
