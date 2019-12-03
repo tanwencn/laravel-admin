@@ -6,7 +6,7 @@
     <li><a href="{{ Admin::action('index') }}"> {{ trans_choice('admin.permission', 1) }}</a></li> @endsection
 
 @section('content')
-    <form action="{{ Admin::action('form', $model) }}"
+    <form action="{{ Admin::action('form', $model->id) }}"
           method="POST">
     {{ csrf_field() }}
     @if(isset($model->id))
