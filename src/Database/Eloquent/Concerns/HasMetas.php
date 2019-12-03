@@ -11,6 +11,7 @@ namespace Tanwencn\Admin\Database\Eloquent\Concerns;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Tanwencn\Admin\Database\Eloquent\UserMeta;
 
 trait HasMetas
 {
