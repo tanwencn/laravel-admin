@@ -3,6 +3,48 @@
 @section('title', "Laravel Logs")
 
 @section('content')
+    <style>
+        .modal-dialog{
+            width: 860px;
+        }
+        .modal-content {
+            position: relative;
+            background-color: transparent;
+             background-clip: padding-box;
+             border: 0;
+             border-radius: 6px;
+             -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+            box-shadow: 0 3px 9px rgba(0,0,0,.5);
+            outline: 0;
+        }
+        .modal-body{
+            padding: 0;
+        }
+        pre {
+            position: relative;
+            background: #21252b;
+            border-radius: 5px;
+            #font: 15px/22px "Microsoft YaHei", Arial, Sans-Serif;
+            #line-height: 1.6;
+            #margin-bottom: 24px;
+            max-width: 100%;
+            overflow: auto;
+            text-shadow: none;
+            color: #000;
+            #padding-top: 30px;
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
+        }
+        pre code {
+            background: #1d1f21;
+            color: #fff;
+            word-break: break-word;
+            font-family: 'Source Code Pro', monospace, Helvetica, Tahoma, Arial, STXihei, "STHeiti Light", "Microsoft YaHei", sans-serif;
+            padding: 2px;
+            text-shadow: none;
+            border-radius: 0 0 5px 5px;
+        }
+
+    </style>
     <!-- begin row -->
     <div class="row">
         <!-- begin col-12 -->
@@ -43,9 +85,10 @@
 
                         <div class="input-group input-group-sm" style="width: 200px;">
                             @if($eof)
-                            <div class="input-group-btn">
-                                <a class="btn btn-sm btn-default" href="{{ Admin::action('index', array_merge(request()->query(), ['page' => $page+1, 'timestrap' => time()])) }}">@lang('pagination.next')</a>
-                            </div>
+                                <div class="input-group-btn">
+                                    <a class="btn btn-sm btn-default"
+                                       href="{{ Admin::action('index', array_merge(request()->query(), ['page' => $page+1, 'timestrap' => time()])) }}">@lang('pagination.next')</a>
+                                </div>
                             @endif
                             <input type="search" name="search" class="form-control pull-right" value=""
                                    placeholder="{{ trans('admin.search') }}...">
@@ -90,13 +133,8 @@
                             <div class="modal fade" id="modal-default{{ $key }}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">Content</h4>
-                                        </div>
                                         <div class="modal-body">
-                                            <pre>{{ $val[4].$val[5] }}</pre>
+                                            <pre><code>{{ $val[4].$val[5] }}</code></pre>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -115,7 +153,7 @@
     <script>
         Admin.boot(function () {
             var table = $('.table').DataTable({
-                searching:true,
+                searching: true,
                 dom: 'Brtip',
                 buttons: [
                     'print'
