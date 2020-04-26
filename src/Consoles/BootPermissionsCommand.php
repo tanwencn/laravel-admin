@@ -12,8 +12,6 @@ namespace Tanwencn\Admin\Consoles;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Spatie\Permission\Contracts\Permission;
-use Spatie\Permission\Contracts\Role;
-use Tanwencn\Admin\Database\Eloquent\User;
 
 class BootPermissionsCommand extends Command
 {
@@ -66,16 +64,7 @@ class BootPermissionsCommand extends Command
 
         $this->abilityResources('permission');
 
-        $roleClass = app(Role::class);
-
-        $roleClass::findOrCreate('superadmin', 'admin');
-
-        $user = User::firstOrNew(['email' => 'admin@admin.com']);
-        $user->name = 'administrator';
-        $user->password = 'admin';
-        if($user->save()) {
-            $user->assignRole('superadmin');
-        }
+        $this->call('resetSuperAdmin');
 
         $this->info('Initialize permissions is complete');
     }

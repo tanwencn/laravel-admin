@@ -18,6 +18,7 @@ use Illuminate\Support\ServiceProvider;
 use Tanwencn\Admin\Consoles\BootPermissionsCommand;
 use Tanwencn\Admin\Consoles\BuildCommand;
 use Tanwencn\Admin\Consoles\InstallCommand;
+use Tanwencn\Admin\Consoles\ResetSuperAdminCommand;
 use Tanwencn\Admin\Foundation\Admin;
 use Tanwencn\Admin\Http\BootstrapComposer;
 
@@ -37,7 +38,8 @@ class AdminServiceProvider extends ServiceProvider
             $this->commands([
                 InstallCommand::class,
                 BuildCommand::class,
-                BootPermissionsCommand::class
+                BootPermissionsCommand::class,
+                ResetSuperAdminCommand::class
             ]);
         }
 

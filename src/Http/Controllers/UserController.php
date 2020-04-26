@@ -65,7 +65,7 @@ class UserController extends Controller
         $model->load('metas');
         $role = Role::where('guard_name', 'admin');
         if (!Auth::user()->hasRole('superadmin'))
-            $role->where('name', '!=', 'superadmin');
+            $role->whereIn('name', Auth::user()->roles->pluck('name')->all());
 
         $roles = $role->get()->pluck('name', 'name');
 
@@ -104,8 +104,13 @@ class UserController extends Controller
         $validates = [
             'email' => ['email', 'max:255'],
             'role' => 'required',
+            'role.*' => function ($attribute, $value, $fail) {
+                if (!Auth::user()->hasRole('superadmin') && !in_array($value, Auth::user()->roles->pluck('name')->all())) {
+                    $fail($attribute.' is invalid.');
+                }
+            },
             'name' => ['max:255'],
-            'password' => 'min:6|confirmed'
+            'password' => [Rule::requiredIf(!$model->id), 'min:6', 'confirmed']
         ];
 
         $login_filed = config('admin.auth.login.username', 'email');

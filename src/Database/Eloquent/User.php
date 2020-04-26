@@ -41,9 +41,9 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($model) {
+        /*static::creating(function ($model) {
             if(!$model->password) $model->password = config('admin.auth.login.default_password', '123456');
-        });
+        });*/
         static::deleting(function ($model) {
             if (method_exists($model, 'isForceDeleting') && !$model->isForceDeleting()) {
                 return;

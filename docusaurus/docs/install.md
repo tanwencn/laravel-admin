@@ -32,6 +32,7 @@ php artisan admin:install
 
 输入登录账号：admin@admin.com   
 输入登录密码：admin
+PS:如若忘记密码或者误删除此账号，可以用```php artisan admin:resetSuperAdmin```命令恢复此账号至安装状态。
 
 ### 5.开发目录
 执行```admin::install```后，扩展包会自动生成开发目录和后台首页控制器及视图:

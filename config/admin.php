@@ -42,8 +42,7 @@ return [
     'auth' => [
         'login' => [
             'controller' => 'Tanwencn\Admin\Http\Controllers\LoginController',
-            'username' => 'name',
-            'default_password' => '123456'
+            'username' => 'name'
         ],
         'guards' => [
             'admin' => [

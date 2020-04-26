@@ -66,10 +66,6 @@ pjax内容过滤中间件，删除这个中间件，会自动取消pjax功能
 ### auth.login.username
 登录字段，默认为邮箱登录。更改此选项的同时，需要注意数据库必填字段及索引等结构。
 
-### auth.login.default_password
-新建后台用户的默认密码，在没有设置或填写密码的情况下生效。
-
-
 ## 授权(auth)
 参考Laravel官方文档的config.auth设置项。
 
