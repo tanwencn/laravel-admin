@@ -83,3 +83,8 @@ pjax内容过滤中间件，删除这个中间件，会自动取消pjax功能
 
 ### logger.except
 不需要记录的字段。
+
+## Laravel Logs
+后台查看Laravel 日志
+### laravel_logs.read_once_rows
+一页读取多少行日志
