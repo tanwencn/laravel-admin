@@ -41,7 +41,12 @@
                     <h3 class="box-title">Logs</h3>
 
                     <div class="box-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
+                        <div class="input-group input-group-sm" style="width: 260px;">
+                            @if($eof)
+                            <div class="input-group-btn">
+                                <a class="btn btn-sm btn-default" href="{{ Admin::action('index', array_merge(request()->query(), ['page' => $page+1, 'timestrap' => time()])) }}">@lang('pagination.next')</a>
+                            </div>
+                            @endif
                             <input type="search" name="search" class="form-control pull-right" value=""
                                    placeholder="Search...">
 
@@ -53,7 +58,7 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover table-striped no-data" data-scroll-y="490">
+                    <table class="table table-hover table-striped no-data" data-scroll-y="450">
                         <thead>
                         <tr>
                             <th>Level</th>

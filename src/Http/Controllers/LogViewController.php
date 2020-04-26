@@ -13,14 +13,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Illuminate\Support\Facades\URL;
 
 class LogViewController extends Controller
 {
     use Package;
 
+    protected $rows_line = 0;
+    protected $eof = false;
+
     public function index(Request $request)
     {
-        $current = $request->filled('f')?decrypt($request->query('f'), false):"";
+        $page = $request->query('page', 1);
+        $current = $request->filled('f') ? decrypt($request->query('f'), false) : "";
+        if ($page == 1) $this->rows_key = 0;
         $current_file = null;
         $tree = [];
         $log_path = storage_path('logs');
@@ -35,12 +41,12 @@ class LogViewController extends Controller
             $pathname = $file->getRelativePathname();
             $info = pathinfo($pathname);
             $key = $info['dirname'] == '.' ? $info['filename'] : str_replace('/', '.', $info['dirname']) . '.' . $info['filename'];
-            $fileName = $log_path.'/'.$pathname;
+            $fileName = $log_path . '/' . $pathname;
 
             /*if(is_file($fileName) && !$current)
                 $current = $fileName;*/
 
-            if($current == $fileName)
+            if ($current == $fileName)
                 $current_file = $file;
 
             Arr::set($tree, $key, $fileName);
@@ -48,17 +54,37 @@ class LogViewController extends Controller
 
         $statistics = "";
 
-        $data = $current?$this->data($current_file):[];
+        if ($page == 1) session(['log_view_line' => 0]);
+        $this->rows_line = $this->isRefresh()?session('log_view_line_last'):session('log_view_line', 0);
 
-        return $this->view('index', compact('tree', 'statistics', 'current', 'data'));
+        $data = $current ? $this->data($current_file) : [];
+
+        $eof = $this->eof;
+
+        return $this->view('index', compact('tree', 'statistics', 'current', 'data', 'page', 'eof'));
     }
 
-    protected function data(SplFileInfo $file){
-        /*if (app('files')->size($file) >= 15*1024*1024) {
-            return null;
-        }*/
+    protected function data(SplFileInfo $file)
+    {
+        $file = (new \SplFileObject($file));
+        $file->seek($this->rows_line);
+        $once_rows = 0;
+        $content = "";
 
-        $content = $file->getContents();
+        while ($this->eof = $file->valid()) {
+            $line = $file->fgets() . "\n";
+            if ($once_rows > config('admin.laravel_logs.read_once_rows', 10000) && preg_match('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $line)) {
+                if (!$this->isRefresh()) {
+                    session(['log_view_line_last' => $this->rows_line]);
+                    session(['log_view_line' => $file->key()-1]);
+                    session(['log_view_line_time' => request()->query('timestrap')]);
+                }
+                break;
+            };
+
+            $content .= $line;
+            $once_rows++;
+        }
 
         preg_match_all('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $content, $headings);
         $log_data = preg_split('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $content, null);
@@ -68,11 +94,16 @@ class LogViewController extends Controller
         $headings = array_shift($headings);
 
         $results = [];
-        foreach ($headings as $key => $heading){
+        foreach ($headings as $key => $heading) {
             preg_match('/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] (.+?)\.(.+?): (.*)/', $heading, $results[$key]);
             array_push($results[$key], $log_data[$key]);
         }
 
         return array_reverse($results);
+    }
+
+    private function isRefresh()
+    {
+        return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('log_view_line_time');
     }
 }

@@ -62,5 +62,9 @@ return [
     'logger' => [
         'method' => ['post', 'put', 'patch', 'delete'],
         'except' => ['password', 'password_confirmation']
+    ],
+
+    'laravel_logs' => [
+        'read_once_rows' => 30000
     ]
 ];
