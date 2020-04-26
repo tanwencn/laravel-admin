@@ -39,21 +39,21 @@
                 <div class="box-header">
 
                     <h3 class="box-title">Logs</h3>
-
                     <div class="box-tools">
-                        <div class="input-group input-group-sm" style="width: 260px;">
+
+                        <div class="input-group input-group-sm" style="width: 200px;">
                             @if($eof)
                             <div class="input-group-btn">
                                 <a class="btn btn-sm btn-default" href="{{ Admin::action('index', array_merge(request()->query(), ['page' => $page+1, 'timestrap' => time()])) }}">@lang('pagination.next')</a>
                             </div>
                             @endif
                             <input type="search" name="search" class="form-control pull-right" value=""
-                                   placeholder="Search...">
+                                   placeholder="{{ trans('admin.search') }}...">
 
-                            <div class="input-group-btn">
+                            {{--<div class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-search"><i class="fa fa-search"></i>
                                 </button>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -123,10 +123,16 @@
             });
 
             $('.nav li.active').parents('ul.collapse').addClass('in');
-            $('.btn-search').click(function () {
+            $('.nav li.active').parents('ul.collapse').addClass('in');
+            $('[name="search"]').keyup(function () {
+                if ($(this).prop('comStart')) return;    // 中文输入过程中不截断
                 NProgress.start();
                 table.search($('input[name="search"]').val()).draw();
                 NProgress.done();
+            }).on('compositionstart', function () {
+                $(this).prop('comStart', true);
+            }).on('compositionend', function () {
+                $(this).prop('comStart', false);
             });
         });
     </script>

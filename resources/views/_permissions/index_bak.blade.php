@@ -37,17 +37,17 @@
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="search" class="form-control pull-right"
                                        value="{{ request('search') }}"
-                                       placeholder="{{ trans('admin.search') }}...">
+                                       placeholder="{{ trans('admin.search_name') }}...">
 
-                                {{--<div class="input-group-btn">
+                                <div class="input-group-btn">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>--}}
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped no-data">
+                    <table class="table table-hover table-striped">
                         <thead>
                         <tr>
                             <th class="table-select"></th>
@@ -84,32 +84,22 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="box-footer clearfix">
+                    <div class="pull-left">
+                        {{ trans('admin.pagination.range', [
+                        'first' => $results->firstItem(),
+                        'last' => $results->lastItem(),
+                        'total' => $results->total(),
+                        ]) }}
+                    </div>
+
+                    <div class="pull-right">
+                        {{ $results->appends(request()->query())->links() }}
+                    </div>
+                </div>
                 <!-- /.box-body -->
             </div>
         </div>
         <!-- end panel -->
     </div>
-    <script>
-        Admin.boot(function () {
-            var table = $('.table').DataTable({
-                searching: true,
-                dom: 'Brtip',
-                buttons: [
-                    'print'
-                ]
-            });
-
-            $('[name="search"]').keyup(function () {
-                if ($(this).prop('comStart')) return;    // 中文输入过程中不截断
-
-                NProgress.start();
-                table.search($('input[name="search"]').val()).draw();
-                NProgress.done();
-            }).on('compositionstart', function () {
-                $(this).prop('comStart', true);
-            }).on('compositionend', function () {
-                $(this).prop('comStart', false);
-            });
-        });
-    </script>
 @endsection

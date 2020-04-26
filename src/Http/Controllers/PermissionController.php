@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Permission;
 use Tanwencn\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Auth;
+use Tanwencn\Admin\Http\Rules\HasAlreadyPermission;
 
 class PermissionController extends Controller
 {
@@ -26,8 +28,8 @@ class PermissionController extends Controller
 
     public function index(Request $request)
     {
-        $model = Permission::query();
-        $search = $request->query('search');
+        $results = Permission::all();
+        /*$search = $request->query('search');
         if (!empty($search)) {
             $model->where(function ($query) use ($search) {
                 $search = ['like', "%{$search}%"];
@@ -35,7 +37,7 @@ class PermissionController extends Controller
             });
         }
 
-        $results = $model->paginate();
+        $results = $model->paginate();*/
 
         return $this->view('index', compact('results'));
     }
@@ -47,6 +49,8 @@ class PermissionController extends Controller
 
     protected function _form(Permission $model)
     {
+        $this->hasAlreadyPermission($model);
+
         $guards = $this->guards;
 
         return $this->view('add_edit', compact('model', 'guards'));
@@ -80,6 +84,8 @@ class PermissionController extends Controller
             'guard' => ['required', Rule::in($this->guards)]
         ]);
 
+        $this->hasAlreadyPermission($model);
+
         $model->name = $request->input('name');
 
         $model->guard_name = $request->input('guard');
@@ -94,6 +100,7 @@ class PermissionController extends Controller
         $ids = $id ? [$id] : $request->input('ids');
         foreach ($ids as $id) {
             $model = Permission::findOrFail($id);
+            $this->hasAlreadyPermission($model);
             $model->delete();
         }
 
@@ -101,6 +108,10 @@ class PermissionController extends Controller
             'status' => true,
             'message' => trans('admin.delete_succeeded'),
         ]);
+    }
+
+    protected function hasAlreadyPermission($model){
+        abort_unless(abort_unless(Auth::user()->hasPermissionTo(intval($model->id)), 402, "you is no permission id {$model->name}"));
     }
 
     protected function abilitiesMap()

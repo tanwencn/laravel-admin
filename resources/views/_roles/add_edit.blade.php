@@ -59,22 +59,27 @@
                                     <template class="{{ $guard }}">
                                         <table class="table table-condensed table-bordered permissions">
                                             <thead>
-                                            <th width="80"><input type="checkbox" class="grid-select-all checkbox-style"></th>
+                                            <th width="80"><input type="checkbox"
+                                                                  class="grid-select-all checkbox-style"></th>
                                             <th>{{ trans_choice('admin.permission', 0) }}</th>
                                             <th>{{ trans('admin.guard') }}</th>
                                             </thead>
                                             <tbody>
                                             @isset($permissions_group[$guard])
-                                            @foreach($permissions_group[$guard] as $permission)
-                                                <tr>
-                                                    <td><input type="checkbox" name="permissions[]"
-                                                               {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
-                                                               value="{{ $permission->id }}"></td>
-                                                    <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
-                                                    <td>{{ $permission->guard_name }}</td>
-                                                </tr>
-                                            @endforeach
-                                                @endisset
+                                                @foreach($permissions_group[$guard] as $permission)
+                                                    <tr>
+                                                        <td>
+                                                            @if($guard == 'admin' && auth()->user()->can($permission->name))
+                                                                <input type="checkbox" name="permissions[]"
+                                                                       {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
+                                                                       value="{{ $permission->id }}">
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
+                                                        <td>{{ $permission->guard_name }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endisset
                                             </tbody>
                                         </table>
                                     </template>
@@ -101,7 +106,7 @@
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
                 $('.data-list').html($('template.' + name).html());
-                $('.data-list>table').DataTable({searching:true});
+                $('.data-list>table').DataTable({searching: true});
                 $('.checkbox-style').iCheck({
                     checkboxClass: 'icheckbox_flat-red',
                     increaseArea: '10%' // optional

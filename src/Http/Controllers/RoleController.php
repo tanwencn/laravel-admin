@@ -88,14 +88,21 @@ class RoleController extends Controller
             'permissions' => 'array'
         ]);
 
+        if($request->filled('permissions')) {
+            foreach ($request->input('permissions') as $val) {
+                abort_unless(Auth::user()->hasPermissionTo(intval($val)), 402, "you is no permission id {$val}");
+            }
+        }
+
         $model->name = $request->input('name');
 
         $model->guard_name = $request->input('guard');
 
         $model->save();
 
-        if ($request->filled('permissions'))
+        if ($request->filled('permissions')) {
             $model->syncPermissions($request->input('permissions'));
+        }
 
         return redirect(\Admin::action('index'))->with('toastr_success', trans('admin.save_succeeded'));
     }
