@@ -75,15 +75,8 @@ pjax内容过滤中间件，删除这个中间件，会自动取消pjax功能
 ### logger.except
 不需要记录的字段。
 
-<<<<<<< Updated upstream
-## 授权(auth)
-参考Laravel官方文档的config.auth设置项。
-
-## 文件管理器(elfinder)
-=======
 ## Laravel Logs
 后台可以查看Laravel日志
 
 ### laravel_logs.read_once_rows
 一页读取多少行日志
->>>>>>> Stashed changes
