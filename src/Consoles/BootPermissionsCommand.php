@@ -64,7 +64,7 @@ class BootPermissionsCommand extends Command
 
         $this->abilityResources('permission');
 
-        $this->call('resetSuperAdmin');
+        $this->call('admin:resetSuperAdmin');
 
         $this->info('Initialize permissions is complete');
     }
