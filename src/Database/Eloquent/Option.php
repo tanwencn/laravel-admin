@@ -25,7 +25,7 @@ class Option extends Model
         });
     }
 
-    public static function findByName(string $name, string $defalut = '')
+    public static function findByName(string $name, $defalut = '')
     {
         $data = Cache::remember('t_options_' . $name, 7200, function () use ($name) {
             try {
@@ -34,7 +34,7 @@ class Option extends Model
                 return null;
             }
 
-            return $model && $model->value ? $model->value : null;
+            return $model && $model->value ? $model->value : "";
         });
 
         return $data ?: $defalut;

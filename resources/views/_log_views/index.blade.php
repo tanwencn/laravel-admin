@@ -1,6 +1,6 @@
 @extends('admin::_layouts.app')
 
-@section('title', "Laravel Logs")
+@section('title', trans("admin.laravel_logs"))
 
 @section('content')
     <style>

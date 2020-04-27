@@ -111,7 +111,7 @@ class PermissionController extends Controller
     }
 
     protected function hasAlreadyPermission($model){
-        abort_unless(abort_unless(Auth::user()->hasPermissionTo(intval($model->id)), 402, "you is no permission id {$model->name}"));
+        abort_unless(Auth::user()->hasPermissionTo(intval($model->id)), 402, "you is no permission id {$model->name}");
     }
 
     protected function abilitiesMap()

@@ -106,4 +106,9 @@ class LogViewController extends Controller
     {
         return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('log_view_line_time');
     }
+
+    protected function abilitiesMap()
+    {
+        return "laravel_logs";
+    }
 }

@@ -51,6 +51,7 @@
                         <thead>
                         <tr>
                             <th class="table-select"></th>
+                            <th>{{ trans('admin.permission') }}</th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
@@ -61,6 +62,7 @@
                         @foreach($results as $permission)
                             <tr>
                                 <td class="table-select">@if($permission->guard_name == 'admin' && auth()->user()->can($permission->name)){{ $permission->id }}@endif</td>
+                                <td>{{ $permission->name }}</td>
                                 <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
                                 <td>{{ $permission->guard_name }}</td>
                                 <td>{{ $permission->updated_at }}</td>

@@ -191,5 +191,7 @@ return [
     'click_view' => 'Click View',
     'format' => 'Format',
 
-    'theme' => 'Theme'
+    'theme' => 'Theme',
+
+    'laravel_logs' => 'Laravel Logs'
 ];

@@ -22,7 +22,7 @@
                     <div class="box-body">
                         <div class="form-horizontal">
                             <div class="form-group {{ $errors->has('name')?"has-error":"" }}">
-                                <label class="control-label col-md-2">{{ trans('admin.name') }}：</label>
+                                <label class="control-label col-md-2">{{ trans('admin.permission') }}：</label>
                                 <div class="col-md-8">
                                     @if($errors->has('name'))
                                         <label class="control-label">

@@ -191,5 +191,7 @@ return [
     'click_view' => '點擊查看',
     'format' => '格式化',
 
-    'theme' => '主題'
+    'theme' => '主題',
+
+    'laravel_logs' => '系統日誌'
 ];
