@@ -6,10 +6,10 @@ Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(
     $router->get('logout', config('admin.auth.login.controller').'@logout')->name('admin.logout');
 });
 
-Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {
+/*Admin::router()->namespace('Tanwencn\Admin\Elfinder')->group(function ($router) {
         $router->any('elfinder/connector', ['as' => 'elfinder.connector', 'uses' => 'Controller@showConnector']);
         $router->get('elfinder/show', ['as' => 'admin.elfinder.show', 'uses' => 'Controller@showIndex']);
-    });
+    });*/
 
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
