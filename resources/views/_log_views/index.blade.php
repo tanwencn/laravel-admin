@@ -123,7 +123,7 @@
                                     </code>
                                 </td>
                                 <td>
-                                    @if(!empty(trim($val[5])))
+                                    @if(isset($val[5]) && !empty(trim($val[5])))
                                         <button type="button" class="btn btn-xs btn-primary" data-toggle="modal"
                                                 data-target="#modal-default{{ $key }}"> View
                                         </button>
@@ -134,7 +134,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <pre><code>{{ $val[4].$val[5] }}</code></pre>
+                                            <pre><code>{{ $val[4].(isset($val[5])?$val[5]:"") }}</code></pre>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->

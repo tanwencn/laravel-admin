@@ -73,7 +73,7 @@ class LogViewController extends Controller
 
         while ($this->eof = $file->valid()) {
             $line = $file->fgets() . "\n";
-            if ($once_rows > config('admin.laravel_logs.read_once_rows', 10000) && preg_match('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $line)) {
+            if ($once_rows > config('admin.laravel_logs.read_once_rows', 10000) && preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $line)) {
                 if (!$this->isRefresh()) {
                     session(['log_view_line_last' => $this->rows_line]);
                     session(['log_view_line' => $file->key()-1]);
@@ -86,8 +86,8 @@ class LogViewController extends Controller
             $once_rows++;
         }
 
-        preg_match_all('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $content, $headings);
-        $log_data = preg_split('/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\].*/', $content, null);
+        preg_match_all('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content, $headings);
+        $log_data = preg_split('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content, null);
         if ($log_data[0] < 1)
             array_shift($log_data);
 
@@ -95,7 +95,7 @@ class LogViewController extends Controller
 
         $results = [];
         foreach ($headings as $key => $heading){
-            preg_match('/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] (.+?)\.(.+?): (.*)/', $heading, $results[$key]);
+            preg_match('/^\[(\d{4}-\d{2}-\d{2}.+\d)\] (.+?)\.(.+?): (.*)/', trim($heading), $results[$key]);
             array_push($results[$key], $log_data[$key]);
         }
 
