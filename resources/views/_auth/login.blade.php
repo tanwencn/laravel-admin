@@ -45,7 +45,7 @@
       <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
 
         @if($errors->has('password'))
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first(password)}}</label></br>
+            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first('password')}}</label></br>
         @endif
 
         <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
