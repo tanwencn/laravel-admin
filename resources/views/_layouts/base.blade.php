@@ -1,99 +1,65 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title') &nbsp;&nbsp;&nbsp;{{ option('web_name', config('app.name')) }}</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Tell the browser to be responsive to screen width -->
     <link rel="shortcut icon" href="{{ asset('vendor/laravel-admin/logo.png') }}" type="image/x-icon">
 
-{!! Admin::asset()->head() !!}
+    <link rel="stylesheet" href="{{ mix('css/vendor.css', 'vendor/laravel-admin') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css', 'vendor/laravel-admin') }}">
+    <script src="{{ mix('js/vendor.js', 'vendor/laravel-admin') }}"></script>
+    <script src="{{ mix('js/app.js', 'vendor/laravel-admin') }}"></script>
 
+    {!! Admin::asset()->head() !!}
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="{{ config('admin.layout.body_class') }}">
 <div class="wrapper">
 
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="javascript:void(0);" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">{!! config('admin.layout.logo_mini') !!}</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">{!! config('admin.layout.logo') !!}</span>
+    <!-- Navbar -->
+    @include('admin::_layouts.top_nav')
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="index3.html" class="brand-link" style="font-size: 1.25rem">
+            {!! config('admin.layout.logo') !!}
         </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="javascript:void(0);" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
 
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ Auth::user()->avatar }}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{ Auth::user()->name }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="{{ Auth::user()->avatar }}" class="img-circle" alt="User Image">
-
-                                <p>
-                                    {{ Auth::user()->username }}
-                                    <small>{{ Auth::user()->name }}</small>
-                                </p>
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{ route('admin.users.edit', Auth::id()) }}"
-                                       class="btn btn-default btn-flat">{{ trans('admin.edit_profile') }}</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{{ route('admin.logout') }}"
-                                       class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="{{ option('web_url') }}"><i class="fa fa-home"></i></a>
-                    </li>
-                </ul>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2">
+                </div>
+                <div class="info">
+                    <a href="{{ route('admin.users.edit', Auth::id()) }}" class="d-block">{{ Auth::user()->name }}</a>
+                </div>
             </div>
-        </nav>
-    </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- /.search form -->
-        {{--<div class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-            </button>
-          </span>
-            </div>
-        </div>--}}
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="true">
                 {!! Admin::menu()->render() !!}
-            </ul>
-        </section>
+                <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
         <!-- /.sidebar -->
     </aside>
 
@@ -101,38 +67,47 @@
     <div class="content-wrapper" id="pjax-container">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                @yield('title')
-                <small>@yield('description')</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route(config('admin.router.index')) }}">
-                        <i class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
-                @yield('breadcrumbs')
-                <li class="active">@hasSection('active_title')
-                        @yield('active_title')
-                    @else
-                        @yield('title')
-                    @endif</li>
-            </ol>
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">@yield('title')</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route(config('admin.router.index')) }}"><i
+                                            class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
+                            @yield('breadcrumbs')
+                            <li class="breadcrumb-item active">
+                                @hasSection('active_title')
+                                    @yield('active_title')
+                                @else
+                                    @yield('title')
+                                @endif</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </section>
+        <!-- /.content-header -->
 
         <!-- Main content -->
-        <section class="content box-body">
+        <section class="content">
             @yield('content')
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     @if(config('admin.layout.footer') !== false)
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2
-            </div>
-            {!! config('admin.layout.footer') !!}
-        </footer>
+    <footer class="main-footer">
+        {!! config('admin.layout.footer') !!}
+    </footer>
     @endif
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -157,7 +132,9 @@
     };
 
     Finder.default = {title: "{{ trans('admin.select_file') }}", url: "{{ route('admin.elfinder.show') }}"};
+
     Admin.init();
+    Admin.activityMenu('{{ url()->current() }}');
 </script>
 </body>
 </html>

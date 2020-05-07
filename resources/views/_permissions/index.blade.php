@@ -7,9 +7,9 @@
     <div class="row">
         <!-- begin col-12 -->
         <div class="col-md-12">
-            <div class="box box-default">
-                <!-- /.box-header -->
-                <div class="box-header">
+            <div class="card">
+                <!-- /.card-header -->
+                <div class="card-header">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm">{{ trans('admin.batch') }}</button>
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -17,10 +17,8 @@
                         </button>
                         <ul class="dropdown-menu">
                             @can('delete_permission')
-                                <li>
-                                    <a href="javascript:void(0)" class="grid-batch-delete"
+                                    <a href="javascript:void(0)" class="grid-batch-delete dropdown-item"
                                        data-url="{{ route('admin.permissions.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                                </li>
                             @endcan
                         </ul>
                     </div>
@@ -32,10 +30,10 @@
                         </div>
                     @endcan
 
-                    <div class="box-tools">
+                    <div class="card-tools">
                         <form id="search" action="{{ Admin::action('index') }}">
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="search" class="form-control pull-right"
+                                <input type="text" name="search" class="form-control float-right"
                                        value="{{ request('search') }}"
                                        placeholder="{{ trans('admin.search') }}...">
 
@@ -46,7 +44,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="box-body table-responsive">
+                <div class="card-body table-responsive p-0">
                     <table class="table table-hover table-striped no-data">
                         <thead>
                         <tr>
@@ -86,11 +84,12 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.box-body -->
+                <!-- /.card-body -->
             </div>
         </div>
         <!-- end panel -->
     </div>
+
     <script>
         Admin.boot(function () {
             var table = $('.table').DataTable({
@@ -100,6 +99,12 @@
                     'print'
                 ]
             });
+
+            $('.checkbox-style').iCheck({
+                checkboxClass: 'icheckbox_flat-red',
+                increaseArea: '10%' // optional
+            });
+            Admin.icheckEvent();
 
             $('[name="search"]').keyup(function () {
                 if ($(this).prop('comStart')) return;    // 中文输入过程中不截断

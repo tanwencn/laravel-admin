@@ -7,15 +7,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@4/css/font-awesome.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@2.4.17/dist/css/AdminLTE.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icheck@1.0/skins/all.css">
-
+  <link rel="stylesheet" href="{{ mix('css/vendor.css', 'vendor/laravel-admin') }}">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -29,56 +21,56 @@
     <a href="{{ route('admin.login') }}"><b>{{ option('web_name', config('app.name')) }}</b></a>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="card">
+    <div class="card-body login-card-body">
     <p class="login-box-msg">{{ trans('admin.login') }}</p>
 
     <form action="{{ route('admin.login') }}" method="post">
-      <div class="form-group has-feedback {!! !$errors->has($username) ?: 'has-error' !!}">
-
-        @if($errors->has($username))
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first($username)}}</label></br>
-        @endif
-
-        <input type="input" class="form-control" placeholder="{{ trans('admin.'.$username) }}" name="{{ $username }}" value="{{ old($username) }}">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      {{ csrf_field() }}
+      <div class="input-group mb-3">
+        <input type="text" class="form-control @if($errors->has($username)) is-invalid @endif" placeholder="{{ trans('admin.'.$username) }}" value="{{ old($username) }}" name="{{ $username }}">
+        <span class="error invalid-feedback">{{$errors->first($username)}}</span>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
+          </div>
+        </div>
       </div>
-      <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
 
-        @if($errors->has('password'))
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$errors->first('password')}}</label></br>
-        @endif
-
-        <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      <div class="input-group mb-3">
+        <input type="password" class="form-control @if($errors->has('password')) is-invalid @endif" placeholder="{{ trans('admin.password') }}" name="password">
+        <span class="error invalid-feedback">{{$errors->first('password')}}</span>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-lock"></span>
+          </div>
+        </div>
       </div>
+
       <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" name="remember"> {{ trans('admin.remember_me') }}
+        <div class="col-8">
+          <div class="icheck-primary">
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember">
+              {{ trans('admin.remember_me') }}
             </label>
           </div>
         </div>
         <!-- /.col -->
-        <div class="col-xs-4">
-          {{ csrf_field() }}
-          <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
+        <div class="col-4">
+          <button type="submit" class="btn btn-primary btn-block">{{ trans('admin.login') }}</button>
         </div>
         <!-- /.col -->
       </div>
     </form>
-
+    </div>
   </div>
-  <!-- /.login-box-body -->
+  <!-- /.login-card-body -->
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery 3 -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.4/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="https://cdn.jsdelivr.net/npm/icheck@1.0/icheck.min.js"></script>
+
+<script src="{{ mix('js/vendor.js', 'vendor/laravel-admin') }}"></script>
 <script>
     $(function () {
         $('input').iCheck({

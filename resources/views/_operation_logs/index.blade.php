@@ -3,17 +3,12 @@
 @section('title', trans_choice('admin.operationlog', 1))
 
 @section('content')
-    <style>
-        .table.dataTable {
-            margin-top: 0 !important;
-        }
-    </style>
     <!-- begin row -->
     <div class="row">
         <!-- begin col-12 -->
         <div class="col-md-12">
-            <div class="box box-widget">
-                <div class="box-body table-responsive no-padding">
+            <div class="card">
+                <div class="card-body table-responsive p-0">
                     <table class="table table-hover table-striped no-data" data-scroll-y="480">
                         <thead>
                         <tr>
@@ -29,7 +24,7 @@
                         @foreach($results as $log)
                             <tr>
                                 <td>{{ $log->user->name }}</td>
-                                <td><span class="label bg-green">{{ $log->method }}</span></td>
+                                <td><span class="badge bg-green">{{ $log->method }}</span></td>
                                 <td><code>{{ $log->uri }}</code></td>
                                 <td>
                                     <pre>{{ $log->body }}</pre>
@@ -46,8 +41,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="box-footer clearfix">
-                    <div class="pull-left">
+                <div class="card-footer clearfix">
+                    <div class="float-left">
                         {{ trans('admin.pagination.range', [
                         'first' => $results->firstItem(),
                         'last' => $results->lastItem(),
@@ -55,15 +50,16 @@
                         ]) }}
                     </div>
 
-                    <div class="pull-right">
+                    <div class="float-right">
                         {{ $results->appends(request()->query())->links() }}
                     </div>
                 </div>
-                <!-- /.box-body -->
+                <!-- /.card-body -->
             </div>
         </div>
         <!-- end panel -->
     </div>
+
     <script>
         Admin.boot(function () {
             var table = $('.table').DataTable();

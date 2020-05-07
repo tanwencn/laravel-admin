@@ -22,6 +22,7 @@ class Item
     public $children;
     public $authority;
     public $target;
+    public $icon;
 
     public function __construct($title, $sort = 10)
     {
@@ -33,6 +34,11 @@ class Item
     public function sort($sort)
     {
         $this->sort = $sort;
+        return $this;
+    }
+
+    public function icon($icon){
+        $this->icon = $icon;
         return $this;
     }
 
@@ -61,10 +67,14 @@ class Item
 
     public function child($title, \Closure $closure = null)
     {
-        if (!Str::contains($title, '<i'))
-            $title = '<i class="fa fa-circle-o"></i><span>' . $title . '</span>';
+        /*if (!Str::contains($title, '<i'))
+            $title = '<i class="far fa-circle nav-icon"></i><span>' . $title . '</span>';*/
+
 
         $item = new static($title);
+
+        $item->icon('circle');
+
         if (!is_null($closure))
             $closure($item);
         $this->children[] = $item;

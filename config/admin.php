@@ -3,9 +3,8 @@
 return [
 
     'layout' => [
-        'body_class' => 'hold-transition skin-black sidebar-mini',
-        'logo' => '<strong>Laravel</strong> Admin',
-        'logo_mini' => '<strong>L</strong> A',
+        'body_class' => 'hold-transition sidebar-mini layout-fixed text-sm',
+        'logo' => '&nbsp;&nbsp;&nbsp;<strong>Laravel</strong>&nbsp;&nbsp;<span class="brand-text font-weight-light">Admin</span>',
         'footer' => '<strong>Made by The <a href="http://www.tanecn.com" target="_blank">TaneCN</a>.</strong>'
     ],
 
@@ -18,7 +17,6 @@ return [
             'web',
             'Tanwencn\Admin\Http\Middleware\Authenticate',
             'Tanwencn\Admin\Http\Middleware\Menu',
-            'Tanwencn\Admin\Http\Middleware\Asset',
             'Tanwencn\Admin\Http\Middleware\Pjax',
             'Tanwencn\Admin\Http\Middleware\HttpLog'
         ]

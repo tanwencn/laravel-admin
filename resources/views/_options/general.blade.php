@@ -18,17 +18,22 @@
     <div class="form-group">
         <label for="web_url" class="col-sm-3 control-label">{{ trans('admin.web_logo') }}(Logo)</label>
         <div class="col-sm-9">
-            <input readonly style="width:210px; float: left" name="options[web_logo]" type="text"
-                   class="form-control" id="web_logo"
-                   value="{{ old('options.web_logo', option('web_logo')) }}">
-            <button type="button" style="width: auto; float: left;"
-                    class="btn btn-default select-image"><i
-                        class="glyphicon glyphicon-folder-open"></i> {{ trans('admin.select_image') }}
-            </button>
+            <div class="input-group">
+                <input readonly style="width:210px; float: left" name="options[web_logo]" type="text"
+                       class="form-control" id="web_logo"
+                       value="{{ old('options.web_logo', option('web_logo')) }}">
+
+                <div class="input-group-append">
+                    <button type="button" style="width: auto; float: left;"
+                            class="btn btn-default select-image"><i
+                                class="glyphicon glyphicon-folder-open"></i> {{ trans('admin.select_image') }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
 
+    <script>
         Admin.boot(function(){
             Finder.disk().click('.select-image', '#web_logo');
         });

@@ -6,27 +6,36 @@
     <title>@yield('title') &nbsp;&nbsp; {{ option('web_name') }} &#8212; TaneCN</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="{{ config('admin.layout.body_class') }}">
 <div class="wrapper">
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" id="pjax-container">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                @yield('title')
-                <small>@yield('description')</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ route(config('admin.router.index')) }}">
-                        <i class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
-                @yield('breadcrumbs')
-                <li class="active">@yield('title')</li>
-            </ol>
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">@yield('title')</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ route(config('admin.router.index')) }}"><i
+                                            class="fa fa-dashboard"></i> {{ trans('admin.dashboard') }}</a></li>
+                            @yield('breadcrumbs')
+                            <li class="breadcrumb-item active">
+                                @hasSection('active_title')
+                                    @yield('active_title')
+                                @else
+                                    @yield('title')
+                                @endif</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </section>
 
         <!-- Main content -->
-        <section class="content box-body">
+        <section class="content card-body">
             @yield('content')
         </section>
         <!-- /.content -->

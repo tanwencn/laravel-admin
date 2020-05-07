@@ -7,9 +7,8 @@
     <div class="row">
         <!-- begin col-12 -->
         <div class="col-md-12">
-            <div class="box box-default">
-                <!-- /.box-header -->
-                <div class="box-header">
+            <div class="card">
+                <div class="card-header">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm">{{ trans('admin.batch') }}</button>
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -17,9 +16,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             @can('delete_role')
-                            <li>
-                                <a href="javascript:void(0)" class="grid-batch-delete" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                            </li>
+                                <a href="javascript:void(0)" class="grid-batch-delete dropdown-item" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
                             @endcan
                         </ul>
                     </div>
@@ -31,22 +28,22 @@
                     </div>
                     @endcan
 
-                    <div class="box-tools">
+                    <div class="card-tools">
                         <form id="search" action="{{ Admin::action('index') }}">
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="search" class="form-control pull-right"
+                                <input type="text" name="search" class="form-control float-right"
                                        value="{{ request('search') }}"
                                        placeholder="{{ trans('admin.search_name') }}...">
 
-                                <div class="input-group-btn">
+                                <div class="input-group-append">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="box-body table-responsive">
-                    <table class="table table-hover table-striped">
+                <div class="card-body table-responsive p-0">
+                    <table class="table text-nowrap table-striped">
                         <thead>
                         <tr>
                             <th class="table-select"></th>
@@ -86,8 +83,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="box-footer clearfix">
-                    <div class="pull-left">
+                <div class="card-footer clearfix">
+                    <div class="float-left">
                         {{ trans('admin.pagination.range', [
                         'first' => $results->firstItem(),
                         'last' => $results->lastItem(),
@@ -95,11 +92,10 @@
                         ]) }}
                     </div>
 
-                    <div class="pull-right">
+                    <div class="float-right">
                         {{ $results->appends(request()->query())->links() }}
                     </div>
                 </div>
-                <!-- /.box-body -->
             </div>
         </div>
         <!-- end panel -->

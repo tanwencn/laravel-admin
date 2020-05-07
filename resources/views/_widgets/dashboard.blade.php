@@ -11,7 +11,7 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{ route('admin.posts.index') }}" class="small-box-footer">{{ trans('admin.more') }} <i
+                <a href="{{ route('admin.posts.index') }}" class="small-card-footer">{{ trans('admin.more') }} <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{ route('admin.pages.index') }}" class="small-box-footer">{{ trans('admin.more') }} <i
+                <a href="{{ route('admin.pages.index') }}" class="small-card-footer">{{ trans('admin.more') }} <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -45,7 +45,7 @@
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{ route('admin.users.index') }}" class="small-box-footer">{{ trans('admin.more') }} <i
+                <a href="{{ route('admin.users.index') }}" class="small-card-footer">{{ trans('admin.more') }} <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -61,7 +61,7 @@
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="{{ route('admin.comments.index') }}" class="small-box-footer">{{ trans('admin.more') }} <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.comments.index') }}" class="small-card-footer">{{ trans('admin.more') }} <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </section>

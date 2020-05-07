@@ -1,4 +1,3 @@
-<li class="{{ url()->current() == Admin::action('general') ? "active" : "" }}">
-    <a href="{{ Admin::action('general') }}">{{ trans('admin.general_settings') }} <span
-                class="pull-right fa fa-angle-right"></span></a>
+<li class="nav-item {{ url()->current() == Admin::action('general') ? "menu-open" : "" }}">
+    <a class="nav-link {{ url()->current() == Admin::action('general') ? "active" : "" }}" href="{{ Admin::action('general') }}"><p>{{ trans('admin.general_settings') }}</p></a>
 </li>

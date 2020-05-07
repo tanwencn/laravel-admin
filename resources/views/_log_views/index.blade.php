@@ -13,8 +13,6 @@
              background-clip: padding-box;
              border: 0;
              border-radius: 6px;
-             -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
-            box-shadow: 0 3px 9px rgba(0,0,0,.5);
             outline: 0;
         }
         .modal-body{
@@ -32,7 +30,7 @@
             text-shadow: none;
             color: #000;
             #padding-top: 30px;
-            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
+            card-bodyshadow: 0 10px 30px 0 rgba(0, 0, 0, .4);
         }
         pre code {
             background: #1d1f21;
@@ -46,42 +44,43 @@
 
     </style>
     <!-- begin row -->
-    <div class="row">
+    <div class="row ">
         <!-- begin col-12 -->
         <div class="col-md-3">
-            <div class="box box-default">
-                <div class="box-header">
-                    <h3 class="box-title">Files</h3>
+            <div class="card sidebar">
+                <div class="card-header">
+                    <h3 class="card-title">Files</h3>
                 </div>
-                <div class="box box-solid" style="height: 532px; overflow: scroll">
-                    <div class="box-body no-padding">
-                        @php
-                            $build_tag = function($results, $id='', $dep=0)use(&$build_tag, $current){
-                                $str = '<ul class="nav nav-pills nav-stacked '.($id?"collapse":"").' " '. ($id?"id={$id}":"") .'>';
-                                foreach ($results as $key => $value){
-                                    $icon = is_array($value)?"folder":"file";
-                                    $attr = is_array($value)?'data-toggle="collapse" href="#'.$key.'"':'href="'. route('admin.logs', ['f' => encrypt($value, false)]) .'"';
+                <div class="card-body p-0 sidebar-light-primary">
+                    @php
+                        $build_tag = function($results)use(&$build_tag, $current){
+                            $str = '';
+                            foreach ($results as $key => $value){
+                                $is_folder = is_array($value);
+                                $icon = $is_folder?"folder":"file";
+                                $attr = 'class="nav-link '.($current==$value?"active":"").'" href="'.($is_folder?'#':route('admin.logs', ['f' => encrypt($value, false)])).'"';
 
-                                    $str .= '<li '. (!is_array($value)?($current==$value?"class=\"active\"":""):"") .'><a '. $attr .'><span style="padding: '. ($dep*8) .'px"></span><i class="fa fa-'. $icon .'"></i>'.$key.'</a></li>';
-                                    if(is_array($value)){
-                                        $str .= $build_tag($value, $key, $dep+1);
-                                    }
+                                $str .= '<li class="nav-item '. ($current==$value?"menu-open":"").(!$is_folder?"":"has-treeview") .'"><a '. $attr .'><i class="nav-icon fas fa-'. $icon .'"></i><p>'.$key.($is_folder?'<i class="right fas fa-angle-left"></i>':'').'</p></a>';
+                                if(is_array($value)){
+                                    $str .= '<ul class="nav nav-treeview">'.$build_tag($value).'</ul>';
                                 }
-                                return $str.'</ul>';
                             }
-                        @endphp
+                            return $str.'</li>';
+                        }
+                    @endphp
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
+                        data-accordion="true" id="tree_list">
                         {!! $build_tag($tree) !!}
-                    </div>
-                    <!-- /.box-body -->
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-9">
-            <div class="box box-default">
-                <div class="box-header">
+            <div class="card">
+                <div class="card-header">
 
-                    <h3 class="box-title">Logs</h3>
-                    <div class="box-tools">
+                    <h3 class="card-title">Logs</h3>
+                    <div class="card-tools">
 
                         <div class="input-group input-group-sm" style="width: 200px;">
                             @if($eof)
@@ -90,7 +89,7 @@
                                        href="{{ Admin::action('index', array_merge(request()->query(), ['page' => $page+1, 'timestrap' => time()])) }}">@lang('pagination.next')</a>
                                 </div>
                             @endif
-                            <input type="search" name="search" class="form-control pull-right" value=""
+                            <input type="search" name="search" class="form-control float-right" value=""
                                    placeholder="{{ trans('admin.search') }}...">
 
                             {{--<div class="input-group-btn">
@@ -100,8 +99,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover table-striped no-data" data-scroll-y="490">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover table-striped no-data">
                         <thead>
                         <tr>
                             <th>Level</th>
@@ -145,13 +144,14 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.box-body -->
+                <!-- /.card-body -->
             </div>
         </div>
         <!-- end panel -->
     </div>
     <script>
         Admin.boot(function () {
+
             var table = $('.table').DataTable({
                 searching: true,
                 dom: 'Brtip',
@@ -160,8 +160,6 @@
                 ]
             });
 
-            $('.nav li.active').parents('ul.collapse').addClass('in');
-            $('.nav li.active').parents('ul.collapse').addClass('in');
             $('[name="search"]').keyup(function () {
                 if ($(this).prop('comStart')) return;    // 中文输入过程中不截断
                 NProgress.start();
@@ -172,6 +170,8 @@
             }).on('compositionend', function () {
                 $(this).prop('comStart', false);
             });
+
+            $('#tree_list a.active').parents('li').addClass('menu-open').children('a').addClass('active');
         });
     </script>
 @endsection
