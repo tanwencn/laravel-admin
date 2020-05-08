@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('public/').setResourceRoot('/vendor/laravel-admin')
+mix.setPublicPath('public/').setResourceRoot('../')
     .copy('resources/images/logo.png', 'public/logo.png')
     .copy('resources/images/logo2.png', 'public/logo2.png')
     .sass('resources/sass/vendor.scss', 'css')
@@ -27,7 +27,7 @@ mix.setPublicPath('public/').setResourceRoot('/vendor/laravel-admin')
         'node_modules/admin-lte/plugins/bootstrap-switch/bootstrap-switch.js',
         'node_modules/admin-lte/plugins/popper/umd/popper.js',
         'node_modules/admin-lte/plugins/overlayScrollbars/js/OverlayScrollbars.js',
-        'node_modules/jquery-pjax/jquery.pjax.js',
+        'resources/js/jquery.pjax.js',
         'node_modules/admin-lte/plugins/jquery-ui/jquery-ui.js',
         'node_modules/admin-lte/plugins/toastr/toastr.min.js',
         'node_modules/icheck/icheck.js',

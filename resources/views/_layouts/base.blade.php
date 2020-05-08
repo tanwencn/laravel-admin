@@ -7,12 +7,12 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Tell the browser to be responsive to screen width -->
-    <link rel="shortcut icon" href="{{ asset('vendor/laravel-admin/logo.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset(mix('/logo.png', 'vendor/laravel-admin')) }}" type="image/x-icon">
 
-    <link rel="stylesheet" href="{{ mix('css/vendor.css', 'vendor/laravel-admin') }}">
-    <link rel="stylesheet" href="{{ mix('css/app.css', 'vendor/laravel-admin') }}">
-    <script src="{{ mix('js/vendor.js', 'vendor/laravel-admin') }}"></script>
-    <script src="{{ mix('js/app.js', 'vendor/laravel-admin') }}"></script>
+    <link rel="stylesheet" href="{{ asset(mix('/css/vendor.css', 'vendor/laravel-admin')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('/css/app.css', 'vendor/laravel-admin')) }}">
+    <script src="{{ asset(mix('/js/vendor.js', 'vendor/laravel-admin')) }}"></script>
+    <script src="{{ asset(mix('/js/app.js', 'vendor/laravel-admin')) }}"></script>
 
     {!! Admin::asset()->head() !!}
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
