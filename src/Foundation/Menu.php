@@ -11,19 +11,25 @@ namespace Tanwencn\Admin\Foundation;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Illuminate\Auth\AuthManager;
 use Tanwencn\Admin\Foundation\Menus\Item;
+use Tanwencn\Admin\Facades\Admin as Facade;
 
 class Menu
 {
-    private $items;
+    protected $items;
 
-    private $auth;
+    protected $auth;
 
-    private $uri_prefix;
+    protected $uri_prefix;
 
     protected $sort = 10;
+
+    protected $is_group;
+
+    protected $groups = [];
+
+    protected $groups_map = [];
 
     /**
      * Menu constructor.
@@ -35,43 +41,22 @@ class Menu
         $this->uri_prefix = config('admin.router.prefix', 'admin');
     }
 
-    public function new($title){
+    public function group($title, $sort = null)
+    {
+        if($this->is_group) return $this;
+        if (!isset($this->groups_map[$title]) && is_null($sort)) $sort = 10;
+        if ($sort) $this->groups_map[$title] = $sort;
+        $this->groups[$title] = @$this->groups[$title] ?: new static($this->auth);
+        $this->groups[$title]->is_group = true;
+        return $this->groups[$title];
+    }
+
+    public function add($title)
+    {
         $item = new Item($title, $this->sort);
         $this->sort++;
         $this->items[] = $item;
         return $item;
-    }
-
-    /**
-     * define menu
-     * @param $name
-     * @param array $parameters
-     * @param null|array|string $parent
-     * @param null|array $children
-     */
-    public function define($name, $parameters = [], $parent = null, $children = [])
-    {
-        if (is_array($parent)) {
-            $children = $parent;
-            $parent = null;
-        }
-        if ($parent) {
-            if (!array_has($this->items, $parent))
-                throw new InvalidArgumentException("{$parent} does not exist");
-
-            $name = "{$parent}.children.{$name}";
-
-            if (empty($parameters['icon'])) $parameters['icon'] = 'fa-circle-o';
-        } else {
-            if (empty($parameters['icon'])) $parameters['icon'] = '';
-        }
-        if (empty($parameters['sort'])) $parameters['sort'] = 10;
-
-        Arr::set($this->items, $name, $parameters);
-
-        foreach ($children as $childName => $child) {
-            $this->define($childName, $child, $name);
-        }
     }
 
     /**
@@ -82,18 +67,18 @@ class Menu
     protected function parser($items)
     {
         return collect($items)->sortBy('sort')->map(function ($val) {
-            $val->children = array_filter($this->parser($val->children)->toArray());
+            $val->children = array_filter($this->parser($val->children));
 
             return $val;
 
         })->filter(function ($val) {
-            if(empty($val->children) && Str::startsWith($val->url, 'javascript')) return false;
+            if (empty($val->children) && Str::startsWith($val->url, 'javascript')) return false;
 
             $user = $this->auth->user();
 
             return empty($val->authority) || $user->can(trim($val->authority));
 
-        });
+        })->all();
     }
 
     /**
@@ -102,8 +87,27 @@ class Menu
      */
     public function render()
     {
-        return view('admin::_menu', [
-            'items' => $this->parser($this->items)
+        return Facade::view('_menu', [
+            'items' => $this->allItems()
         ]);
+    }
+
+    public function items()
+    {
+        return $this->parser($this->items);
+    }
+
+    public function allItems()
+    {
+        asort($this->groups_map);
+        $items = $this->items();
+        foreach ($this->groups_map as $group_name => $_) {
+            $group_items = $this->groups[$group_name]->items();
+            if (!empty($group_items)) {
+                array_unshift($group_items, $group_name);
+                $items = array_merge($items, $group_items);
+            }
+        }
+        return $items;
     }
 }

@@ -14,21 +14,15 @@
     <script src="{{ asset(mix('/js/vendor.js', 'vendor/laravel-admin')) }}"></script>
     <script src="{{ asset(mix('/js/app.js', 'vendor/laravel-admin')) }}"></script>
 
-    {!! Admin::asset()->head() !!}
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    {!! Admin::asset()->header() !!}
+    @includeIf('admin::header')
 </head>
 <body class="{{ config('admin.layout.body_class') }}">
 <div class="wrapper">
 
     <!-- Navbar -->
-    @include('admin::_layouts.top_nav')
-    <!-- /.navbar -->
+@include('admin::top_navbar')
+<!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -98,12 +92,12 @@
     </div>
     <!-- /.content-wrapper -->
     @if(config('admin.layout.footer') !== false)
-    <footer class="main-footer">
-        {!! config('admin.layout.footer') !!}
-    </footer>
-    @endif
+        <footer class="main-footer">
+            {!! config('admin.layout.footer') !!}
+        </footer>
+@endif
 
-    <!-- Control Sidebar -->
+<!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
     </aside>
@@ -112,7 +106,7 @@
 <!-- ./wrapper -->
 
 {!! Admin::asset()->footer() !!}
-
+@includeIf('admin::footer')
 <script>
     @foreach($errors->all() as $error)
     Admin.errors.push('{{ $error }}');

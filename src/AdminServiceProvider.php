@@ -24,6 +24,12 @@ use Tanwencn\Admin\Http\BootstrapComposer;
 
 class AdminServiceProvider extends ServiceProvider
 {
+    protected $middlewareGroup = [
+        'web',
+        'Tanwencn\Admin\Http\Middleware\Authenticate',
+        'Tanwencn\Admin\Http\Middleware\Menu',
+        'Tanwencn\Admin\Http\Middleware\HttpLog'
+    ];
 
     public function boot(Gate $gate)
     {
@@ -78,6 +84,7 @@ class AdminServiceProvider extends ServiceProvider
             return new Admin($app['config'], $app['auth'], $app['router']);
         });
 
-        $this->app['router']->middlewareGroup('admin', config('admin.router.middleware', []));
+        $middlewareGroup = array_merge($this->middlewareGroup, config('admin.router.middleware', []));
+        $this->app['router']->middlewareGroup('admin', $middlewareGroup);
     }
 }

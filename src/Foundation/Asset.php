@@ -13,42 +13,32 @@ use Illuminate\Support\Str;
 
 class Asset
 {
-    protected $before;
-
     protected $head;
 
     protected $footer;
 
-    protected $after;
+    protected $items = [];
 
-    protected $position;
+    protected $position = 10;
 
-    public function __construct()
+    public function header()
     {
-        $this->position = 0;
-    }
-
-    public function head()
-    {
-        return $this->parserAsset($this->head) . $this->parserAsset($this->before);
+        if(!$this->head) $this->head = new static();
+        return $this->head;
     }
 
     public function footer()
     {
-        return $this->parserAsset($this->footer) . $this->parserAsset($this->after);
+        if(!$this->footer) $this->footer = new static();
+        return $this->footer;
     }
 
-    public function before($path, $position = null)
+    public function render()
     {
-        return $this->add($path, $position, 'before');
+        return $this->parserAsset($this->items);
     }
 
-    public function after($path, $position = null)
-    {
-        return $this->add($path, $position, 'after');
-    }
-
-    public function add($path, $position = null, $type = null)
+    public function add($path, $position = 10)
     {
         if (empty($path)) return $this;
 
@@ -56,20 +46,13 @@ class Asset
             $position = $this->position;
 
         $path = trim($path);
-        if (!$type)
-            $type = Str::endsWith($path, '.css') ? 'head' : 'footer';
 
-        $this->{$type}[] = [
+        $this->items[] = [
             'url' => $this->parserPath($path),
             'position' => $position
         ];
         $this->position += 10;
         return $this;
-    }
-
-    public function addBag($path, $position = null, $type = null)
-    {
-        return $this->add(str_ireplace('{type}', 'css', $path) . '.css', $position, $type)->add(str_ireplace('{type}', 'js', $path) . '.js', $position, $type);
     }
 
     protected function parserPath($path)
@@ -83,7 +66,7 @@ class Asset
 
     protected function parserAsset($itmes)
     {
-        if (empty($itmes)) return null;
+        if (empty($itmes)) return "";
 
         return collect($itmes)->sortBy('position')->map(function ($item) {
             if (Str::endsWith($item['url'], '.css'))
@@ -94,29 +77,8 @@ class Asset
         })->implode('');
     }
 
-    public function jsdelivrCombile(...$paths)
+    public function __toString()
     {
-        $css = [];
-        $js = [];
-        foreach ($paths as $path) {
-            if (Str::endsWith($path, '.css'))
-                $css[] = $path;
-            else
-                $js[] = $path;
-        }
-
-        return $this->jsdelivr('combine/'.implode(',', $css))->jsdelivr('combine/'.implode(',', $js));
-    }
-
-    public function jsdelivr($path, $position = null, $type = null)
-    {
-        if ($path == 'combine/') return $this;
-
-        return $this->add('https://cdn.jsdelivr.net/' . $path, $position, $type);
-    }
-
-    public function jsdelivrBag($path, $position = null, $type = null)
-    {
-        return $this->jsdelivr(str_ireplace('{type}', 'css', $path) . '.css', $position, $type)->jsdelivr(str_ireplace('{type}', 'js', $path) . '.js', $position, $type);
+        return $this->render();
     }
 }

@@ -14,11 +14,8 @@ return [
         'routes' => app_path('Admin/routes.php'),
         'index' => 'admin.dashboard',
         'middleware' => [
-            'web',
-            'Tanwencn\Admin\Http\Middleware\Authenticate',
-            'Tanwencn\Admin\Http\Middleware\Menu',
-            'Tanwencn\Admin\Http\Middleware\Pjax',
-            'Tanwencn\Admin\Http\Middleware\HttpLog'
+            Tanwencn\Admin\Http\Middleware\Pjax::class,
+            App\Admin\Middleware\Menu::class
         ]
     ],
 
