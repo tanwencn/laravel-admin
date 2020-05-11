@@ -195,5 +195,6 @@ return [
 
     'theme' => '主题',
     'laravel_logs' => '系统日志',
+    'system' => '系统',
     'log' => '日志'
 ];

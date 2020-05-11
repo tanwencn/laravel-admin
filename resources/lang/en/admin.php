@@ -195,5 +195,6 @@ return [
     'theme' => 'Theme',
 
     'laravel_logs' => 'Laravel Logs',
+    'system' => 'System',
     'log' => 'Log|Logs'
 ];
