@@ -13,10 +13,9 @@
             <div class="col-md-3" style="padding-left:0;">
                 <div class="card solid">
                     <div class="card-body p-0 sidebar-light-primary" style="">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
-                            data-accordion="true">
-                            @include('admin::_options.nav')
-                        </ul>
+                        <div class="list-group setting-nav">
+                            @include('admin::options.nav')
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -26,10 +25,11 @@
                     <div class="card">
                         <div class="card-body">
                             {{ csrf_field() }}
-                            @yield('form')
+                            @include("admin::options.{$template}")
                         </div>
+
                         <div class="card-footer clearfix">
-                            <button type="button" style="width: 120px"
+                            <button type="submit" style="width: 120px"
                                     class="btn btn-primary float-right btn-save">{{ trans('admin.save') }}</button>
                         </div>
                     </div>
@@ -37,4 +37,12 @@
             </div>
         </div>
     </div>
+    <script>
+        Admin.boot(function () {
+            $('.setting-nav a').removeClass('active');
+            $('.setting-nav a').each(function(_, val){
+                if($(val).attr('href') == window.location.href) $(val).addClass('active');
+            });
+        });
+    </script>
 @endsection

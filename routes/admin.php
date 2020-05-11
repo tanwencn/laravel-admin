@@ -23,7 +23,7 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
 
         $router->resource('permissions', 'PermissionController')->names('permissions');
 
-        $router->get('options/general', 'OptionController@general')->name('options.general');
+        $router->get('options/{template}', 'OptionController@view')->name('options');
 
         $router->post('options/save', 'OptionController@save');
 

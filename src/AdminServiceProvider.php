@@ -67,10 +67,10 @@ class AdminServiceProvider extends ServiceProvider
         });
 
 
-        View::composer(
+        /*View::composer(
             ['admin::*'],
             BootstrapComposer::class
-        );
+        );*/
 
         Blade::component('admin::components.button-dropdown', 'admin_buttons_dropdown');
         Blade::component('admin::components.page', 'admin_page');

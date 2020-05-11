@@ -37,16 +37,5 @@
         Admin.boot(function(){
             Finder.disk().click('.select-image', '#web_logo');
         });
-
-        $('.btn-save').click(function () {
-            var form = $(this).parents('form');
-            $.post(form.attr('action'), form.serialize(), function (data) {
-                if (data.status) {
-                    toastr.success(data.message);
-                } else {
-                    toastr.error(data.message);
-                }
-            }, 'json');
-        });
     </script>
 @endsection

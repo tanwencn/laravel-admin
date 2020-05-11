@@ -28,6 +28,6 @@ class Menu extends AbstractMenuMiddleware
             $menu->route('admin.operationlog')->auth('operationlog')->sort(99);
         });
 
-        $this->group(trans_choice('admin.system', 0))->add(trans_choice('admin.setting', 0))->icon('cog')->uri('options/general')->sort(98)->auth('general_settings');
+        $this->group(trans_choice('admin.system', 0))->add(trans_choice('admin.setting', 0))->icon('cog')->route('admin.options', ['template' => 'default'])->sort(98)->auth('setting');
     }
 }

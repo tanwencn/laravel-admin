@@ -11,6 +11,7 @@ namespace Tanwencn\Admin\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\View;
 use Tanwencn\Admin\Database\Eloquent\Option;
 use Tanwencn\Admin\Facades\Admin;
 
@@ -18,11 +19,16 @@ class OptionController extends Controller
 {
     use AuthorizesRequests,Package;
 
-    public function general()
-    {
+    public function view($template){
         $this->authorize('admin.setting');
+        
+        abort_unless(View::exists("admin::options.{$template}"), 404);
+        
+        $view = function($template){
+            return route('admin.options', compact('template'));
+        };
 
-        return view('admin::_options.general');
+        return view("admin::_options.view", compact('template', 'view'));
     }
 
     public function save()
@@ -39,10 +45,7 @@ class OptionController extends Controller
             $model->save();
         }
 
-        return response()->json([
-            'message' => trans('admin.save_succeeded')
-        ]);
+        return redirect(url()->previous())->with('success', trans('admin.save_succeeded'));
     }
-
 
 }
