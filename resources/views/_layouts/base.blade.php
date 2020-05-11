@@ -108,27 +108,27 @@
 {!! Admin::asset()->footer() !!}
 @includeIf('admin::footer')
 <script>
+    var success = '{{ session('success') }}'
+    if (success != '') {
+        toastr.success(success);
+    }
     @foreach($errors->all() as $error)
     Admin.errors.push('{{ $error }}');
     @endforeach
-        Admin.info = {
-        timeout_load: '{{ trans('admin.timeout_load') }}',
-        failed: '{{ trans('admin.failed') }}',
-        deleteTitle: '{{ trans('admin.delete_confirm') }}',
-        deleteText: "{{ trans('admin.delete') }}",
-        cancelText: "{{ trans('admin.cancel') }}",
+        Admin.language = {
+        confirmTitle: '{{ trans('admin.please_confirm') }}',
+        confirm: '{{ trans('admin.confirm') }}',
+        cancel: "{{ trans('admin.cancel') }}",
         trashMessage: "{{ trans('admin.trash_message') }}",
         deleteMessage: "{{ trans('admin.delete_message') }}",
         pleaseSelectData: "{{ trans('admin.please_select_data') }}",
         ok: "{{ trans('admin.ok') }}",
-        toastr_success: '{{ session('toastr_success') }}',
         csrf_token: '{{ csrf_token() }}'
     };
 
     Finder.default = {title: "{{ trans('admin.select_file') }}", url: "{{ route('admin.elfinder.show') }}"};
 
     Admin.init();
-    Admin.activityMenu('{{ url()->current() }}');
 </script>
 </body>
 </html>

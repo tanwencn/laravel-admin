@@ -80,6 +80,7 @@ return [
 
     'operation_log' => 'Operation log',
 
+    'please_confirm' => 'Please Confirm',
     'confirm' => 'Confirm',
     'cancel' => 'Cancel',
 
@@ -142,7 +143,7 @@ return [
     'no_items' => 'No Items.',
     'please_select_data' => 'Please select the data!',
 
-
+    'user_group' => 'User Group',
     'user' => 'User',
     'view_user' => 'View User',
     'add_user' => 'Add User',
@@ -193,5 +194,6 @@ return [
 
     'theme' => 'Theme',
 
-    'laravel_logs' => 'Laravel Logs'
+    'laravel_logs' => 'Laravel Logs',
+    'log' => 'Log|Logs'
 ];

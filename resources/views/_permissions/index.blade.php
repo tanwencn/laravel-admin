@@ -10,18 +10,13 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-header">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">{{ trans('admin.batch') }}</button>
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @can('delete_permission')
-                                    <a href="javascript:void(0)" class="grid-batch-delete dropdown-item"
-                                       data-url="{{ route('admin.permissions.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                            @endcan
-                        </ul>
-                    </div>
+                    @admin_buttons_dropdown(['name' => trans('admin.batch')])
+                    @slot('links')
+                        @can('delete_role')
+                            <a href="javascript:void(0);" class="dropdown-item" ajax-post="{{ route('admin.permissions.destroy', 0) }}" data-method="delete" data-confirm="{{ trans('admin.delete_message') }}" data-selected-list="ids">{{ trans('admin.delete') }}</a>
+                        @endcan
+                    @endslot
+                    @endadmin_buttons_dropdown
 
                     @can('add_permission')
                         <div class="btn-group">
@@ -45,21 +40,19 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover table-striped no-data">
-                        <thead>
+                    @admin_table(['checkbox' => true, 'nodata' => true])
+                    @slot('thead')
                         <tr>
-                            <th class="table-select"></th>
                             <th>{{ trans('admin.permission') }}</th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    @endslot
+                    @slot('tbody')
                         @foreach($results as $permission)
-                            <tr>
-                                <td class="table-select">@if($permission->guard_name == 'admin' && auth()->user()->can($permission->name)){{ $permission->id }}@endif</td>
+                            <tr @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name)) data-id="{{ $permission->id }}" @endif>
                                 <td>{{ $permission->name }}</td>
                                 <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
                                 <td>{{ $permission->guard_name }}</td>
@@ -73,16 +66,14 @@
                                     @endcan
                                     @can('delete_permission')
                                         @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name))
-                                            <a href="javascript:void(0);"
-                                               data-url="{{ route('admin.permissions.destroy', $permission->id) }}"
-                                               class="grid-row-delete">{{ trans('admin.delete') }}</a>
+                                                <a href="javascript:void(0);" ajax-post="{{ route('admin.permissions.destroy', $permission->id) }}" data-method="delete" data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
                                         @endif
                                     @endcan
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
+                    @endslot
+                    @endadmin_table
                 </div>
                 <!-- /.card-body -->
             </div>

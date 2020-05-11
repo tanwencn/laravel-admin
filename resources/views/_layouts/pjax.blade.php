@@ -41,15 +41,17 @@
         <!-- /.content -->
 
         <script>
-            $(function () {
+            $(function(){
+                var success = '{{ session('success') }}'
+                if (success != '') {
+                    Admin.success(success);
+                }
                 @foreach($errors->all() as $error)
                 Admin.errors.push('{{ $error }}');
                 @endforeach
 
-                Admin.info.csrf_token = '{{ csrf_token() }}';
-                Admin.info.toastr_success = '{{ session('toastr_success') }}';
+                Admin.language.csrf_token = '{{ csrf_token() }}';
                 Admin.init();
-                Admin.activityMenu('{{ url()->current() }}');
             });
         </script>
     </div>

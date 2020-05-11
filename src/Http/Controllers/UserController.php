@@ -137,7 +137,7 @@ class UserController extends Controller
 
         $url = Auth::user()->can('view_user') ? Admin::action('index') : Admin::action('edit', $model->id);
 
-        return redirect($url)->with('toastr_success', trans('admin.save_succeeded'));
+        return redirect($url)->with('success', trans('admin.save_succeeded'));
     }
 
     public function destroy($id, Request $request)
@@ -151,7 +151,6 @@ class UserController extends Controller
         }
 
         return response([
-            'status' => true,
             'message' => trans('admin.delete_succeeded'),
         ]);
     }

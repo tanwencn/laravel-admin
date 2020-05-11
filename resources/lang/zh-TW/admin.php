@@ -48,6 +48,7 @@ return [
     'submit' => '提交',
     'succeeded' => '成功',
     'failed' => '失敗',
+    'error' => '錯誤',
     'delete_message' => '永久刪除後，數據將無法恢復。你確定要繼續嗎?',
     'trash_message' => '刪除後，你可以在垃圾箱中恢復它',
     'delete_confirm' => '你確定要刪除這個項目嗎?',
@@ -82,6 +83,7 @@ return [
 
     'operation_log' => '操作日誌',
 
+    'please_confirm' => '請確認',
     'confirm' => '確認',
     'cancel' => '取消',
 
@@ -144,7 +146,7 @@ return [
     'no_items' => '沒有項目。',
     'please_select_data' => '請選擇數據!',
 
-
+    'user_group' => '用戶組',
     'user' => '用戶',
     'add_user' => '添加用戶',
     'edit_user' => '編輯用戶',
@@ -193,5 +195,6 @@ return [
     'format' => '格式化',
 
     'theme' => '主題',
-    'laravel logs' => '系統日誌'
+    'laravel logs' => '系統日誌',
+    'log' => '日誌'
 ];

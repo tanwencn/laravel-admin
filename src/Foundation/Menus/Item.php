@@ -37,8 +37,8 @@ class Item
         return $this;
     }
 
-    public function icon($icon){
-        $this->icon = $icon;
+    public function icon($icon, $key='fas'){
+        $this->icon = $key.' fa-'.$icon;
         return $this;
     }
 
@@ -73,7 +73,7 @@ class Item
 
         $item = new static($title);
 
-        $item->icon('circle');
+        $item->icon('circle', 'far');
 
         if (!is_null($closure))
             $closure($item);

@@ -2,7 +2,7 @@
     @if(is_string($val)) <li class="nav-header">{{ $val }}</li> @continue @endif
     <li class="nav-item {{ $val->children ? "has-treeview" : "" }}">
         <a target="{{ $val->target?:'_self' }}" href="{{ $val->url }}" class="nav-link">
-            <i class="nav-icon fas fa-{{ $val->icon }}"></i>
+            <i class="nav-icon {{ $val->icon }}"></i>
             <p>
                 {!! $val->title !!}
                 @if($val->children)

@@ -40,7 +40,6 @@ class OptionController extends Controller
         }
 
         return response()->json([
-            'status' => true,
             'message' => trans('admin.save_succeeded')
         ]);
     }

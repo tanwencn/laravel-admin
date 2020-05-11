@@ -104,7 +104,7 @@ class RoleController extends Controller
             $model->syncPermissions($request->input('permissions'));
         }
 
-        return redirect(\Admin::action('index'))->with('toastr_success', trans('admin.save_succeeded'));
+        return redirect(\Admin::action('index'))->with('success', trans('admin.save_succeeded'));
     }
 
     public function destroy($id, Request $request)
@@ -117,8 +117,7 @@ class RoleController extends Controller
         }
 
         return response([
-            'status' => true,
-            'message' => trans('admin.delete_succeeded'),
+            'message' => trans('admin.delete_succeeded')
         ]);
     }
 

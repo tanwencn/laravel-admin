@@ -92,7 +92,7 @@ class PermissionController extends Controller
 
         $model->save();
 
-        return redirect(Admin::action('index'))->with('toastr_success', trans('admin.save_succeeded'));
+        return redirect(Admin::action('index'))->with('success', trans('admin.save_succeeded'));
     }
 
     public function destroy($id, Request $request)
@@ -105,7 +105,6 @@ class PermissionController extends Controller
         }
 
         return response([
-            'status' => true,
             'message' => trans('admin.delete_succeeded'),
         ]);
     }

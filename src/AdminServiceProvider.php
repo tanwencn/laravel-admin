@@ -21,6 +21,7 @@ use Tanwencn\Admin\Consoles\InstallCommand;
 use Tanwencn\Admin\Consoles\ResetSuperAdminCommand;
 use Tanwencn\Admin\Foundation\Admin;
 use Tanwencn\Admin\Http\BootstrapComposer;
+use Illuminate\Support\Facades\Blade;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -70,6 +71,10 @@ class AdminServiceProvider extends ServiceProvider
             ['admin::*'],
             BootstrapComposer::class
         );
+
+        Blade::component('admin::components.button-dropdown', 'admin_buttons_dropdown');
+        Blade::component('admin::components.page', 'admin_page');
+        Blade::component('admin::components.table', 'admin_table');
     }
 
     /**

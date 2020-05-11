@@ -9,23 +9,22 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">{{ trans('admin.batch') }}</button>
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @can('delete_role')
-                                <a href="javascript:void(0)" class="grid-batch-delete dropdown-item" data-url="{{ route('admin.roles.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                            @endcan
-                        </ul>
-                    </div>
+                    @admin_buttons_dropdown(['name' => trans('admin.batch')])
+                    @slot('links')
+                        @can('delete_role')
+                            <a href="javascript:void(0);" class="dropdown-item"
+                               ajax-post="{{ route('admin.roles.destroy', 0) }}" data-method="delete"
+                               data-confirm="{{ trans('admin.delete_message') }}"
+                               data-selected-list="ids">{{ trans('admin.delete') }}</a>
+                        @endcan
+                    @endslot
+                    @endadmin_buttons_dropdown
 
                     @can('add_role')
-                    <div class="btn-group">
-                        <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
-                                    class="fa fa-plus f-s-12"></i> {{ trans('admin.add_role') }}</a>
-                    </div>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-success" href="{{ Admin::action('create') }}"><i
+                                        class="fa fa-plus f-s-12"></i> {{ trans('admin.add_role') }}</a>
+                        </div>
                     @endcan
 
                     <div class="card-tools">
@@ -42,59 +41,45 @@
                         </form>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table text-nowrap table-striped">
-                        <thead>
+                <div class="card-body">
+                    @admin_table(['checkbox' => true])
+                    @slot('thead')
                         <tr>
-                            <th class="table-select"></th>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    @endslot
+                    @slot('tbody')
                         @foreach($results as $role)
-                            <tr>
-                                <td class="table-select">
-                                    @if($role->name != 'superadmin')
-                                        {{ $role->id }}
-                                    @endif
-                                </td>
+                            <tr @if($role->name != 'superadmin') data-id="{{ $role->id }}" @endif>
                                 <td>{{ $role->name }}</td>
                                 <td>{{ $role->guard_name }}</td>
                                 <td>{{ $role->created_at }}</td>
                                 <td>{{ $role->updated_at }}</td>
                                 <td>
                                     @can('edit_role')
-                                    <a href="{{ Admin::action('edit', $role->id) }}">{{ trans('admin.edit') }}</a> &nbsp;
+                                        <a href="{{ Admin::action('edit', $role->id) }}">{{ trans('admin.edit') }}</a>
+                                        &nbsp;
                                     @endcan
                                     @can('delete_role')
-                                    @if($role->name !='superadmin')
-                                        <a href="javascript:void(0);"
-                                           data-url="{{ route('admin.roles.destroy', $role->id) }}"
-                                           class="grid-row-delete">{{ trans('admin.delete') }}</a>
-                                    @endif
+                                        @if($role->name !='superadmin')
+                                            <a href="javascript:void(0);"
+                                               ajax-post="{{ route('admin.roles.destroy', $role->id) }}"
+                                               data-method="delete"
+                                               data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
+                                        @endif
                                     @endcan
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
+                    @endslot
+                    @endadmin_table
                 </div>
                 <div class="card-footer clearfix">
-                    <div class="float-left">
-                        {{ trans('admin.pagination.range', [
-                        'first' => $results->firstItem(),
-                        'last' => $results->lastItem(),
-                        'total' => $results->total(),
-                        ]) }}
-                    </div>
-
-                    <div class="float-right">
-                        {{ $results->appends(request()->query())->links() }}
-                    </div>
+                    @admin_page(['results' => $results]) @endadmin_page
                 </div>
             </div>
         </div>

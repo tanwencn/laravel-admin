@@ -67,7 +67,7 @@
                             <div class="col-md-12 data-list p-0"></div>
                             @foreach($guards as $guard)
                                 <template class="{{ $guard }}">
-                                    <table class="table text-nowrap table-striped permissions no-data">
+                                    <table class="table text-nowrap table-borderless permissions no-data">
                                         <thead>
                                         <th width="80"><input type="checkbox"
                                                               class="grid-select-all checkbox-style"></th>

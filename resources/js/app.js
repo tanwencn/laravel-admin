@@ -4,7 +4,7 @@ window.Admin = function () {
     return {
         is_one: true,
         is_pjax: true,
-        info: {},
+        language: {},
         data: {},
         boots: [],
         errors: [],
@@ -12,46 +12,43 @@ window.Admin = function () {
             this.boots.push(call);
         },
         onece: function onece() {
-            var self = this;
             toastr.options = {
                 progressBar: true
             };
             NProgress.configure({
                 parent: '#pjax-container'
                 /*, showSpinner:false*/
-
+            }).start();
+            $(document).ready(function() {
+                NProgress.done();
             });
-            NProgress.start();
+
             $(document).ajaxStart(function () {
                 NProgress.start();
+            }).ajaxStop(function () {
+                NProgress.done();
             });
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': Admin.info.csrf_token
+                    'X-CSRF-TOKEN': Admin.language.csrf_token
                 }
             });
-            $(document).ajaxStop(function () {
-                NProgress.done();
-            });
-            NProgress.done();
 
             $.extend($.fn.dataTable.defaults, {
                 paging: false,
                 ordering: false,
                 searching: false,
                 info: false,
-                scrollY: $(window).height()?$(window).height()-240:420,
+                scrollY: $(window).height() ? $(window).height() - 240 : 420,
                 scrollCollapse: true,
-                headerCallback: function headerCallback(thead, data, start, end, display) {
+                /*headerCallback: function headerCallback(thead, data, start, end, display) {
                     var th = $(thead).find('th').eq(0);
-                    if (th.hasClass('table-select')) th.html('<input type="checkbox" class="grid-select-all checkbox-style">');
+                    if ($(this).hasClass('table-select')) th.html('<input type="checkbox" class="grid-select-all checkbox-style" />');
                 },
                 rowCallback: function rowCallback(row, data, index) {
                     var td = $('td:eq(0)', row);
-                    var id = $.trim(data[0]);
-                    if (td.hasClass('table-select') && id) td.html('<input type="checkbox" class="grid-row-checkbox checkbox-style" value="' + $.trim(data[0]) + '">');
-                    if (td.hasClass('table-index')) td.html(index + 1);
-                }
+                    if($(this).hasClass('table-select')) td.html('<input type="checkbox" class="grid-row-checkbox checkbox-style" value="' + $.trim(data[0]) + '">');
+                }*/
             });
             $('#pjax-container').on('change', '.grid-row-checkbox:not(.checkbox-style)', function () {
                 if (this.checked) {
@@ -63,18 +60,41 @@ window.Admin = function () {
             $('#pjax-container').on('change', '.grid-select-all:not(.checkbox-style)', function () {
                 $('.grid-row-checkbox').prop('checked', this.checked).trigger('change');
             });
-            $('#pjax-container').on('click', '.grid-batch-delete,.grid-row-delete', function () {
-                var selected = [];
-
-                if ($(this).hasClass('grid-batch-delete')) {
-                    selected = Admin.listSelectedRows();
-
-                    if (!selected) {
-                        return false;
-                    }
+            $('#pjax-container').on('click', '[ajax-post]', function (event) {
+                event.preventDefault();
+                var url = $(this).attr('ajax-post');
+                var data = $(this).data();
+                if (data['method']) data['_method'] = data['method'];
+                if (!data['_method']) data['_method'] = 'POST';
+                if (data['mergeValue']) $.extend(data, data['mergeValue'])
+                if (data['selectedList']) {
+                    data[data['selectedList']] = Admin.listSelectedRows();
+                    if (!data[data['selectedList']]) return false;
                 }
 
-                self["delete"]($(this).data('url'), selected, $(this).data('type'));
+                var request = function () {
+                    $.ajax({
+                        method: 'POST',
+                        url: url,
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            $.pjax.reload('#pjax-container');
+                            if (data['message']) Admin.success(data['message']);
+                        },
+                        error: function (rs) {
+                            if (rs['responseJSON'] && rs['responseJSON']['message']) {
+                                Admin.error(rs['responseJSON']['message']);
+                            }
+                        }
+                    });
+                }
+
+                if (data['confirm']) {
+                    Admin.confirm(data['confirm'], request);
+                } else {
+                    request();
+                }
             });
             if (this.is_pjax) this.pjax();
         },
@@ -84,17 +104,27 @@ window.Admin = function () {
                 this.is_one = false;
             } // $('#pjax-container .box').boxWidget();
 
+            this.activityMenu();
+            $('#pjax-container .table').each(function(_, table){
+                if($(table).hasClass('no-pitch')){
+                    $(table).parent().addClass('table-responsive').addClass('p-0');
+                }
+                if($(table).hasClass('table-select')){
+                    $(table).find('thead tr:first').prepend('<th><input type="checkbox" class="grid-select-all checkbox-style" /></th>')
+                    $(table).find('tbody tr').each(function(_, tr){
+                        var id = $.trim($(tr).data('id'));
+                        if(id) $(tr).prepend('<td><input type="checkbox" class="grid-row-checkbox checkbox-style" value="' + id + '"></td>')
+                        else $(tr).prepend('<td></td>');
+                    });
+                }
 
-            $('#pjax-container .table:not(.no-data)').DataTable();
+                if(!$(table).hasClass('no-data')) $(table).DataTable();
+            });
             $('#pjax-container .select2').select2();
             toastr.clear();
 
-            if (this.info.toastr_success != '') {
-                toastr.success(this.info.toastr_success);
-            }
-
             $.each(Admin.errors, function (i, e) {
-                toastr.error(e, Admin.info.failed);
+                Admin.error(e);
             });
             Admin.errors = [];
             /** list **/
@@ -115,49 +145,25 @@ window.Admin = function () {
         pjax: function pjax() {
             $.pjax.defaults.timeout = 5000;
             $.pjax.defaults.maxCacheLength = 0;
-            $(document).on('pjax:start', function () {
-                NProgress.start();
-            });
-            $(document).on('pjax:end', function () {
-                NProgress.done();
-            });
             $(document).pjax('a[target!=_blank]', '#pjax-container');
-            $(document).on('pjax:timeout', function (event) {
+            $(document).on('pjax:timeout pjax:error', function (event, xhr) {
                 event.preventDefault();
-                toastr.warning(Admin.info.timeout_load);
                 NProgress.done();
-            });
-            $(document).on('pjax:error', function (event, textStatus) {
-                event.preventDefault();
-                toastr.error(Admin.info.failed);
-                NProgress.done();
-            });
-            $(document).on('submit', 'form', function (event) {
+                if (event.handleObj.type == 'pjax:error')
+                    toastr.error(xhr.statusText + " " + xhr.status);
+                else
+                    toastr.warning(xhr.statusText + " " + xhr.status);
+            }).on('submit', 'form', function (event) {
                 $.pjax.submit(event, '#pjax-container');
-            });
-            $(document).on('pjax:send', function (xhr) {
-                if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
+            }).on('pjax:send pjax:complete', function (event) {
+                if (event.relatedTarget && event.relatedTarget.tagName && event.relatedTarget.tagName.toLowerCase() === 'form') {
                     var submit_btn = $('form [type="submit"]');
 
                     if (submit_btn) {
-                        submit_btn.attr("disabled", true);
+                        submit_btn.attr("disabled", event.handleObj.type == 'pjax:send');
                     }
                 }
-
-                NProgress.start();
             });
-            $(document).on('pjax:complete', function (xhr) {
-                if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                    var submit_btn = $('form [type="submit"]');
-
-                    if (submit_btn) {
-                        submit_btn.removeAttr("disabled");
-                    }
-                }
-
-                NProgress.done();
-            });
-            NProgress.done();
         },
         icheckEvent: function icheckEvent() {
             $('#pjax-container .grid-row-checkbox.checkbox-style').on('ifChanged', function () {
@@ -197,7 +203,8 @@ window.Admin = function () {
             });
             return parms.join('&');
         },
-        activityMenu: function activityMenu(url) {
+        activityMenu: function activityMenu() {
+            var url = window.location.href;
             var current = $('aside .nav-sidebar li a[href="' + url + '"]');
 
             if (current.length > 0) {
@@ -205,48 +212,7 @@ window.Admin = function () {
                 var parents_li = current.parents('li');
                 parents_li.addClass('menu-open').children('a').addClass('active');
                 $('aside .nav-sidebar li').not(parents_li).removeClass('menu-open').find('a').removeClass('active');
-                /*var parents_treeview = current.parents('.treeview-menu');
-                parents_treeview.slideDown("slow");
-                $('aside .sidebar-menu .treeview-menu').not(parents_treeview).slideUp("slow");*/
             }
-        },
-        "delete": function _delete(url, ids, type) {
-            var message = "";
-
-            if (type == 'trash') {
-                message = this.info.trashMessage;
-            } else {
-                message = this.info.deleteMessage;
-            }
-
-            $.confirm({
-                title: this.info.deleteTitle,
-                content: message,
-                autoClose: 'cancelAction|6000',
-                buttons: {
-                    deleteAction: {
-                        text: this.info.deleteText,
-                        action: function action() {
-                            $.ajax({
-                                method: 'post',
-                                url: url,
-                                data: {
-                                    _method: 'DELETE',
-                                    _token: Admin.info.csrf_token,
-                                    ids: ids
-                                },
-                                success: function success(data) {
-                                    $.pjax.reload('#pjax-container');
-                                    toastr.success(data.message);
-                                }
-                            });
-                        }
-                    },
-                    cancelAction: {
-                        text: this.info.cancelText
-                    }
-                }
-            });
         },
         listSelectedRows: function listSelectedRows() {
             var selected = [];
@@ -255,20 +221,47 @@ window.Admin = function () {
             });
 
             if (selected.length < 1) {
-                $.alert({
-                    title: false,
-                    type: 'red',
-                    content: Admin.info.pleaseSelectData,
-                    buttons: {
-                        yes: {
-                            text: Admin.info.ok
-                        }
-                    }
-                });
+                this.alert(Admin.language.pleaseSelectData);
                 return false;
             }
 
             return selected;
+        },
+        alert: function alert(content) {
+            $.alert({
+                title: false,
+                autoClose: 'yes|3000',
+                content: content,
+                buttons: {
+                    yes: {
+                        text: Admin.language.ok
+                    }
+                }
+            });
+        },
+        confirm: function confirm(content, call) {
+            $.confirm({
+                title: Admin.language.confirmTitle,
+                content: content,
+                autoClose: 'cancel|6000',
+                buttons: {
+                    ok: {
+                        text: Admin.language.confirm,
+                        action: function action() {
+                            call();
+                        }
+                    },
+                    cancel: {
+                        text: Admin.language.cancel
+                    }
+                }
+            });
+        },
+        error: function error(content) {
+            toastr.error(content);
+        },
+        success: function success(content) {
+            toastr.success(content);
         }
     };
 }();

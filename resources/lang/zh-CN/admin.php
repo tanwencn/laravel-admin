@@ -46,6 +46,7 @@ return [
     'excerpt' => '摘要',
     'submit' => '提交',
     'succeeded' => '成功',
+    'error' => '错误',
     'failed' => '失败',
     'delete_message' => '永久删除后，数据将无法恢复。你确定要继续吗?',
     'trash_message' => '删除后，你可以在垃圾箱中恢复它',
@@ -74,6 +75,7 @@ return [
 
     'operation_log' => '操作日志',
 
+    'please_confirm' => '请确认',
     'confirm' => '确认',
     'cancel' => '取消',
 
@@ -142,6 +144,7 @@ return [
     'edit_permission' => '修改权限',
     'delete_permission' => '删除权限',
 
+    'user_group' => '用户组',
     'user' => '用户',
     'view_user' => '查看用户',
     'add_user' => '添加用户',
@@ -191,5 +194,6 @@ return [
     'format' => '格式化',
 
     'theme' => '主题',
-    'laravel_logs' => '系统日志'
+    'laravel_logs' => '系统日志',
+    'log' => '日志'
 ];

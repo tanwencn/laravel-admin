@@ -99,9 +99,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover table-striped no-data">
-                        <thead>
+                <div class="card-body">
+                    @admin_table(['nodata' => true, 'nowrap' => false])
+                    @slot('thead')
                         <tr>
                             <th>Level</th>
                             <th>Context</th>
@@ -109,8 +109,8 @@
                             <th>Content</th>
                             <th>More</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    @endslot
+                    @slot('tbody')
                         @foreach($data as $key => $val)
                             <tr>
                                 <td style="white-space: nowrap;">{{ $val[3] }}</td>
@@ -141,8 +141,8 @@
                                 <!-- /.modal-dialog -->
                             </div>
                         @endforeach
-                        </tbody>
-                    </table>
+                    @endslot
+                    @endadmin_table
                 </div>
                 <!-- /.card-body -->
             </div>

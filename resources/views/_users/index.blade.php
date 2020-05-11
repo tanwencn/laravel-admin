@@ -10,18 +10,13 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-header">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">{{ trans('admin.batch') }}</button>
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @can('delete_user')
-                                    <a href="javascript:void(0)" class="grid-batch-delete dropdown-item"
-                                       data-url="{{ route('admin.users.destroy', 0) }}">{{ trans('admin.delete') }}</a>
-                            @endcan
-                        </ul>
-                    </div>
+                    @admin_buttons_dropdown(['name' => trans('admin.batch')])
+                    @slot('links')
+                        @can('delete_role')
+                            <a href="javascript:void(0);" class="dropdown-item" ajax-post="{{ route('admin.users.destroy', 0) }}" data-method="delete" data-confirm="{{ trans('admin.delete_message') }}" data-selected-list="ids">{{ trans('admin.delete') }}</a>
+                        @endcan
+                    @endslot
+                    @endadmin_buttons_dropdown
 
                     @can('add_user')
                         <div class="btn-group">
@@ -45,10 +40,9 @@
                     </div>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover table-striped">
-                        <thead>
+                    @admin_table(['checkbox' => true])
+                    @slot('thead')
                         <tr>
-                            <th class="table-select"></th>
                             @foreach($user_name_fileds as $filed)
                                 <th>{{ trans('admin.'.$filed) }}</th>
                             @endforeach
@@ -57,15 +51,10 @@
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    @endslot
+                    @slot('tbody')
                         @foreach($results as $user)
-                            <tr>
-                                <td class="table-select">
-                                    @if($user->id > 1)
-                                        {{ $user->id }}
-                                    @endif
-                                </td>
+                            <tr @if($user->id > 1) data-id="{{ $user->id }}" @endif>
                                 @foreach($user_name_fileds as $filed)
                                     <td>{{ $user->$filed }}</td>
                                 @endforeach
@@ -83,29 +72,17 @@
                                     @endcan
                                     @can('delete_user')
                                         @if($user->id > 1 && Auth::user()->can('delete_user'))
-                                            <a href="javascript:void(0);"
-                                               data-url="{{ route('admin.users.destroy', $user->id) }}"
-                                               class="grid-row-delete">{{ trans('admin.delete') }}</a>
+                                                <a href="javascript:void(0);" ajax-post="{{ route('admin.users.destroy', $user->id) }}" data-method="delete" data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
                                         @endif
                                     @endcan
                                 </td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
+                    @endslot
+                    @endadmin_table
                 </div>
                 <div class="card-footer clearfix">
-                    <div class="float-left">
-                        {{ trans('admin.pagination.range', [
-                        'first' => $results->firstItem(),
-                        'last' => $results->lastItem(),
-                        'total' => $results->total(),
-                        ]) }}
-                    </div>
-
-                    <div class="float-right">
-                        {{ $results->appends(request()->query())->links() }}
-                    </div>
+                    @admin_page(['results' => $results]) @endadmin_page
                 </div>
                 <!-- /.card-body -->
             </div>

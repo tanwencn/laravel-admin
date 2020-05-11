@@ -8,9 +8,9 @@
         <!-- begin col-12 -->
         <div class="col-md-12">
             <div class="card">
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover table-striped no-data" data-scroll-y="480">
-                        <thead>
+                <div class="card-body">
+                    @admin_table(['nodata'=>true])
+                    @slot('thead')
                         <tr>
                             <th>{{ trans('admin.user') }}</th>
                             <th>{{ trans('admin.method') }}</th>
@@ -19,8 +19,8 @@
                             <th>{{ trans('admin.format') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                         </tr>
-                        </thead>
-                        <tbody>
+                    @endslot
+                    @slot('tbody')
                         @foreach($results as $log)
                             <tr>
                                 <td>{{ $log->user->name }}</td>
@@ -38,21 +38,11 @@
                                 <td style="white-space:nowrap">{{ $log->created_at }}</td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
+                    @endslot
+                    @endadmin_table
                 </div>
                 <div class="card-footer clearfix">
-                    <div class="float-left">
-                        {{ trans('admin.pagination.range', [
-                        'first' => $results->firstItem(),
-                        'last' => $results->lastItem(),
-                        'total' => $results->total(),
-                        ]) }}
-                    </div>
-
-                    <div class="float-right">
-                        {{ $results->appends(request()->query())->links() }}
-                    </div>
+                    @admin_page(['results' => $results]) @endadmin_page
                 </div>
                 <!-- /.card-body -->
             </div>
