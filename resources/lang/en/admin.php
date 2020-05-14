@@ -105,6 +105,7 @@ return [
     'ad_list' => 'Advertising list',
     'ads_count' => 'Number of ads',
 
+    'list' => 'List|Lists',
     'all' => 'All',
     'search' => 'Search',
     'select_all' => 'Select All',

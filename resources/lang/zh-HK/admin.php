@@ -105,6 +105,7 @@ return [
     'save_ad' => '保存廣告位',
     'invalid_prompt' => '有一些無效的項目,請檢查或刪除它們。',
     'ad_list' => '廣告位列表',
+    'list' => '列表',
     'ads_count' => '廣告數量',
 
     'all' => '所有',

@@ -98,6 +98,7 @@ return [
     'save_ad' => '保存广告位',
     'invalid_prompt' => '有一些无效的项目,请检查或删除它们。',
     'ad_list' => '广告位列表',
+    'list' => '列表',
     'ads_count' => '广告数量',
 
     'all' => '所有',

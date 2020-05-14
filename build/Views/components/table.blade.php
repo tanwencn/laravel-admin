@@ -1,11 +1,11 @@
 @php
-$checkbox = isset($checkbox)?$checkbox:false;
-$nowrap = isset($nowrap)?$nowrap:true;
-$nodata = isset($nodata)?$nodata:false;
+$checkbox = isset($checkbox)?"table-select":"";
+$nowrap = isset($nowrap)?"":"text-nowrap";
+$nodata = isset($nodata)?"no-data":"";
 $id = 'table-'.mt_rand(1000, 9999);
 @endphp
 
-<table id="{{ $id }}" class="table table-borderless no-pitch @if($nodata) no-data @endif @if($nowrap) text-nowrap @endif @if($checkbox) table-select @endif">
+<table id="{{ $id }}" style="width: 100%" class="table table-borderless no-pitch {{ $nodata }} {{ $nowrap }} {{ $checkbox }}">
     <thead class="thead-light">
     {{ $thead }}
     </thead>

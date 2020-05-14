@@ -39,6 +39,7 @@ window.Admin = function () {
                 ordering: false,
                 searching: false,
                 info: false,
+                scrollX:true,
                 scrollY: $(window).height() ? $(window).height() - 240 : 420,
                 scrollCollapse: true,
                 /*headerCallback: function headerCallback(thead, data, start, end, display) {
