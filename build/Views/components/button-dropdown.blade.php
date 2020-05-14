@@ -3,7 +3,7 @@
     $class = isset($class)?$class:'btn-secondary btn-sm';
 @endphp
 <div class="btn-group">
-    <button id="{{ $id }}" type="button" class="btn dropdown-toggle {{ $class }}" data-toggle="dropdown">
+    <button id="{!! $id !!}" type="button" class="btn dropdown-toggle {!! $class !!}" data-toggle="dropdown">
         {{ $name }}
     </button>
     <div class="dropdown-menu" aria-labelledby="{{ $id }}">

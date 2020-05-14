@@ -12,9 +12,7 @@
         </a>
         @if ($val->children)
             <ul class="nav nav-treeview">
-                {!! view('admin::_menu', [
-            'items' => $val->children
-        ]) !!}
+                {!! view('admin::_menu', ['items' => $val->children]) !!}
             </ul>
         @endif
     </li>

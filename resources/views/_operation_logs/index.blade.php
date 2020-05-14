@@ -9,8 +9,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    @admin_table(['nodata'=>true])
-                    @slot('thead')
+                    <admin::table nodata="true">
+                    <slot name="thead">
                         <tr>
                             <th>{{ trans('admin.user') }}</th>
                             <th>{{ trans('admin.method') }}</th>
@@ -19,8 +19,8 @@
                             <th>{{ trans('admin.format') }}</th>
                             <th>{{ trans('admin.created_at') }}</th>
                         </tr>
-                    @endslot
-                    @slot('tbody')
+                    </slot>
+                    <slot name="tbody">
                         @foreach($results as $log)
                             <tr>
                                 <td>{{ $log->user->name }}</td>
@@ -38,11 +38,11 @@
                                 <td style="white-space:nowrap">{{ $log->created_at }}</td>
                             </tr>
                         @endforeach
-                    @endslot
-                    @endadmin_table
+                    </slot>
+                    </admin::table>
                 </div>
                 <div class="card-footer clearfix">
-                    @admin_page(['results' => $results]) @endadmin_page
+                    <admin::page :results="$results" />
                 </div>
                 <!-- /.card-body -->
             </div>

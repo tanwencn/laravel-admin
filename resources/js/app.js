@@ -60,42 +60,6 @@ window.Admin = function () {
             $('#pjax-container').on('change', '.grid-select-all:not(.checkbox-style)', function () {
                 $('.grid-row-checkbox').prop('checked', this.checked).trigger('change');
             });
-            $('#pjax-container').on('click', '[ajax-post]', function (event) {
-                event.preventDefault();
-                var url = $(this).attr('ajax-post');
-                var data = $(this).data();
-                if (data['method']) data['_method'] = data['method'];
-                if (!data['_method']) data['_method'] = 'POST';
-                if (data['mergeValue']) $.extend(data, data['mergeValue'])
-                if (data['selectedList']) {
-                    data[data['selectedList']] = Admin.listSelectedRows();
-                    if (!data[data['selectedList']]) return false;
-                }
-
-                var request = function () {
-                    $.ajax({
-                        method: 'POST',
-                        url: url,
-                        data: data,
-                        dataType: 'JSON',
-                        success: function (data) {
-                            $.pjax.reload('#pjax-container');
-                            if (data['message']) Admin.success(data['message']);
-                        },
-                        error: function (rs) {
-                            if (rs['responseJSON'] && rs['responseJSON']['message']) {
-                                Admin.error(rs['responseJSON']['message']);
-                            }
-                        }
-                    });
-                }
-
-                if (data['confirm']) {
-                    Admin.confirm(data['confirm'], request);
-                } else {
-                    request();
-                }
-            });
             if (this.is_pjax) this.pjax();
         },
         init: function init() {
@@ -213,19 +177,6 @@ window.Admin = function () {
                 parents_li.addClass('menu-open').children('a').addClass('active');
                 $('aside .nav-sidebar li').not(parents_li).removeClass('menu-open').find('a').removeClass('active');
             }
-        },
-        listSelectedRows: function listSelectedRows() {
-            var selected = [];
-            $('#pjax-container .grid-row-checkbox:checked').each(function () {
-                selected.push(this.value);
-            });
-
-            if (selected.length < 1) {
-                this.alert(Admin.language.pleaseSelectData);
-                return false;
-            }
-
-            return selected;
         },
         alert: function alert(content) {
             $.alert({

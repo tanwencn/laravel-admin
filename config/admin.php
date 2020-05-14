@@ -36,7 +36,7 @@ return [
 
     'auth' => [
         'login' => [
-            'controller' => 'Tanwencn\Admin\Http\Controllers\LoginController',
+            'controller' => 'App\Admin\Controllers\LoginController',
             'username' => 'name'
         ],
         'guards' => [

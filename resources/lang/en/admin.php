@@ -141,7 +141,8 @@ return [
     'adjust_sort_tip' => 'After adjusting the sorting, you need to manually click the save button to take effect!',
     'chang_password_tip' => 'If the password item is left blank. The password will not be changed.',
     'no_items' => 'No Items.',
-    'please_select_data' => 'Please select the data!',
+    'please_select' => 'Please select the data!',
+    'data' => 'Data',
 
     'user_group' => 'User Group',
     'user' => 'User',

@@ -9,16 +9,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    @admin_buttons_dropdown(['name' => trans('admin.batch')])
-                    @slot('links')
-                        @can('delete_role')
-                            <a href="javascript:void(0);" class="dropdown-item"
-                               ajax-post="{{ route('admin.roles.destroy', 0) }}" data-method="delete"
-                               data-confirm="{{ trans('admin.delete_message') }}"
-                               data-selected-list="ids">{{ trans('admin.delete') }}</a>
-                        @endcan
-                    @endslot
-                    @endadmin_buttons_dropdown
+                    <admin::button-dropdown :name="trans('admin.batch')">
+                        <slot name="links">
+                            @can('delete_role')
+                                <admin::ajax class="dropdown-item" :url="route('admin.roles.destroy', 0)" method="delete" :confirm="trans('admin.delete_message')" selected="ids" :text="trans('admin.delete')" />
+                            @endcan
+                        </slot>
+                    </admin::button-dropdown>
 
                     @can('add_role')
                         <div class="btn-group">
@@ -42,8 +39,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @admin_table(['checkbox' => true])
-                    @slot('thead')
+                    <admin::table checkbox="true">
+                    <slot name="thead">
                         <tr>
                             <th>{{ trans('admin.name') }}</th>
                             <th>{{ trans('admin.guard') }}</th>
@@ -51,8 +48,8 @@
                             <th>{{ trans('admin.updated_at') }}</th>
                             <th>{{ trans('admin.operating') }}</th>
                         </tr>
-                    @endslot
-                    @slot('tbody')
+                    </slot>
+                    <slot name="tbody">
                         @foreach($results as $role)
                             <tr @if($role->name != 'superadmin') data-id="{{ $role->id }}" @endif>
                                 <td>{{ $role->name }}</td>
@@ -75,11 +72,11 @@
                                 </td>
                             </tr>
                         @endforeach
-                    @endslot
-                    @endadmin_table
+                    </slot>
+                    </admin::table>
                 </div>
                 <div class="card-footer clearfix">
-                    @admin_page(['results' => $results]) @endadmin_page
+                    <admin::page :results="$results"/>
                 </div>
             </div>
         </div>

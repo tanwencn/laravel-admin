@@ -100,8 +100,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @admin_table(['nodata' => true, 'nowrap' => false])
-                    @slot('thead')
+                    <admin::table nowrap="false" nodata="true">
+                    <slot name="thead">
                         <tr>
                             <th>Level</th>
                             <th>Context</th>
@@ -109,8 +109,8 @@
                             <th>Content</th>
                             <th>More</th>
                         </tr>
-                    @endslot
-                    @slot('tbody')
+                    </slot>
+                    <slot name="tbody">
                         @foreach($data as $key => $val)
                             <tr>
                                 <td style="white-space: nowrap;">{{ $val[3] }}</td>
@@ -141,8 +141,8 @@
                                 <!-- /.modal-dialog -->
                             </div>
                         @endforeach
-                    @endslot
-                    @endadmin_table
+                    </slot>
+                    </admin::table>
                 </div>
                 <!-- /.card-body -->
             </div>

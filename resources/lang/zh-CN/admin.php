@@ -136,7 +136,8 @@ return [
     'adjust_sort_tip' => '调整排序后需要手动点击保存按钮才会生效哦！',
     'chang_password_tip' => '若密码项留空。则密码将不会被改变。',
     'no_items' => '没有项目。',
-    'please_select_data' => '请选择数据!',
+    'please_select' => '请选择',
+    'data' => '数据',
 
     'permission' => '权限',
     'view_permission' => '查看权限',

@@ -121,7 +121,7 @@
         cancel: "{{ trans('admin.cancel') }}",
         trashMessage: "{{ trans('admin.trash_message') }}",
         deleteMessage: "{{ trans('admin.delete_message') }}",
-        pleaseSelectData: "{{ trans('admin.please_select_data') }}",
+        pleaseSelectData: "{{ trans('admin.please_select') }}{{ trans('admin.data') }}",
         ok: "{{ trans('admin.ok') }}",
         csrf_token: '{{ csrf_token() }}'
     };

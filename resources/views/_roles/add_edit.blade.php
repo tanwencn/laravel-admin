@@ -2,16 +2,10 @@
 
 @section('title', trans_choice('admin.'.($model->id?'edit_role':'add_role'), 1))
 
-@section('breadcrumbs')
-    <li class="breadcrumb-item"><a href="{{ Admin::action('index') }}"> {{ trans('admin.role') }}</a></li> @endsection
+<admin::bread-middle :middle="['url' => Admin::action('index'), 'name' => trans('admin.role')]" />
 
 @section('content')
-    <form action="{{ Admin::action('form', $model->id) }}"
-          method="POST">
-    {{ csrf_field() }}
-    @if(isset($model->id))
-        {{ method_field("PUT") }}
-    @endif
+    <admin::form :model="$model">
     <!-- begin row -->
         <div class="row">
             <!-- begin col-12 -->
@@ -19,27 +13,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group row {{ $errors->has('name')?"has-error":"" }}">
-                            <label class="col-form-label text-right col-form-label-sm col-md-4 text-right asterisk">{{ trans('admin.name') }}
-                                ：</label>
+                            <admin::label :text="trans('admin.name')" required="true" class="col-md-4 text-right" />
                             <div class="col-md-8">
-                                <input {{ $model->name=='superadmin'?'readonly':'' }} type="text" name="name"
-                                       class="form-control form-control-sm @if($errors->has('name')) is-invalid @endif"
-                                       value="{{ old('name', $model->name)}}">
-                                    <span class="error invalid-feedback">{{$errors->first('name')}}</span>
+                                <admin::input name="name" :value="old('name', $model->name)" :readonly="$model->name=='superadmin'" />
                             </div>
                         </div>
                         <div class="form-group row {{ $errors->has('guard')?"has-error":"" }}">
-                            <label class="col-form-label text-right col-form-label-sm col-md-4 text-right asterisk">{{ trans('admin.guard') }}
-                                ：</label>
+                            <admin::label :text="trans('admin.guard')" required="true" class="col-md-4 text-right" />
                             <div class="col-md-8">
-                                <select data-minimum-results-for-search="Infinity" name="guard"
-                                        class="form-control form-control-sm select2 @if($errors->has('guard')) is-invalid @endif">
-                                    <option>请选择</option>
-                                    @foreach($guards as $guard)
-                                        <option @if(old('guard_name', $model->guard_name)==$guard) selected @endif>{{ $guard }}</option>
-                                    @endforeach
-                                </select>
-                                    <span class="error invalid-feedback">{{$errors->first('guard')}}</span>
+                                <admin::select name="guard" :selected="old('guard_name', $model->guard_name)" :results="$guards" toName="true" search="false" />
                             </div>
                         </div>
                     </div>
@@ -56,9 +38,7 @@
                         <div class="card-tools">
                             <form id="search" action="http://admin6.test/admin/permissions">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="search" class="form-control float-right" value="" placeholder="搜索...">
-
-
+                                    <input type="text" name="search" class="form-control float-right" value="" placeholder="{{ trans('admin.search_name') }}">
                                 </div>
                             </form>
                         </div>
@@ -98,7 +78,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </admin::form>
     <!-- end row -->
 
     <!-- end #content -->

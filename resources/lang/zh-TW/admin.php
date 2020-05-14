@@ -144,7 +144,8 @@ return [
     'adjust_sort_tip' => '調整排序後需要手動點擊保存按鈕才會生效哦！',
     'chang_password_tip' => '若密碼項留空。則密碼將不會被改變。',
     'no_items' => '沒有項目。',
-    'please_select_data' => '請選擇數據!',
+    'please_select' => '請選擇',
+    'data' => '數據',
 
     'user_group' => '用戶組',
     'user' => '用戶',
