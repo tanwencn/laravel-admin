@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- begin row -->
-    <div class="row" xmlns:admin="http://www.w3.org/1999/html">
+    <div class="row">
         <!-- begin col-12 -->
         <div class="col-md-12">
             <div class="card">

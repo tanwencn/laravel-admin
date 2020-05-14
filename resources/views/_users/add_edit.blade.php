@@ -2,8 +2,7 @@
 
 @section('title', trans_choice('admin.'.($model->id?'edit_user':'add_user'), 1))
 
-<admin::bread-middle :middle="['url' => Admin::action('index'), 'name' => trans_choice('admin.user', 1)]"
-                     xmlns:admin="http://www.w3.org/1999/html"/>
+<admin::bread-middle :middle="['url' => Admin::action('index'), 'name' => trans_choice('admin.user', 1)]" />
 
 @section('content')
     <admin::form :model="$model">
