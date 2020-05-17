@@ -66,10 +66,7 @@
                                             @endcan
                                             @can('delete_permission')
                                                 @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name))
-                                                    <a href="javascript:void(0);"
-                                                       ajax-post="{{ route('admin.permissions.destroy', $permission->id) }}"
-                                                       data-method="delete"
-                                                       data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
+                                                        <admin::ajax :url="route('admin.permissions.destroy', $permission->id)" method="delete" :confirm="trans('admin.delete_message')" :text="trans('admin.delete')" />
                                                 @endif
                                             @endcan
                                         </td>

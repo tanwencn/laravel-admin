@@ -56,6 +56,8 @@ return [
     'save_succeeded' => '保存成功!',
     'save_failed' => '保存失败!',
     'login_successful' => '登录成功!',
+    'apply' => '确定',
+
 
     'select_file' => '选择文件',
     'select_image' => '选择图片',
@@ -198,5 +200,5 @@ return [
     'theme' => '主题',
     'laravel_logs' => '系统日志',
     'system' => '系统',
-    'log' => '日志'
+    'log' => '日志',
 ];

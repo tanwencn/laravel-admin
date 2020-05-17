@@ -10,7 +10,6 @@
             <div class="card">
                 <!-- /.card-header -->
                 <div class="card-header">
-
                     <admin::button-dropdown :name="trans('admin.batch')">
                         <slot name="links">
                             @can('delete_role')
@@ -71,10 +70,7 @@
                                         @endcan
                                         @can('delete_user')
                                             @if($user->id > 1 && Auth::user()->can('delete_user'))
-                                                <a href="javascript:void(0);"
-                                                   ajax-post="{{ route('admin.users.destroy', $user->id) }}"
-                                                   data-method="delete"
-                                                   data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
+                                                    <admin::ajax :url="route('admin.users.destroy', $user->id)" method="delete" :confirm="trans('admin.delete_message')" :text="trans('admin.delete')" />
                                             @endif
                                         @endcan
                                     </td>

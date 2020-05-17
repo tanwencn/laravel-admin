@@ -57,6 +57,7 @@ return [
     'save_succeeded' => '保存成功!',
     'save_failed' => '保存失敗!',
     'login_successful' => '登錄成功!',
+    'apply' => '確定',
 
     'select_file' => '選擇文件',
     'select_image' => '選擇圖片',

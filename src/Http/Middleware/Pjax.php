@@ -42,7 +42,12 @@ class Pjax
     {
         $response = $next($request);
 
-        if (!$request->pjax() || $response->isRedirection() || $response->isServerError()) {
+        if (!$request->pjax() || $response->isRedirection()) {
+            return $response;
+        }
+
+        if($response->isServerError()) {
+            $response->header('X-PJAX-URL', $request->header('referer'));
             return $response;
         }
 

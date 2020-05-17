@@ -11,6 +11,7 @@
             <!-- begin col-12 -->
             <div class="col-md-4">
                 <div class="card">
+                    <div class="card-header"><h3 class="card-title">{{ trans('admin.role') }}</h3></div>
                     <div class="card-body">
                         <div class="form-group row {{ $errors->has('name')?"has-error":"" }}">
                             <admin::label :text="trans('admin.name')" required="true" class="col-md-4 text-right" />
@@ -21,7 +22,7 @@
                         <div class="form-group row {{ $errors->has('guard')?"has-error":"" }}">
                             <admin::label :text="trans('admin.guard')" required="true" class="col-md-4 text-right" />
                             <div class="col-md-8">
-                                <admin::select name="guard" :selected="old('guard_name', $model->guard_name)" :results="$guards" toName="true" search="false" />
+                                <admin::select name="guard" :selected="old('guard', $model->guard_name)" :results="$guards" toName="true" search="false" />
                             </div>
                         </div>
                     </div>
@@ -34,7 +35,8 @@
             <!-- end panel -->
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ trans_choice('admin.permission', 1) }}
+                    <div class="card-header">
+                        <h3 class="card-title">{{ trans_choice('admin.permission', 1) }}</h3>
                         <div class="card-tools">
                             <form id="search" action="http://admin6.test/admin/permissions">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -43,8 +45,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0">
-                            <div class="col-md-12 data-list p-0"></div>
+                    <div class="card-body table-responsive p-0 data-list">
                             @foreach($guards as $guard)
                                 <template class="{{ $guard }}">
                                     <table class="table text-nowrap table-borderless permissions no-data">
@@ -59,7 +60,7 @@
                                             @foreach($permissions_group[$guard] as $permission)
                                                 <tr>
                                                     <td>
-                                                        @if($guard == 'admin' && auth()->user()->can($permission->name))
+                                                        @if(auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole($guard) && auth()->user()->can($permission->name)))
                                                             <input type="checkbox" name="permissions[]"
                                                                    {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
                                                                    value="{{ $permission->id }}">

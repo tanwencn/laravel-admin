@@ -63,10 +63,7 @@
                                     @endcan
                                     @can('delete_role')
                                         @if($role->name !='superadmin')
-                                            <a href="javascript:void(0);"
-                                               ajax-post="{{ route('admin.roles.destroy', $role->id) }}"
-                                               data-method="delete"
-                                               data-confirm="{{ trans('admin.delete_message') }}">{{ trans('admin.delete') }}</a>
+                                                <admin::ajax :url="route('admin.roles.destroy', $role->id)" method="delete" :confirm="trans('admin.delete_message')" :text="trans('admin.delete')" />
                                         @endif
                                     @endcan
                                 </td>

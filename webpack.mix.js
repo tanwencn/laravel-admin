@@ -27,6 +27,8 @@ mix.setPublicPath('public/').setResourceRoot('../')
         'node_modules/admin-lte/plugins/bootstrap-switch/bootstrap-switch.js',
         'node_modules/admin-lte/plugins/popper/umd/popper.js',
         'node_modules/admin-lte/plugins/overlayScrollbars/js/OverlayScrollbars.js',
+        'node_modules/admin-lte/plugins/daterangepicker/daterangepicker.js',
+        'node_modules/admin-lte/plugins/bootstrap-switch/js/bootstrap-switch.js',
         'resources/js/jquery.pjax.js',
         'node_modules/admin-lte/plugins/jquery-ui/jquery-ui.js',
         'node_modules/admin-lte/plugins/toastr/toastr.min.js',

@@ -113,6 +113,8 @@ window.Admin = function () {
             $(document).pjax('a[target!=_blank]', '#pjax-container');
             $(document).on('pjax:timeout pjax:error', function (event, xhr) {
                 event.preventDefault();
+                var serverUrl = xhr.getResponseHeader('X-PJAX-URL');
+                window.history.replaceState(null, "", serverUrl);
                 NProgress.done();
                 if (event.handleObj.type == 'pjax:error')
                     toastr.error(xhr.statusText + " " + xhr.status);

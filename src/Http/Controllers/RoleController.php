@@ -22,7 +22,8 @@ class RoleController extends Controller
 
     public function __construct()
     {
-        $this->guards = array_keys(config('auth.guards', []));
+        $guards = array_keys(config('auth.guards', []));
+        $this->guards = array_combine($guards, $guards);
     }
 
     public function index(Request $request)
@@ -90,7 +91,7 @@ class RoleController extends Controller
 
         if($request->filled('permissions')) {
             foreach ($request->input('permissions') as $val) {
-                abort_unless(Auth::user()->hasPermissionTo(intval($val)), 402, "you is no permission id {$val}");
+                abort_unless(Auth::user()->hasRole('superadmin') || Auth::user()->hasPermissionTo(intval($val)), 402, "you is no permission id {$val}");
             }
         }
 

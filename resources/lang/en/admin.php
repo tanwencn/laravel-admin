@@ -41,6 +41,7 @@ return [
     'expand_all' => 'Expand all',
     'collapse_all' => 'All Collapse',
     'captcha' => 'Verification Code',
+    'apply' => 'Apply',
 
     'title' => 'Title',
     'excerpt' => 'Summary',

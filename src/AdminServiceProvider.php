@@ -72,7 +72,7 @@ class AdminServiceProvider extends ServiceProvider
             BootstrapComposer::class
         );*/
 
-        BladeX::component('admin::components.*');
+        BladeX::component('admin::components.**.*');
     }
 
     /**
