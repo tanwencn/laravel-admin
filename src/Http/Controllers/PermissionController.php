@@ -23,7 +23,7 @@ class PermissionController extends Controller
 
     public function __construct()
     {
-        $this->guards = collect(array_keys(config('auth.guards', [])))->pluck('name', 'name');
+        $this->guards = array_keys(config('auth.guards', []));
     }
 
     public function index(Request $request)

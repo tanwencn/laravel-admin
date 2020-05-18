@@ -6,7 +6,7 @@
         $search = isset($search) && $search=='false'?'data-minimum-results-for-search="Infinity"':"";
         $slot = (string)$slot;
         $results = isset($results)?$results:[];
-        if(isset($toName) && $toName) $results = array_combine($results, $results);
+        if(isset($toName) && $toName && !empty($results)) $results = array_combine($results, $results);
 
 @endphp
 
