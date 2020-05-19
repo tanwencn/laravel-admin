@@ -171,7 +171,7 @@ window.Admin = function () {
             return parms.join('&');
         },
         activityMenu: function activityMenu() {
-            var url = window.location.href;
+            var url = window.location.href.split("?")[0];
             var current = $('aside .nav-sidebar li a[href="' + url + '"]');
 
             if (current.length > 0) {
