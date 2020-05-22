@@ -23,16 +23,16 @@ class Option extends Model
         self::saved(function ($model) {
             Cache::forget('t_options_' . $model->name);
         });
+        self::deleted(function ($model) {
+            Cache::forget('t_options_' . $model->name);
+        });
     }
 
     public static function findByName(string $name, $defalut = '')
     {
-        $data = Cache::remember('t_options_' . $name, 7200, function () use ($name) {
-            try {
-                $model = static::query()->where('name', $name)->select('value')->first();
-            } catch (\Exception $e) {
-                return null;
-            }
+        $data = Cache::rememberForever('t_options_' . $name, function () use ($name) {
+
+            $model = static::query()->where('name', $name)->select('value')->first();
 
             return $model && $model->value ? $model->value : "";
         });

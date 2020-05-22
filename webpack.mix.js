@@ -35,6 +35,7 @@ mix.setPublicPath('public/').setResourceRoot('../')
         'node_modules/icheck/icheck.js',
         'node_modules/jquery-confirm/dist/jquery-confirm.min.js',
         'node_modules/admin-lte/dist/js/adminlte.js',
+        'node_modules/summernote/dist/summernote-bs4.js',
         'node_modules/nprogress/nprogress.js',
         '../laravel-elfinder/resources/assets/app.js'
     ], 'public/js/vendor.js')
