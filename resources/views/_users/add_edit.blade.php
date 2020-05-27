@@ -35,8 +35,8 @@
                                 <admin::label class="col-md-3" :text="trans_choice('admin.role', 1)" required="true"/>
                                 <div class="col-md-6">
                                     <admin::select name="role[]" multiple="true">
-                                        @foreach($roles as $name => $title)
-                                            <option {{ in_array($name, old('role', $model->roles->pluck('name')->all()))?'selected':'' }} value="{{ $name }}">{{ $title }}</option>
+                                        @foreach($roles as $role)
+                                            <option {{ in_array($role->name, old('role', $model->roles->pluck('name')->all()))?'selected':'' }} value="{{ $role->name }}">{{ $role->guard_name.':'.$role->name }}</option>
                                         @endforeach
                                     </admin::select>
                                 </div>

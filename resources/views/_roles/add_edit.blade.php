@@ -46,36 +46,37 @@
                         </div>
                     </div>
                     <div class="card-body table-responsive p-0 data-list">
-                            @foreach($guards as $guard)
-                                <template class="{{ $guard }}">
-                                    <table class="table text-nowrap table-borderless permissions no-data">
-                                        <thead>
-                                        <th width="80"><input type="checkbox"
-                                                              class="grid-select-all checkbox-style"></th>
-                                        <th>{{ trans_choice('admin.permission', 0) }}</th>
-                                        <th>{{ trans('admin.guard') }}</th>
-                                        </thead>
-                                        <tbody>
-                                        @isset($permissions_group[$guard])
-                                            @foreach($permissions_group[$guard] as $permission)
-                                                <tr>
-                                                    <td>
-                                                        @if(auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole($guard) && auth()->user()->can($permission->name)))
-                                                            <input type="checkbox" name="permissions[]"
-                                                                   {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
-                                                                   value="{{ $permission->id }}">
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
-                                                    <td>{{ $permission->guard_name }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endisset
-                                        </tbody>
-                                    </table>
-                                </template>
-                            @endforeach
+
                     </div>
+                    @foreach($guards as $guard)
+                        <template class="{{ $guard }}">
+                            <table class="table text-nowrap table-borderless permissions no-data">
+                                <thead>
+                                <th width="80"><input type="checkbox"
+                                                      class="grid-select-all checkbox-style"></th>
+                                <th>{{ trans_choice('admin.permission', 0) }}</th>
+                                <th>{{ trans('admin.guard') }}</th>
+                                </thead>
+                                <tbody>
+                                @isset($permissions_group[$guard])
+                                    @foreach($permissions_group[$guard] as $permission)
+                                        <tr>
+                                            <td>
+                                                @if(auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole($guard) && auth()->user()->can($permission->name)))
+                                                    <input type="checkbox" name="permissions[]"
+                                                           {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
+                                                           value="{{ $permission->id }}">
+                                                @endif
+                                            </td>
+                                            <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
+                                            <td>{{ $permission->guard_name }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endisset
+                                </tbody>
+                            </table>
+                        </template>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -101,6 +102,7 @@
 
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
+                console.log($('template.' + name).html());
                 $('.data-list').html($('template.' + name).html());
                 table = $('.data-list>table').DataTable({searching: true, dom: 'Brtip',
                     buttons: [

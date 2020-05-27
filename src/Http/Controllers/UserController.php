@@ -63,12 +63,12 @@ class UserController extends Controller
     protected function _form($model)
     {
         $model->load('metas');
-        $role = Role::where('guard_name', 'admin');
+        $role = Role::query();
         if (!Auth::user()->hasRole('superadmin'))
             $role->whereIn('name', Auth::user()->roles->pluck('name')->all());
 
-        $roles = $role->get()->pluck('name', 'name');
-
+        $roles = $role->get();
+        
         return $this->view('add_edit', compact('model', 'roles'));
     }
 
