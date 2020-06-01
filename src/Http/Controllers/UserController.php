@@ -68,7 +68,7 @@ class UserController extends Controller
             $role->whereIn('name', Auth::user()->roles->pluck('name')->all());
 
         $roles = $role->get();
-        
+
         return $this->view('add_edit', compact('model', 'roles'));
     }
 
@@ -106,7 +106,7 @@ class UserController extends Controller
             'role' => 'required',
             'role.*' => function ($attribute, $value, $fail) {
                 if (!Auth::user()->hasRole('superadmin') && !in_array($value, Auth::user()->roles->pluck('name')->all())) {
-                    $fail($attribute.' is invalid.');
+                    $fail($attribute . ' is invalid.');
                 }
             },
             'name' => ['max:255'],
@@ -121,7 +121,6 @@ class UserController extends Controller
         $input = array_filter($request->except('role'));
 
         $roles = array_filter($request->input('role', []));
-
         $model->fill($input);
 
         $model->save();
@@ -129,10 +128,28 @@ class UserController extends Controller
         $model->saveMetas($input['metas']);
 
         if (!empty($roles) && Auth::user()->can('edit_role')) {
+            $model->roles()->detach();
+
             if (!Auth::user()->hasRole('superadmin'))
                 $roles = array_diff($roles, ['superadmin']);
 
-            $model->syncRoles($roles);
+            $roles = collect($roles)
+                ->flatten()
+                ->map(function ($role) {
+                    if (empty($role)) {
+                        return false;
+                    }
+
+                    $role = explode(':', $role);
+                    return Role::findByName(...$role);
+                })
+                ->filter(function ($role) {
+                    return $role instanceof \Spatie\Permission\Contracts\Role;
+                })
+                ->map->id
+                ->all();
+
+            $model->roles()->sync($roles, false);
         }
 
         $url = Auth::user()->can('view_user') ? Admin::action('index') : Admin::action('edit', $model->id);

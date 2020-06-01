@@ -54,8 +54,8 @@ class LogViewController extends Controller
 
         $statistics = "";
 
-        if ($page == 1) session(['log_view_line' => 0]);
-        $this->rows_line = $this->isRefresh()?session('log_view_line_last'):session('log_view_line', 0);
+        if ($page == 1) session(['admin-log-view-line' => 0]);
+        $this->rows_line = $this->isRefresh()?session('admin-log-view-line-last'):session('admin-log-view-line', 0);
 
         $data = $current ? $this->data($current_file) : [];
 
@@ -75,9 +75,9 @@ class LogViewController extends Controller
             $line = $file->fgets() . "\n";
             if ($once_rows > config('admin.laravel_logs.read_once_rows', 10000) && preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $line)) {
                 if (!$this->isRefresh()) {
-                    session(['log_view_line_last' => $this->rows_line]);
-                    session(['log_view_line' => $file->key()-1]);
-                    session(['log_view_line_time' => request()->query('timestrap')]);
+                    session(['admin-log-view-line-last' => $this->rows_line]);
+                    session(['admin-log-view-line' => $file->key()-1]);
+                    session(['admin-log-view-line-time' => request()->query('timestrap')]);
                 }
                 break;
             };
@@ -104,7 +104,7 @@ class LogViewController extends Controller
 
     private function isRefresh()
     {
-        return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('log_view_line_time');
+        return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('admin-log-view-line-time');
     }
 
     protected function abilitiesMap()

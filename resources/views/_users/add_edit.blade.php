@@ -36,7 +36,9 @@
                                 <div class="col-md-6">
                                     <admin::select name="role[]" multiple="true">
                                         @foreach($roles as $role)
-                                            <option {{ in_array($role->name, old('role', $model->roles->pluck('name')->all()))?'selected':'' }} value="{{ $role->name }}">{{ $role->guard_name.':'.$role->name }}</option>
+                                            <option {{ $model->roles->contains(function ($value, $key)use($role) {
+    return $value->name == $role->name && $value->guard_name==$role->guard_name;
+})?'selected':'' }} value="{{ $role->name.':'.$role->guard_name }}">{{ $role->guard_name.':'.$role->name }}</option>
                                         @endforeach
                                     </admin::select>
                                 </div>
