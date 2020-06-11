@@ -2,7 +2,7 @@
 
 Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(function ($router) {
     $router->get('login', config('admin.auth.login.controller').'@showLoginForm')->name('admin.login');
-    $router->post('login', config('admin.auth.login.controller').'@login')->name('admin.login');
+    $router->post('login', config('admin.auth.login.controller').'@login')->middleware('throttle:60,15')->name('admin.login');
     $router->get('logout', config('admin.auth.login.controller').'@logout')->name('admin.logout');
 });
 
