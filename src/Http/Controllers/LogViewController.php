@@ -21,7 +21,6 @@ class LogViewController extends Controller
 {
     use Package;
 
-    protected $rows_line = 0;
     protected $eof = false;
 
     public function index(Request $request)
@@ -56,52 +55,14 @@ class LogViewController extends Controller
 
         $statistics = "";
 
-        if ($page == 1) session(['admin-log-view-line' => 0]);
-        $this->rows_line = $this->isRefresh()?session('admin-log-view-line-last'):session('admin-log-view-line', 0);
+        if ($page == 1) session()->forget('admin_logs_view.read');
+        $this->isRefresh() ? session('admin_logs_view.last') : session()->forget('admin_logs_view.last');
 
         $data = $current ? $this->reverseData($current_file) : [];
 
-        $eof = $this->eof;
+        $eof = session('admin_logs_view.last') != 0;
 
         return $this->view('index', compact('tree', 'statistics', 'current', 'data', 'page', 'eof'));
-    }
-
-    protected function data(SplFileInfo $file)
-    {
-        $file = (new \SplFileObject($file));
-        $file->seek($this->rows_line);
-        $once_rows = 0;
-        $content = "";
-
-        while ($this->eof = $file->valid()) {
-            $line = $file->fgets() . "\n";
-            if ($once_rows > config('admin.laravel_logs.read_once_rows', 10000) && preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $line)) {
-                if (!$this->isRefresh()) {
-                    session(['admin-log-view-line-last' => $this->rows_line]);
-                    session(['admin-log-view-line' => $file->key()-1]);
-                    session(['admin-log-view-line-time' => request()->query('timestrap')]);
-                }
-                break;
-            };
-
-            $content .= $line;
-            $once_rows++;
-        }
-
-        preg_match_all('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content, $headings);
-        $log_data = preg_split('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content, null);
-        if ($log_data[0] < 1)
-            array_shift($log_data);
-
-        $headings = array_shift($headings);
-
-        $results = [];
-        foreach ($headings as $key => $heading){
-            preg_match('/^\[(\d{4}-\d{2}-\d{2}.+\d)\] (.+?)\.(.+?): (.*)/', trim($heading), $results[$key]);
-            array_push($results[$key], $log_data[$key]);
-        }
-
-        return array_reverse($results);
     }
 
     protected function reverseData(SplFileInfo $file)
@@ -111,7 +72,8 @@ class LogViewController extends Controller
         return array_filter($items);
     }
 
-    protected function totalLines(\SplFileObject $file){
+    protected function totalLines(\SplFileObject $file)
+    {
         $start = microtime(TRUE);
 
         $lines = 0;
@@ -124,35 +86,45 @@ class LogViewController extends Controller
         return $lines;
     }
 
-    protected function page(int $maxLine, SplFileInfo $file){
-        $count = $this->totalLines($file->openFile());
+    protected function page(int $maxLine, SplFileInfo $file)
+    {
+        $line = session('admin_logs_view.read', $this->totalLines($file->openFile()));
 
         $time = time();
-        $file = $file->openFile();
-        $file->seek($count);
 
         $items = [];
-        for ($i=0;$i<=20;$i++){
-            $items[$i] = $this->parseLine($count, $file);
-            if(empty($items[$i]) || (time() - $time) > 10) break;
+        for ($i = 0; $i <= $maxLine; $i++) {
+            $items[$i] = $this->parseLine($line, $file->openFile());
+            if (empty($items[$i]) || (time() - $time) > 10) break;
+        }
+
+        //断点记录
+        if (!$this->isRefresh()) {
+            session([
+                'admin_logs_view' => [
+                    'last' => $line,
+                    'read' => $line,
+                    'time' => request()->query('timestrap')
+                ]
+            ]);
         }
 
         return $items;
     }
 
-    protected function parseLine(&$line, \SplFileObject $file){
+    protected function parseLine(&$line, \SplFileObject $file)
+    {
         $content = [];
         $result = [];
-        while ($line > 0) {
+        $while = true;
+        while ($line > 0 && $while) {
             $file->seek($line);
             $content[$line] = trim($file->current());
-            if (preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content[$line])){
-                $line--;
-                break;
-            }
+            if (preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content[$line])) $while = false;
             $line--;
+
         }
-        if($content) {
+        if ($content) {
             $data = array_reverse(array_filter($content));
             preg_match('/^\[(\d{4}-\d{2}-\d{2}.+\d)\] (.+?)\.(.+?): (.*)/', $data[0], $result);
             //$result[] = implode('', $data);
@@ -162,7 +134,7 @@ class LogViewController extends Controller
 
     private function isRefresh()
     {
-        return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('admin-log-view-line-time');
+        return request()->filled('page') && request()->filled('timestrap') && request()->query('timestrap') == session('admin_logs_view.time');
     }
 
     protected function abilitiesMap()
