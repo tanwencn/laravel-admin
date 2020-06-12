@@ -10,7 +10,9 @@
 namespace Tanwencn\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\URL;
@@ -57,7 +59,7 @@ class LogViewController extends Controller
         if ($page == 1) session(['admin-log-view-line' => 0]);
         $this->rows_line = $this->isRefresh()?session('admin-log-view-line-last'):session('admin-log-view-line', 0);
 
-        $data = $current ? $this->data($current_file) : [];
+        $data = $current ? $this->reverseData($current_file) : [];
 
         $eof = $this->eof;
 
@@ -100,6 +102,62 @@ class LogViewController extends Controller
         }
 
         return array_reverse($results);
+    }
+
+    protected function reverseData(SplFileInfo $file)
+    {
+        $items = $this->page(20, $file);
+
+        return array_filter($items);
+    }
+
+    protected function totalLines(\SplFileObject $file){
+        $start = microtime(TRUE);
+
+        $lines = 0;
+        $file->setFlags(\SplFileObject::READ_AHEAD);
+        $lines += iterator_count($file) - 1; // -1 gives the same number as "wc -l"
+
+        echo '<br>';
+        $end = microtime(TRUE);
+        echo 'sg耗时' . $deltime = $end - $start;
+        return $lines;
+    }
+
+    protected function page(int $maxLine, SplFileInfo $file){
+        $count = $this->totalLines($file->openFile());
+
+        $time = time();
+        $file = $file->openFile();
+        $file->seek($count);
+
+        $items = [];
+        for ($i=0;$i<=20;$i++){
+            $items[$i] = $this->parseLine($count, $file);
+            if(empty($items[$i]) || (time() - $time) > 10) break;
+        }
+
+        return $items;
+    }
+
+    protected function parseLine(&$line, \SplFileObject $file){
+        $content = [];
+        $result = [];
+        while ($line > 0) {
+            $file->seek($line);
+            $content[$line] = trim($file->current());
+            if (preg_match('/\[\d{4}-\d{2}-\d{2}.*\].*/', $content[$line])){
+                $line--;
+                break;
+            }
+            $line--;
+        }
+        if($content) {
+            $data = array_reverse(array_filter($content));
+            preg_match('/^\[(\d{4}-\d{2}-\d{2}.+\d)\] (.+?)\.(.+?): (.*)/', $data[0], $result);
+            //$result[] = implode('', $data);
+        }
+        return $result;
     }
 
     private function isRefresh()
