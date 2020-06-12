@@ -103,7 +103,7 @@ class UserController extends Controller
 
         $validates = [
             'email' => ['email', 'max:255'],
-            'role' => 'required',
+            'role' => Rule::requiredIf(Auth::user()->can('edit_role')),
             'role.*' => function ($attribute, $value, $fail) {
                 if (!Auth::user()->hasRole('superadmin') && !in_array($value, Auth::user()->roles->pluck('name')->all())) {
                     $fail($attribute . ' is invalid.');
