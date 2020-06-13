@@ -99,8 +99,8 @@
                         <div class="form-group row p-0 m-0" style="float:left; ">
                             <admin::label class="text-right" text="Show Lines"/>
                             <div>
-                                <admin::select :selected="old('lines', request('lines', 20))" search="false"
-                                               :results="['20' => 20, '50' => 50, '100' => 100, '200' => 200, '500'=>500, '1000'=>1000, '2000'=>2000]"
+                                <admin::select :selected="old('lines', request('lines', 100))" search="false"
+                                               :results="['100' => 100, '200' => 200, '500'=>500, '1000'=>1000, '2000'=>2000]"
                                                name="lines"/>
                             </div>
                         </div>

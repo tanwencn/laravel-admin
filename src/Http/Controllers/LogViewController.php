@@ -53,7 +53,7 @@ class LogViewController extends Controller
 
     public function api(Request $request)
     {
-        $lines = $request->query('lines', 20);
+        $lines = $request->query('lines', 100);
         if(session('admin_logs_view.last', 0) >= $lines) return [];
         $file = $request->filled('f') ? decrypt($request->query('f'), false) : "";
         return $this->reverseData(new \SplFileInfo($file));
