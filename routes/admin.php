@@ -14,6 +14,8 @@ Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
         $router->get('/logs', 'LogViewController@index')->name('logs');
+        
+        $router->get('/logs/api', 'LogViewController@api')->name('logs.api');
 
         $router->get('/operationlog', 'OperationLogController@index')->name('operationlog');
 

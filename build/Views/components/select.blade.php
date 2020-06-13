@@ -10,7 +10,7 @@
 
 @endphp
 
-<select id="select2"
+<select style = "width : 100%"
         {!! $id !!} {!! $nameAttr !!} {!! $search !!} {!! $multiple !!} class="select2 form-control form-control-sm @if($errors->has($name)) is-invalid @endif"
         data-placeholder="{{ trans('admin.please_select') }}">
     <option></option>
