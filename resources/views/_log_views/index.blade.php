@@ -121,9 +121,9 @@
                         <admin::table nowrap="false" nodata="true">
                             <slot name="thead">
                                 <tr>
+                                    <th>Date</th>
                                     <th>Level</th>
                                     <th>Context</th>
-                                    <th>Date</th>
                                     <th>Content</th>
                                     <th>More</th>
                                 </tr>
@@ -210,6 +210,7 @@
                     if (table == undefined) {
                         table = $('.table').DataTable({
                             searching: true,
+                            ordering:false,
                             dom: 'Brt',
                             buttons: [
                                 'print'
