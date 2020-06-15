@@ -44,7 +44,7 @@
             </div>
 
             <!-- Sidebar Menu -->
-            <nav class="mt-2">
+            <nav class="mt-2" style="padding-bottom: 5rem">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="true">
                 {!! Admin::menu()->render() !!}
