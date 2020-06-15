@@ -8,7 +8,6 @@
         <!-- begin col-12 -->
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h3 class="card-title">trans_choice('admin.list', 1)</h3></div>
                 <div class="card-body">
                     <admin::table nodata="true">
                     <slot name="thead">
