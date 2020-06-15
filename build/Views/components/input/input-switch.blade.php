@@ -12,7 +12,7 @@
     Admin.boot(function () {
         $("#{{ $id }}").bootstrapSwitch({
             'state': $(this).prop('checked'),
-            size: "small",
+            size: "mini",
             onSwitchChange: function (event, state) {
                 //监听switch change事件，可以根据状态把相应的业务逻辑代码写在这里
                 @if($ajax)
