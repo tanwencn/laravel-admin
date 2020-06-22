@@ -20,7 +20,9 @@ class CreateOperationLogTable extends Migration {
 			$table->string('uri', 255);
 			$table->string('ip', 255);
 			$table->text('body');
+			$table->integer('status');
             $table->timestamps();
+            $table->index(['user_id', 'uri']);
 		});
 	}
 

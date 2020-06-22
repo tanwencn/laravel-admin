@@ -33,16 +33,6 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2">
-                </div>
-                <div class="info">
-                    <a href="{{ route('admin.users.edit', Auth::id()) }}" class="d-block">{{ Auth::user()->name }}</a>
-                </div>
-            </div>
-
             <!-- Sidebar Menu -->
             <nav class="mt-2" style="padding-bottom: 5rem">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -98,9 +88,32 @@
 @endif
 
 <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
+    <aside class="control-sidebar control-sidebar-dark" id="c-s-l">
+        <div class="p-3 control-sidebar-content">
+            <h5>个人信息</h5>
+            <hr class="mb-1"/>
+            <div class="mb-1 mt-1">@lang('admin.name')：{{ Admin::user()->name }}</div>
+            <div class="mb-1">@lang('admin.email')：{{ Admin::user()->email }}</div>
+            <div class="mb-1">@lang('admin.role')：{{ Admin::user()->roles->implode('name', ' | ') }}</div>
+            <div class="mb-1">@lang('admin.last_login_time')：{{ Admin::user()->last_login_time }}</div>
+            <div class="mb-1 mt-2">
+                <a href="javascript:void(0)" data-url="{{ route('admin.users.edit', ['user' => Admin::user()]) }}" class="btn btn-secondary btn-xs col-12">修改信息</a>
+            </div>
+            <div class="mb-1 mt-1">
+                <a href="javascript:void(0);" data-url="{{ route('admin.users.change_password') }}" class="btn btn-secondary btn-xs col-12">修改密码</a>
+            </div>
+            <hr class="mb-1"/>
+        </div>
     </aside>
+
+    <script>
+        Admin.boot(function(){
+            $('#c-s-l a').click(function(){
+                var url = $(this).data('url');
+                window.location = url;
+            });
+        });
+    </script>
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->

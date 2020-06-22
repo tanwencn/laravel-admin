@@ -29,22 +29,22 @@
       {{ csrf_field() }}
       <div class="input-group mb-3">
         <input type="text" class="form-control @if($errors->has($username)) is-invalid @endif" placeholder="{{ trans('admin.'.$username) }}" value="{{ old($username) }}" name="{{ $username }}">
-        <span class="error invalid-feedback">{{$errors->first($username)}}</span>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>
           </div>
         </div>
+        <span class="error invalid-feedback">{{$errors->first($username)}}</span>
       </div>
 
       <div class="input-group mb-3">
         <input type="password" class="form-control @if($errors->has('password')) is-invalid @endif" placeholder="{{ trans('admin.password') }}" name="password">
-        <span class="error invalid-feedback">{{$errors->first('password')}}</span>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-lock"></span>
           </div>
         </div>
+        <span class="error invalid-feedback">{{$errors->first('password')}}</span>
       </div>
 
       <div class="row">
@@ -70,7 +70,7 @@
 <!-- /.login-box -->
 
 
-<script src="{{ mix('js/vendor.js', 'vendor/laravel-admin') }}"></script>
+<script src="{{ asset(mix('js/vendor.js', 'vendor/laravel-admin')) }}"></script>
 <script>
     $(function () {
         $('input').iCheck({

@@ -10,6 +10,7 @@
 namespace Tanwencn\Admin\Consoles;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Spatie\Permission\Contracts\Role;
 use Tanwencn\Admin\Database\Eloquent\User;
 
@@ -51,10 +52,12 @@ class ResetSuperAdminCommand extends Command
         $user->id = 1;
         $user->email = 'admin@admin.com';
         $user->name = 'administrator';
-        $user->password = 'admin';
+        $password = Str::random(32);
+        $user->password = $password;
         if($user->save())
             $user->assignRole('superadmin');
 
-        $this->info('Reset SuperAdmin is complete');
+        $this->info('Reset SuperAdmin is complete.New Password:');
+        $this->info($password);
     }
 }

@@ -16,7 +16,7 @@ use Tanwencn\Admin\Database\Scopes\LatestScope;
 
 class OperationLog extends Model
 {
-    protected $fillable = ['method', 'uri', 'body', 'ip', 'user_id'];
+    protected $fillable = ['method', 'uri', 'body', 'ip', 'user_id', 'status'];
 
     public static function boot()
     {

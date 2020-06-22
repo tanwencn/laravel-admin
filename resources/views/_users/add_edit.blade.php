@@ -2,7 +2,7 @@
 
 @section('title', trans_choice('admin.'.($model->id?'edit_user':'add_user'), 1))
 
-<admin::bread-middle :middle="['url' => Admin::action('index'), 'name' => trans_choice('admin.user', 1)]" />
+<admin::bread-middle :middle="['url' => Admin::action('index'), 'name' => trans_choice('admin.user', 1)]"/>
 
 @section('content')
     <admin::form :model="$model">
@@ -31,8 +31,9 @@
                             </div>
                         </div>
                         @can('edit_role')
+                            <?php old('role')?>
                             <div class="form-group row {{ $errors->has('role')?"has-error":"" }}">
-                                <admin::label class="col-md-3" :text="trans_choice('admin.role', 1)" required="true"/>
+                                <admin::label class="col-md-3" :text="trans_choice('admin.role', 1)"/>
                                 <div class="col-md-6">
                                     <admin::select name="role[]" multiple="true">
                                         @foreach($roles as $role)
@@ -44,7 +45,13 @@
                                 </div>
                             </div>
                         @endcan
-                        @if($model->id)
+                        @isset($password)
+                            <div class="form-group row {{ $errors->has('password')?"has-error":"" }}">
+                                <admin::label class="col-md-3" :text="trans_choice('admin.password', 1)"/>
+                                <div class="col-sm-6 input-group">{{ $password }}</div>
+                            </div>
+                        @endisset
+                        {{--@if($model->id)
                             <div class="form-group row">
                                 <label for="password"
                                        class="col-sm-3 text-right col-form-label text-right col-form-label-sm"></label>
@@ -72,7 +79,7 @@
                                 </div>
                                 <admin::input type="password" name="password_confirmation"/>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="card-footer clearfix">
                         <button type="submit" class="float-right btn btn-primary"

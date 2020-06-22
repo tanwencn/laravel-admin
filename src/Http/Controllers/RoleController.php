@@ -20,6 +20,8 @@ class RoleController extends Controller
 {
     use ValidatesRequests,Package;
 
+    protected $guards;
+
     public function __construct()
     {
         $guards = array_keys(config('auth.guards', []));
@@ -37,6 +39,9 @@ class RoleController extends Controller
             });
         }
 
+        /*if(!Auth::user()->hasRole('superAdmin'))
+            $model->where('guard_name', Auth::user()->guard_name);*/
+
         $results = $model->paginate();
 
         return $this->view('index', compact('results'));
@@ -49,7 +54,7 @@ class RoleController extends Controller
 
     protected function _form(Role $model)
     {
-        $permissions_group = Permission::all()->groupBy('guard_name');
+        $permissions_group = Permission::where('name', '!=', 'dashboard')->where('guard_name', 'admin')->get()->groupBy('guard_name');
 
         $current_permissions = old('permissions', $model->permissions->pluck('id')->toArray());
 
@@ -74,7 +79,7 @@ class RoleController extends Controller
     {
         $role = Role::findOrfail($id);
         if ($role->name == 'superadmin' && request()->input('name') != $role->name) {
-            abort(401);
+            abort(422);
         }
         return $this->save($role);
     }
@@ -84,16 +89,20 @@ class RoleController extends Controller
         $request = request();
 
         $this->validate($request, [
-            'name' => 'required|max:255',
             'guard' => ['required', Rule::in($this->guards)],
+            'name' => ['required', 'max:255',
+                Rule::unique('roles')->ignore($model)->where(function ($query)use($request) {
+                    return $query->where('guard_name', $request->input('guard'));
+                })
+            ],
             'permissions' => 'array'
         ]);
 
-        if($request->filled('permissions')) {
+        /*if($request->filled('permissions')) {
             foreach ($request->input('permissions') as $val) {
                 abort_unless(Auth::user()->hasRole('superadmin') || Auth::user()->hasPermissionTo(intval($val)), 402, "you is no permission id {$val}");
             }
-        }
+        }*/
 
         $model->name = $request->input('name');
 

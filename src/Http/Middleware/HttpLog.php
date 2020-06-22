@@ -19,9 +19,11 @@ use Tanwencn\Admin\Facades\Admin;
 class HttpLog
 {
 
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $status = null)
     {
-        if (in_array(strtolower($request->method()), config('admin.logger.method'))) {
+        $response = $next($request);
+        
+        if (in_array(strtolower($request->method()), config('admin.logger.method')) && Admin::user()) {
 
             $body = $request->except(array_merge(config('admin.logger.except', []), ['_token', '_method']));
 
@@ -32,11 +34,12 @@ class HttpLog
                 'uri' => substr($request->getPathInfo(), 0, 255),
                 'method' => $request->method(),
                 'ip' => $request->getClientIp(),
-                'body' => json_encode(array_merge($body, $files), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+                'body' => json_encode(array_merge($body, $files), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+                'status' => $response->getStatusCode()
             ]);
         }
 
-        return $next($request);
+        return $response;
     }
 
     protected function fileNames($files)

@@ -2,7 +2,7 @@
 
 Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(function ($router) {
     $router->get('login', config('admin.auth.login.controller').'@showLoginForm')->name('admin.login');
-    $router->post('login', config('admin.auth.login.controller').'@login')->middleware('throttle:60,15')->name('admin.login');
+    $router->post('login', config('admin.auth.login.controller').'@login')->middleware('throttle:60,15')->middleware(\Tanwencn\Admin\Http\Middleware\HttpLog::class)->name('admin.login');
     $router->get('logout', config('admin.auth.login.controller').'@logout')->name('admin.logout');
 });
 
@@ -14,12 +14,16 @@ Route::prefix(config('admin.router.prefix', 'admin'))->middleware('web')->group(
 Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($router) {
 
         $router->get('/logs', 'LogViewController@index')->name('logs');
-        
+
         $router->get('/logs/api', 'LogViewController@api')->name('logs.api');
 
         $router->get('/operationlog', 'OperationLogController@index')->name('operationlog');
 
-        $router->resource('users', 'UserController')->names('users');;
+        $router->resource('users', 'UserController')->names('users');
+
+        $router->get('/change-password', 'UserController@changePassword')->name('users.change_password');
+
+        $router->post('/change-password', 'UserController@savePassword')->name('users.change_password');
 
         $router->resource('roles', 'RoleController')->names('roles');
 

@@ -19,7 +19,7 @@ use Tanwencn\Admin\Http\Rules\HasAlreadyPermission;
 
 class PermissionController extends Controller
 {
-    use ValidatesRequests,Package;
+    use ValidatesRequests, Package;
 
     public function __construct()
     {
@@ -80,8 +80,12 @@ class PermissionController extends Controller
         $request = request();
 
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'guard' => ['required', Rule::in($this->guards)]
+            'guard' => ['required', Rule::in($this->guards)],
+            'name' => ['required', 'max:255',
+                Rule::unique('permissions')->ignore($model)->where(function ($query)use($request) {
+                    return $query->where('guard_name', $request->input('guard'));
+                })
+            ]
         ]);
 
         $this->hasAlreadyPermission($model);
@@ -99,7 +103,7 @@ class PermissionController extends Controller
     {
         $ids = $id ? [$id] : $request->input('ids');
         foreach ($ids as $id) {
-            $model = Permission::findOrFail($id);
+            $model = Permission::query()->findOrFail($id);
             $this->hasAlreadyPermission($model);
             $model->delete();
         }
@@ -109,8 +113,9 @@ class PermissionController extends Controller
         ]);
     }
 
-    protected function hasAlreadyPermission($model){
-        if($model->id) abort_unless(Auth::user()->hasPermissionTo(intval($model->id)) || Auth::user()->hasRole('superadmin'), 402, "you is no permission id {$model->name}");
+    protected function hasAlreadyPermission($model)
+    {
+        //if($model->id) abort_unless(Auth::user()->hasPermissionTo(intval($model->id), $model->guard_name) || Auth::user()->hasRole('superadmin'), 402, "you is no permission id {$model->name}");
     }
 
     protected function abilitiesMap()

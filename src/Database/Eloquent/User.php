@@ -16,6 +16,7 @@ use Tanwencn\Admin\Database\Eloquent\Concerns\HasMetas;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Tanwencn\Admin\Facades\Admin;
 
 class User extends Authenticatable
 {
@@ -61,7 +62,8 @@ class User extends Authenticatable
         return $value ?: $this->email;
     }
 
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = bcrypt($value);
     }
 
@@ -73,6 +75,22 @@ class User extends Authenticatable
     public function getMorphClass()
     {
         return self::class;
+    }
+
+    public function getGuardNameAttribute()
+    {
+        return $this->guard_name;
+    }
+
+    public function getLastLoginTimeAttribute()
+    {
+        $operation = $this->operation()->where('uri', route('admin.login', [], false))->where('method', 'POST')->first();
+        return $operation ? $operation->created_at : null;
+    }
+
+    public function operation()
+    {
+        return $this->hasMany('Tanwencn\Admin\Database\Eloquent\OperationLog', 'user_id', 'id');
     }
 
     /*permission cache bug

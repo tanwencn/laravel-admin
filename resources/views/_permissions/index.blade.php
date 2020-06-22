@@ -13,7 +13,9 @@
                     <admin::button-dropdown :name="trans('admin.batch')">
                         <slot name="links">
                             @can('delete_role')
-                                <admin::ajax class="dropdown-item" :url="route('admin.permissions.destroy', 0)" method="delete" :confirm="trans('admin.delete_message')" selected="ids" :text="trans('admin.delete')" />
+                                <admin::ajax class="dropdown-item" :url="route('admin.permissions.destroy', 0)"
+                                             method="delete" :confirm="trans('admin.delete_message')" selected="ids"
+                                             :text="trans('admin.delete')"/>
                             @endcan
                         </slot>
                     </admin::button-dropdown>
@@ -41,38 +43,43 @@
                 </div>
                 <div class="card-body table-responsive p-0">
                     <admin::table checkbox="true" nodata="true">
-                            <slot name="thead">
-                                <tr>
-                                    <th>{{ trans('admin.permission') }}</th>
-                                    <th>{{ trans('admin.name') }}</th>
-                                    <th>{{ trans('admin.guard') }}</th>
-                                    <th>{{ trans('admin.updated_at') }}</th>
-                                    <th>{{ trans('admin.operating') }}</th>
-                                </tr>
-                            </slot>
-                            <slot name="tbody">
-                                @foreach($results as $permission)
-                                    <tr @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name)) data-id="{{ $permission->id }}" @endif>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
-                                        <td>{{ $permission->guard_name }}</td>
-                                        <td>{{ $permission->updated_at }}</td>
-                                        <td>
+                        <slot name="thead">
+                            <tr>
+                                <th>{{ trans('admin.permission') }}</th>
+                                <th>{{ trans('admin.name') }}</th>
+                                <th>{{ trans('admin.guard') }}</th>
+                                <th>{{ trans('admin.updated_at') }}</th>
+                                <th>{{ trans('admin.operating') }}</th>
+                            </tr>
+                        </slot>
+                        <slot name="tbody">
+                            @foreach($results as $permission)
+                                <tr @if(!($permission->name == 'dashboard' && $permission->guard_name == 'admin')) data-id="{{ $permission->id }}" @endif>
+                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ \Illuminate\Support\Str::after(trans('admin.'.$permission->name), 'admin.') }}</td>
+                                    <td>{{ $permission->guard_name }}</td>
+                                    <td>{{ $permission->updated_at }}</td>
+                                    <td>
+                                        @if(!($permission->name == 'dashboard' && $permission->guard_name == 'admin'))
                                             @can('edit_permission')
-                                                @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name))
+                                                @if(true || auth()->user()->can($permission->name))
                                                     <a href="{{ Admin::action('edit', $permission->id) }}">{{ trans('admin.edit') }}</a>
                                                 @endif
                                                 &nbsp;
                                             @endcan
                                             @can('delete_permission')
-                                                @if($permission->guard_name == 'admin' && auth()->user()->can($permission->name))
-                                                        <admin::ajax :url="route('admin.permissions.destroy', $permission->id)" method="delete" :confirm="trans('admin.delete_message')" :text="trans('admin.delete')" />
+                                                @if(true || auth()->user()->can($permission->name))
+                                                    <admin::ajax
+                                                            :url="route('admin.permissions.destroy', $permission->id)"
+                                                            method="delete" :confirm="trans('admin.delete_message')"
+                                                            :text="trans('admin.delete')"/>
                                                 @endif
                                             @endcan
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </slot>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </slot>
                     </admin::table>
                 </div>
                 <!-- /.card-body -->

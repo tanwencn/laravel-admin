@@ -11,8 +11,9 @@ namespace Tanwencn\Admin\Http\Controllers;
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Tanwencn\Admin\Facades\Admin;
@@ -34,7 +35,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $model = $this->model::with('roles');
-        if (!Auth::user()->hasRole('superadmin'))
+        if (!Admin::user()->hasRole('superadmin'))
             $model->whereHas('roles', function ($query) {
                 $query->where('name', '!=', 'superadmin');
             });
@@ -57,15 +58,17 @@ class UserController extends Controller
 
     public function create()
     {
-        return $this->_form(new $this->model());
+        $passwrod = Str::random(32);
+        session(['create_password' => $passwrod]);
+        return $this->_form(new $this->model())->with('password', $passwrod);
     }
 
     protected function _form($model)
     {
         $model->load('metas');
         $role = Role::query();
-        if (!Auth::user()->hasRole('superadmin'))
-            $role->whereIn('name', Auth::user()->roles->pluck('name')->all());
+        /*if (!Admin::user()->hasRole('superadmin'))
+            $role->whereIn('name', Admin::user()->roles->pluck('name')->all());*/
 
         $roles = $role->get();
 
@@ -74,7 +77,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if (Auth::id() != $id)
+        if (Admin::user()->id != $id)
             $this->authorize('edit_user');
 
         $model = $this->model::with('roles')->findOrFail($id);
@@ -82,15 +85,42 @@ class UserController extends Controller
         return $this->_form($model);
     }
 
+    public function changePassword()
+    {
+        return $this->view('change_password');
+    }
+
+    public function savePassword(Request $request)
+    {
+        $input = $request->validate([
+            'old_password' => ['required', 'string', 'max:255',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Admin::user()->password)) {
+                        $fail(trans('admin.old_password').trans('admin.error'));
+                    }
+                },],
+            'password' => array_merge(['required', 'string', 'confirmed'], config('admin.auth.password.rule', [])),
+        ], [], [
+            'old_password' => trans('admin.old_password')
+        ]);
+
+        Admin::user()->password = $input['password'];
+        Admin::user()->save();
+
+        return redirect(config('admin.router.prefix', 'admin').'/')->with('success', trans('admin.save_succeeded'));
+    }
+
     public function store()
     {
         $model = new $this->model();
+        $model->password = session('create_password');
+        abort_unless($model->password, 422, "password is invald.");
         return $this->save($model);
     }
 
     public function update($id)
     {
-        if (Auth::id() != $id)
+        if (Admin::user()->id != $id)
             $this->authorize('edit_user');
 
         $model = $this->model::findOrFail($id);
@@ -103,34 +133,34 @@ class UserController extends Controller
 
         $validates = [
             'email' => ['email', 'max:255'],
-            'role' => Rule::requiredIf(Auth::user()->can('edit_role')),
-            'role.*' => function ($attribute, $value, $fail) {
-                if (!Auth::user()->hasRole('superadmin') && !in_array($value, Auth::user()->roles->pluck('name')->all())) {
-                    $fail($attribute . ' is invalid.');
-                }
-            },
             'name' => ['max:255'],
-            'password' => [Rule::requiredIf(!$model->id), 'min:6', 'confirmed']
+            'metas' => 'array',
+            //'role' => Rule::requiredIf(Admin::user()->can('edit_role')),
+            'role.*' => function ($attribute, $value, $fail) {
+                /*if (!Admin::user()->hasRole('superadmin') && !in_array($value, Admin::user()->roles->pluck('name')->all())) {
+                    $fail($attribute . ' is invalid.');
+                }*/
+            },
+            //'password' => [Rule::requiredIf(!$model->id), 'min:6', 'confirmed']
         ];
 
         $login_filed = config('admin.auth.login.username', 'email');
         $validates[$login_filed] = array_merge($validates[$login_filed], ['required', Rule::unique('users')->ignore($model->id)]);
 
-        $this->validate($request, $validates);
-
-        $input = array_filter($request->except('role'));
+        $input = $request->validate($validates);
 
         $roles = array_filter($request->input('role', []));
+
         $model->fill($input);
 
         $model->save();
 
         $model->saveMetas($input['metas']);
 
-        if (!empty($roles) && Auth::user()->can('edit_role')) {
+        if (!empty($roles) && Admin::user()->can('edit_role')) {
             $model->roles()->detach();
 
-            if (!Auth::user()->hasRole('superadmin'))
+            if (!Admin::user()->hasRole('superadmin'))
                 $roles = array_diff($roles, ['superadmin']);
 
             $roles = collect($roles)
@@ -152,7 +182,9 @@ class UserController extends Controller
             $model->roles()->sync($roles, false);
         }
 
-        $url = Auth::user()->can('view_user') ? Admin::action('index') : Admin::action('edit', $model->id);
+        $model->givePermissionTo('dashboard');
+
+        $url = Admin::user()->can('view_user') ? Admin::action('index') : Admin::action('edit', $model->id);
 
         return redirect($url)->with('success', trans('admin.save_succeeded'));
     }

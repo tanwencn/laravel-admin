@@ -62,11 +62,9 @@
                                     @foreach($permissions_group[$guard] as $permission)
                                         <tr>
                                             <td>
-                                                @if(auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole($guard) && auth()->user()->can($permission->name)))
-                                                    <input type="checkbox" name="permissions[]"
-                                                           {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
-                                                           value="{{ $permission->id }}">
-                                                @endif
+                                                <input type="checkbox" name="permissions[]"
+                                                       {{ in_array($permission->id, $current_permissions)?'checked':'' }} class="grid-row-checkbox checkbox-style"
+                                                       value="{{ $permission->id }}">
                                             </td>
                                             <td>{{ \Illuminate\Support\Str::after(trans("{$permission->guard_name}.{$permission->name}"), '.') }}</td>
                                             <td>{{ $permission->guard_name }}</td>
@@ -102,7 +100,7 @@
 
             $('[name="guard"]').change(function () {
                 var name = $(this).val();
-                console.log($('template.' + name).html());
+                //console.log($('template.' + name).html());
                 $('.data-list').html($('template.' + name).html());
                 table = $('.data-list>table').DataTable({searching: true, dom: 'Brtip',
                     buttons: [
