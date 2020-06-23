@@ -181,10 +181,13 @@ window.Admin = function () {
                 $('aside .nav-sidebar li').not(parents_li).removeClass('menu-open').find('a').removeClass('active');
             }
         },
-        alert: function alert(content) {
+        alert: function alert(content, title, time) {
+            if(title === undefined) title = false;
+            if(time === undefined) time = 3000;
+            if(time != false) time = 'yes|'+time;
             $.alert({
-                title: false,
-                autoClose: 'yes|3000',
+                title: title,
+                autoClose: time,
                 content: content,
                 buttons: {
                     yes: {

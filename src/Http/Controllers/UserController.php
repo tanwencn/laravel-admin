@@ -22,6 +22,9 @@ class UserController extends Controller
 {
     use ValidatesRequests, Package;
 
+    /**
+     * @var \Tanwencn\Admin\Database\Eloquent\User;
+     */
     protected $model;
 
     public function __construct()
@@ -54,6 +57,17 @@ class UserController extends Controller
         $results = $model->paginate();
 
         return $this->view('index', compact('results'));
+    }
+
+    public function resetPassword(Request $request){
+        $input = $request->validate([
+            'id' => ['required'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $model = $this->model::query()->findOrFail($input['id']);
+        $model->password = $input['password'];
+        $model->save();
     }
 
     public function create()
@@ -210,7 +224,8 @@ class UserController extends Controller
             'index' => 'view_user',
             'create' => 'add_user',
             'store' => 'add_user',
-            'destroy' => 'delete_user'
+            'destroy' => 'delete_user',
+            'resetPassword' => 'reset_password',
         ];
     }
 }

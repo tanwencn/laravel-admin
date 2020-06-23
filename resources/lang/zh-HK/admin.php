@@ -19,6 +19,8 @@ return [
     'password_confirmation' => '確認密碼',
     'change_password' => '更改密碼',
     'change_password_tip' => '你需要先更改密碼才能進行其它操作',
+    'reset_password' => '重置密碼',
+    'confirm_reset_password' => '確定要重置此賬號密碼?',
     'remember_me' => '記住我',
     'avatar' => '頭像',
     'timeout_load' => '加載超時',

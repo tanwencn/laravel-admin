@@ -73,8 +73,13 @@
                                             <a href="{{ Admin::action('edit', $user) }}">{{ trans('admin.edit') }}</a>
                                             &nbsp;
                                         @endcan
+                                        @can('reset_password')
+                                            <a class="reset-password" data-id="{{ $user->id }}"
+                                               href="javascript:void(0);">{{ trans('admin.reset_password') }}</a>
+                                            &nbsp;
+                                        @endcan
                                         @can('delete_user')
-                                            @if($user->id > 1 && Auth::user()->can('delete_user'))
+                                            @if($user->id > 1)
                                                 <admin::ajax :url="route('admin.users.destroy', $user->id)"
                                                              method="delete" :confirm="trans('admin.delete_message')"
                                                              :text="trans('admin.delete')"/>
@@ -94,4 +99,40 @@
         </div>
         <!-- end panel -->
     </div>
+    <script>
+        Admin.boot(function () {
+            $('.reset-password').click(function () {
+                var id = $(this).data('id');
+                var password = randStr(32);
+                Admin.confirm('@lang("admin.confirm_reset_password")', function () {
+                    $.ajax({
+                        method: 'post',
+                        url: '{{ Admin::action('resetPassword') }}',
+                        data: {id: id, password: password, '_method': 'put'},
+                        success: function () {
+                            Admin.alert(password, '@lang("admin.password")', false);
+                        },
+                        error: function (rs) {
+                            if (rs['responseJSON'] && rs['responseJSON']['message']) {
+                                Admin.error(rs['responseJSON']['message']);
+                            }
+                        }
+                    });
+                });
+                $.ajax
+            });
+        });
+
+        function randStr(len) {
+            len = len || 1;
+            var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var maxPos = $chars.length;
+            var pwd = '';
+            for (i = 0; i < len; i++) {
+                pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+            }
+
+            return pwd;
+        }
+    </script>
 @endsection

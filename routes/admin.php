@@ -20,6 +20,8 @@ Admin::router()->namespace('Tanwencn\Admin\Http\Controllers')->group(function ($
         $router->get('/operationlog', 'OperationLogController@index')->name('operationlog');
 
         $router->resource('users', 'UserController')->names('users');
+        
+        $router->put('reset-password', 'UserController@resetPassword')->name('users.reset_password');
 
         $router->get('/change-password', 'UserController@changePassword')->name('users.change_password');
 

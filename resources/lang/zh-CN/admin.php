@@ -18,6 +18,8 @@ return [
     'password_confirmation' => '确认密码',
     'change_password' => '更改密码',
     'change_password_tip' => '你需要先更改密码才能进行其它操作',
+    'reset_password' => '重置密码',
+    'confirm_reset_password' => '确定要重置此账号密码?',
     'remember_me' => '记住我',
     'avatar' => '头像',
     'timeout_load' => '加载超时',
